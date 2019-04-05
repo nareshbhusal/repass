@@ -48,11 +48,12 @@ app.get('', (req, res) => {
     res.send('welcome to the frontpage');
 });
 
-app.get('/login', (req, res) => {
-    res.send('Login');
+app.post('/login', (req, res) => {
+    console.log(req.body);
+    res.send(req.body);
 });
 
-app.get('/logout', (req, res) => {
+app.post('/logout', (req, res) => {
     // res.send('Logout');
     res.send(req.session)
 })

@@ -5,6 +5,7 @@ import Register from '../forms/Register/Register';
 import Login from '../forms/Login/Login';
 import Sub from '../Sub/Sub';
 import Post from '../Post/Post';
+import Header from '../Header/Header';
 import './App.css';
 
 class App extends React.Component{
@@ -12,6 +13,7 @@ class App extends React.Component{
         return (
             <div>
                 <Router history={history}>
+                    <Header />
                     <Route exact path="/register" component={Register} />
                     <Route exact path="/login" component={Login} />
                     <Route exact path="/r/:sub" component={Sub} />
