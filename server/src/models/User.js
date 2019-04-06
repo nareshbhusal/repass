@@ -6,10 +6,10 @@ const user = db.define('user', {
         type: Sequelize.STRING
     },
     listings: {
-        type: Sequelize.ARRAY(Sequelize.STRING)
+        type: Sequelize.ARRAY
     },
     subs: {
-        type: Sequelize.ARRAY(Sequelize.STRING)
+        type: Sequelize.ARRAY
     },
     email: {
         type: Sequelize.STRING

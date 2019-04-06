@@ -1,5 +1,4 @@
 const express = require('express');
-const hbs = require('hbs');
 const path = require('path');
 const db = require('./config/database');
 
@@ -10,6 +9,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Initialise database
+db.authenticate()
+    .then(() => console.log('Database connected'))
+    .catch(() => console.log(err))
 
 //Set routes
 app.get('', (req, res) => {
