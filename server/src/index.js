@@ -13,9 +13,30 @@ const RedisStore = require('connect-redis')(session);
 const app = express();
 const uuid = require('uuid');
 
+// Create redis client
+let client = redis.createClient();
+client.on('connect', () => {
+    console.log('Redis connected')
+})
+
 // Configure middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+
+// express cookies
+app.use(session({
+    genid: function(req) {
+        return uuid(); //use UUIDs for session IDs
+    },
+    secret: 'ssssshhhh',
+    saveUninitialized: true,
+    resave: true,
+    store: new RedisStore({ client }),
+    cookie: {
+        maxAge: 30 * 24 * 60 * 1000 // 30 days
+    }
+}));
 
 // Initialise database
 db.authenticate()
