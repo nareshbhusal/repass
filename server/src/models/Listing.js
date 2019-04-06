@@ -15,6 +15,12 @@ const listing = db.define('listing', {
         // title in null except for posts
         type: Sequelize.STRING
     },
+    ups: {
+        type: Sequelize.INTEGER
+    },
+    downs: {
+        type: Sequelize.INTEGER
+    },
     children: {
         // ids of sub-listings
         type: Sequelize.ARRAY
