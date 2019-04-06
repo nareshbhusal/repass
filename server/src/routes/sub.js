@@ -7,6 +7,11 @@ router.get('/:sub', (req, res) => {
     res.send(req.params);
 })
 
+// create post route
+router.get('/:sub/create', (req, res) => {
+    res.send('create your post');
+})
+
 router.post('/subs/create', (req, res) => {
     res.send('create a subreddit');
 })
