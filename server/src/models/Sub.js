@@ -19,5 +19,11 @@ const sub = db.define('sub', {
     },
     rules: {
         type: Sequelize.JSON
+    },
+    createdAt: {
+        type: Sequelize.DATE
+    },
+    updatedAt: {
+        type: Sequelize.STRING
     }
 })

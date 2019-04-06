@@ -22,6 +22,12 @@ const listing = db.define('listing', {
     parent: {
         // id of parent listing
         type: Sequelize.STRING
+    },
+    createdAt: {
+        type: Sequelize.DATE
+    },
+    updatedAt: {
+        type: Sequelize.STRING
     }
 })
 
