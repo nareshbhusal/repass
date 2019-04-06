@@ -1,15 +1,28 @@
+const db = require('../config/database');
 const Sequelize = require('sequelize');
 
-module.exports = new Sequelize('repassdb', 'postgres','nnnsss333', {
-    host: 'localhost',
-    dialect: 'postgres',
-    pool: {
-        max:5,
-        min: 0,
-        acquire: 30000,
-        idle: 1000
+const user = db.define('user', {
+    name: {
+        type: Sequelize.STRING
     },
-    define : {
-        timestamps: true
+    listings: {
+        type: Sequelize.ARRAY(Sequelize.STRING)
+    },
+    subs: {
+        type: Sequelize.ARRAY(Sequelize.STRING)
+    },
+    email: {
+        type: Sequelize.STRING
+    },
+    createdAt : {
+        type: Sequelize.Date
+    },
+    updatedAt: {
+        type: Sequelize.Date
     }
 })
+module.exports = user;
+
+
+// listings are associated with their ids
+// subs can be subpasses(subreddits), posts or even users
