@@ -27,10 +27,10 @@ const listing = db.define('listing', {
     },
     parent: {
         // id of parent listing
-        type: Sequelize.STRING
+        type: Sequelize.INTEGER
     },
     isNSFW: {
-        type: Sequelize.ARRAY
+        type: Sequelize.BOOLEAN
     },
     isSpoiler: {
         type: Sequelize.BOOLEAN

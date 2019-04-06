@@ -19,6 +19,9 @@ const user = db.define('user', {
     },
     createdAt : {
         type: Sequelize.Date
+    },
+    votes: {
+        type: Sequelize.JSON
     }
 })
 module.exports = user;
