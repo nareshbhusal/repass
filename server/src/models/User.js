@@ -14,6 +14,9 @@ const user = db.define('user', {
     email: {
         type: Sequelize.STRING
     },
+    followersCount: {
+        type: Sequelize.INTEGER
+    },
     createdAt : {
         type: Sequelize.Date
     },
