@@ -3,6 +3,7 @@ const db = require('./config/database');
 const userRouter = require('./routes/user');
 const subRouter = require('./routes/sub');
 const commentsRouter = require('./routes/comments');
+const createRouter = require('./routes/create');
 const app = express();
 
 // Configure middlewares
@@ -21,6 +22,7 @@ app.get('', (req, res) => {
 
 app.use('/r', subRouter);
 app.use('/u', userRouter);
-app.use('/r/:sub/comments', commentsRouter);
+app.use('/r/:sub/:postId/comments', commentsRouter);
+app.use('/create', createRouter);
 
 module.exports = app;
