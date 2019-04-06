@@ -9,7 +9,7 @@ const user = db.define('user', {
         type: Sequelize.ARRAY
     },
     subs: {
-        type: Sequelize.ARRAY
+        type: Sequelize.JSON
     },
     email: {
         type: Sequelize.STRING
