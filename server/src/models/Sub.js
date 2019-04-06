@@ -25,8 +25,5 @@ const sub = db.define('sub', {
     },
     createdAt: {
         type: Sequelize.DATE
-    },
-    updatedAt: {
-        type: Sequelize.STRING
     }
 })
