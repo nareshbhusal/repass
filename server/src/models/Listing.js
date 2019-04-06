@@ -2,6 +2,9 @@ const db = require('../config/database');
 const Sequelize = require('sequelize');
 
 const listing = db.define('listing', {
+    user: {
+        type: Sequelize.STRING
+    },
     body: {
         type: Sequelize.STRING
     },
@@ -10,7 +13,7 @@ const listing = db.define('listing', {
     },
     title: {
         // title in null except for posts
-        type: Sequelize.String
+        type: Sequelize.STRING
     },
     children: {
         // ids of sub-listings
@@ -18,7 +21,7 @@ const listing = db.define('listing', {
     },
     parent: {
         // id of parent listing
-        type: Sequelize.String
+        type: Sequelize.STRING
     }
 })
 
