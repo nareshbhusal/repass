@@ -18,7 +18,7 @@ const user = db.define('user', {
         type: Sequelize.INTEGER
     },
     createdAt : {
-        type: Sequelize.Date
+        type: Sequelize.DATE
     },
     votes: {
         type: Sequelize.JSON

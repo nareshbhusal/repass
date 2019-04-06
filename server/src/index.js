@@ -1,7 +1,9 @@
 const express = require('express');
 const path = require('path');
 const db = require('./config/database');
-
+const userRouter = require('./routes/user');
+const subRouter = require('./routes/sub');
+const commentsRouter = require('./routes/comments');
 const app = express();
 
 // Configure middlewares
@@ -15,11 +17,11 @@ db.authenticate()
 
 //Set routes
 app.get('', (req, res) => {
-    const data = [
-        {name: 'Naresh', age: 19},
-        {name: 'Ariadne', age: 19}
-    ]
-    res.send(data);
-})
+    res.send('welcome to the frontpage');
+});
+
+app.use('/r', subRouter);
+app.use('/u', userRouter);
+app.use('/r/:sub/comments', commentsRouter);
 
 module.exports = app;

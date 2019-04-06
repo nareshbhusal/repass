@@ -23,7 +23,7 @@ const listing = db.define('listing', {
     },
     children: {
         // ids of sub-listings
-        type: Sequelize.ARRAY
+        type: Sequelize.ARRAY(Sequelize.INTEGER)
     },
     parent: {
         // id of parent listing

@@ -6,13 +6,13 @@ const sub = db.define('sub', {
         type: Sequelize.STRING
     },
     users: {
-        type: Sequelize.ARRAY
+        type: Sequelize.ARRAY(Sequelize.STRING)
     },
     listings: {
-        type: Sequelize.ARRAY
+        type: Sequelize.ARRAY(Sequelize.INTEGER)
     },
     mods: {
-        type: Sequelize.ARRAY
+        type: Sequelize.ARRAY(Sequelize.STRING)
     },
     createdBy: {
         type: Sequelize.STRING
