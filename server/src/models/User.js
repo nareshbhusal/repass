@@ -19,9 +19,6 @@ const user = db.define('user', {
     },
     createdAt : {
         type: Sequelize.Date
-    },
-    updatedAt: {
-        type: Sequelize.Date
     }
 })
 module.exports = user;

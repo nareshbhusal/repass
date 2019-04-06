@@ -11,7 +11,7 @@ app.use(express.urlencoded({ extended: true }));
 // Initialise database
 db.authenticate()
     .then(() => console.log('Database connected'))
-    .catch(() => console.log(err))
+    .catch((err) => console.log(err))
 
 //Set routes
 app.get('', (req, res) => {
