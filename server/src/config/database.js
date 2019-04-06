@@ -10,6 +10,6 @@ module.exports = new Sequelize('repassdb', 'postgres','nnnsss333', {
         idle: 1000
     },
     define : {
-        timestamps: true
+        timestamps: false
     }
 })

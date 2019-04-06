@@ -24,3 +24,5 @@ const sub = db.define('sub', {
         type: Sequelize.JSON
     }
 })
+
+module.exports = sub;

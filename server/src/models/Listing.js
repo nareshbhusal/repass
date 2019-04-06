@@ -29,6 +29,9 @@ const listing = db.define('listing', {
         // id of parent listing
         type: Sequelize.INTEGER
     },
+    originalPost: {
+        type: Sequelize.INTEGER
+    },
     isNSFW: {
         type: Sequelize.BOOLEAN
     },

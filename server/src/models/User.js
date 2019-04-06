@@ -6,7 +6,7 @@ const user = db.define('user', {
         type: Sequelize.STRING
     },
     listings: {
-        type: Sequelize.JSON
+        type: Sequelize.INTEGER
     },
     subs: {
         type: Sequelize.JSON
