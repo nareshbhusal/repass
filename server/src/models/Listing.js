@@ -23,6 +23,12 @@ const listing = db.define('listing', {
         // id of parent listing
         type: Sequelize.STRING
     },
+    isNSFW: {
+        type: Sequelize.ARRAY
+    },
+    isSpoiler: {
+        type: Sequelize.BOOLEAN
+    },
     createdAt: {
         type: Sequelize.DATE
     },

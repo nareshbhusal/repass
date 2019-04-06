@@ -8,6 +8,9 @@ const sub = db.define('sub', {
     users: {
         type: Sequelize.ARRAY
     },
+    listings: {
+        type: Sequelize.ARRAY
+    },
     mods: {
         type: Sequelize.ARRAY
     },
