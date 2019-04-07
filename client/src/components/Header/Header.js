@@ -55,7 +55,6 @@ class Header extends React.Component{
         }
     }
     render() {
-        console.log(this.state);
         return (
             <div className={styles.header}>
                 <div className={styles.left}>
@@ -71,7 +70,7 @@ class Header extends React.Component{
                     {this.renderSignInBtns()}
                 </div>
             </div>
-        )
+        );
     }
 }
 

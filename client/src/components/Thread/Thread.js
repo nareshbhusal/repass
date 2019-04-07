@@ -7,7 +7,6 @@ import Comment from '../Comment/Comment';
 class PostPage extends React.Component{
 
     render() {
-        console.log('thread');
         return (
             <div className={styles.thread}>
                 <Post detailed/>

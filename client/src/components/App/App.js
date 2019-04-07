@@ -13,11 +13,11 @@ class App extends React.Component{
         return (
             <div>
                 <Router history={history}>
-                    <Header />
+                    <Route exact path="/" component={Sub} />
                     <Route exact path="/register" component={Register} />
                     <Route exact path="/login" component={Login} />
                     <Route exact path="/r/:sub" component={Sub} />
-                    <Route exact path="/r/:sub/:postId/:comments" component={PostPage} />
+                    <Route exact path="/r/:sub/:postId/comments" component={PostPage} />
                 </Router>
             </div>
         )

@@ -56,7 +56,6 @@ class Post extends React.Component{
     componentDidMount = () => {
         this.UpdateVotes();
         if (this.props.detailed) {
-            console.log('done?');
             this.postRef.current.style.border = 'none';
         }
     }
