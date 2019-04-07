@@ -6,7 +6,8 @@ class Header extends React.Component{
 
     state = {
         theme: 'light',
-        loggedIn: false
+        loggedIn: false,
+        sub: 'Home'
     }
 
     changeTheme = () => {
@@ -57,10 +58,15 @@ class Header extends React.Component{
         console.log(this.state);
         return (
             <div className={styles.header}>
-                <Link className={styles.logo} to="/">
-                    repass
-                </Link>
-                <div className={styles.actions}>
+                <div className={styles.left}>
+                    <Link to="/" className={styles.logo} to="/">
+                        repass
+                    </Link>
+                    <Link to="#" className={styles.sub} >
+                        {this.state.sub}
+                    </Link>
+                </div>
+                <div className={styles.right}>
                     {this.renderThemeBtn()}
                     {this.renderSignInBtns()}
                 </div>
