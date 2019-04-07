@@ -1,0 +1,13 @@
+.showcase{
+    display: flex;
+    background-color: blue;
+    height: 70px;
+    align-items: center;
+}
+
+.sub{
+    color: #fff;
+    font-size: 3rem;
+    padding: 3rem;
+    text-decoration: none;
+}

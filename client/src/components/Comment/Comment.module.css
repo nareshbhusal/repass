@@ -44,7 +44,7 @@ i{
     color: #555;
 }
 .user{
-    color: var(--color-primay);
+    color: #4CAF50;
     margin-right: 0.35rem;
     text-decoration: none;
 }

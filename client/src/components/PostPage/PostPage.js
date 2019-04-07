@@ -1,23 +1,21 @@
 import React from 'react';
 import styles from './PostPage.module.css';
-import Post from '../Posts/Post/Post';
-import Input from '../Input/Input';
-import Comment from '../Comment/Comment';
+import SubShowcase from '../Sub/SubShowcase/SubShowcase';
+import Thread from '../Thread/Thread';
+import SubDetails from '../Sub/SubDetails/SubDetails';
 
 class PostPage extends React.Component{
-
     render() {
-        console.log('postpage')
         return (
             <div className={styles.postpage}>
-                <Post detailed/>
-                <Input />
-                <div className={styles.line}></div>
-                <div className={styles.comments}>
-                 <Comment />
+                <SubShowcase sub="anime"/>
+                <div className={styles.main}>
+                    <Thread />
+                    <SubDetails />
                 </div>
             </div>
         )
     }
 }
+
 export default PostPage;

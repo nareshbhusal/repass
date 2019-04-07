@@ -2,6 +2,7 @@
     border: 1px solid #ccc;
     margin: 1rem;
     display: flex;
+    background-color: #fff;
 }
 
 .post > *{

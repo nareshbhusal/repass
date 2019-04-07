@@ -1,0 +1,10 @@
+.sub{
+    background: #eeeeef;
+}
+.main > *{
+    margin: 1.5rem;
+}
+
+.main{
+    display: flex;
+}
