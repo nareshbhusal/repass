@@ -1,0 +1,34 @@
+.input{
+    width: 92%;
+    margin: 2rem auto;
+    background-color: #ccc;
+}
+.input textarea{
+    width: 100%;
+    height: 120px;
+    padding: 0.4rem;
+    border: none;
+    outline: 1px solid #edeff1;
+}
+.input textarea:focus {
+    outline: 1px solid #999;
+}
+
+.actions{
+    display: flex;
+    justify-content: flex-end;
+    padding: 0.25rem;
+}
+
+.actions button{
+    background-color: #0079d3;
+    color: #fff;
+    border: none;
+    padding: 0.35rem;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+.actions button:hover{
+    opacity: 0.85;
+}

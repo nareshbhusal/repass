@@ -1,34 +1,21 @@
 import React from 'react';
-import styles from './Post.module.css';
-import { Link } from 'react-router-dom';
+import styles from './Comment.module.css';
 
-// This is just a postItem, not directly accessible via link
-// only through PostPage or (Sub)Posts
-
-class Post extends React.Component{
-    constructor(props) {
+class Comment extends React.Component{
+    constructor(){
         super(props);
 
         this.state = {
             user: 'username',
-            title: 'This is the title of the post',
-            body: 'Hi reddit. I want you to know that you are ok i guess. This is just a demon post anyways, so feel free to post any porn links.',
-            votes: 20,
-            comments: 69,
+            votes: 5,
             time: '1 hour ago',
-            sub: 'whatever',
-            url: 'r/ask/postid/comments',
-            isSaved: false,
-            detailed: true,
-            vote: null
+            body: "There's a guy in our community from Melbourne who made the move to London that could maybe offer some advice. Though he isn't an FE Dev (he's back end and did CS degree in 2000) he only moved here in the last year or so."
         }
 
         this.upVote = React.createRef();
         this.downVote = React.createRef();
-        // ref for post
-        this.postRef = React.createRef();
     }
-    
+
     onSaveHandler = () => {
         this.setState({ isSaved:  !this.state.isSaved});
         if (this.state.isSaved) {
@@ -144,7 +131,7 @@ class Post extends React.Component{
     }
     render(){
         return (
-            <div ref={this.postRef} className={styles.post}>
+            <div ref={this.postRef} className={styles.comment}>
                 <div className={styles.votes}>
                     <i ref={this.upVote} onClick={this.toggleVote} className={`fa fa-arrow-up up ${styles.up}`}></i>
                         {this.state.votes}
@@ -160,4 +147,4 @@ class Post extends React.Component{
     }
 }
 
-export default Post;
+export default Comment;

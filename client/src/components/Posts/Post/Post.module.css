@@ -4,7 +4,6 @@
     display: flex;
 }
 
-
 .post > *{
     padding: 1rem;
 }
@@ -76,6 +75,7 @@ i{
 
 .actions{
     font-size: 1.5rem;
+    margin-top: 1rem;
 }
 
 .comment, .save{

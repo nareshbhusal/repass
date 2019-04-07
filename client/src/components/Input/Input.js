@@ -7,7 +7,7 @@ class Input extends React.Component{
     }
     render() {
         return (
-            <div>
+            <div className={styles.input}>
                 <textarea placeholder="What are your thoughts?"></textarea>
                 <div className={styles.actions}>
                     <button className={styles.button}>{this.state.type.toUpperCase()}</button>

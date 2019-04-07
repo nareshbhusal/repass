@@ -1,0 +1,11 @@
+.postpage{
+    border: 1px solid #edeff1;
+    margin-top: 3rem;
+}
+
+.line{
+    height: 1px;
+    width: 92%;
+    background-color: #edeff1;
+    margin: 1rem auto;
+}
