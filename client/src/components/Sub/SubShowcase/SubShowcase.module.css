@@ -8,6 +8,8 @@
 .sub{
     color: #fff;
     font-size: 3rem;
-    padding: 3rem;
+    padding: 0.35rem;
+    margin-left: 1rem;
+    display: block;
     text-decoration: none;
 }

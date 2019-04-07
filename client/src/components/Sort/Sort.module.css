@@ -1,4 +1,29 @@
 .sort{
     background-color: #fff;
     display: flex;
+    padding: 0.15rem;
+}
+
+select {
+    background-color: transparent;
+    border: 1px solid #ddddee;
+    cursor: pointer;
+    padding: 0.3rem;
+    margin-left: 2rem;
+    font-family: Arial, Helvetica, sans-serif;
+    /* box-shadow: 2px 2px 0px 1px #fff; */
+    outline: none;
+    text-align: center;
+    
+}
+
+option{
+    cursor: pointer;
+    box-shadow: 5px 5px 5px 5px #fff;
+    outline: none;
+    border: none;
+}
+option:hover{
+    background-color: rgba(0, 0, 255, 0.904);
+    color: white;
 }
