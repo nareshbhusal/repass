@@ -116,7 +116,7 @@ class Post extends React.Component{
     renderActions = () => {
         return (
             <div className={styles.actions}>
-                <Link to={this.state.url} className={styles.comment}>
+                <Link to={`/${this.state.url}`} className={styles.comment}>
                     <i className="fa fa-comment"></i>
                     {this.state.comments} Comments
                 </Link>

@@ -1,16 +1,18 @@
 import { CHANGE_THEME } from '../actions/types';
 
-const defaultTheme = 'light';
+const defaultState = {
+    theme: 'light'
+}
 
-const themeReducer  = (theme=defaultTheme, action) => {
+const themeReducer  = (state=defaultState, action) => {
     if (action.type === CHANGE_THEME) {
-        if (theme === 'light') {
-            return { state, theme: 'dark'};
+        if (state.theme === 'light') {
+            return {...state, theme: 'dark'};
         } else {
-            return { state, theme: 'light'}
+            return {...state, theme: 'light'}
         }
     }
-    return theme;
+    return state;
 }
 
 export default themeReducer;

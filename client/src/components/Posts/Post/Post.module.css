@@ -1,8 +1,13 @@
 .post{
     border: 1px solid #ccc;
-    margin: 1rem;
+    /* margin: 1rem; */
     display: flex;
     background-color: #fff;
+    border-bottom: none;
+}
+
+.post:last-of-type{
+    border-bottom: 1px solid #ccc;
 }
 
 .post > *{

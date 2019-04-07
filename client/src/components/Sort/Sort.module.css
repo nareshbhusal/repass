@@ -2,6 +2,8 @@
     background-color: #fff;
     display: flex;
     padding: 0.15rem;
+    padding-left: 3rem;
+    align-items: center;
 }
 
 select {

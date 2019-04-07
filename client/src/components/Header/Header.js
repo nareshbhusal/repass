@@ -4,31 +4,23 @@ import { Link } from 'react-router-dom';
 
 class Header extends React.Component{
 
-    state = {
-        theme: 'light',
-        loggedIn: false,
-        sub: 'Home'
-    }
-
     changeTheme = () => {
-        const newTheme = this.state.theme === 'light' ? 'dark' : 'light';
-        this.setState({ theme:  newTheme});
+        this.props.changeTheme();
     }
 
     renderThemeBtn = () => {
         return (
             <button onClick={this.changeTheme} className={styles.themeBtn}>
                 {
-                    this.state.theme === 'light' ?
+                    this.props.theme === 'dark' ?
                     <i className="fa fa-moon-o"></i> :
                     <i className="fa fa-sun-o"></i>
                 }
-                
             </button>
         );
     }
     renderSignInBtns = () => {
-        if (!this.state.loggedIn) {
+        if (!this.props.auth.loggedIn) {
             return (
                 <div className={styles.signInBtns}>
                     <Link className={`${styles.btn} ${styles.btnLogin}`} to="/login">
@@ -55,6 +47,7 @@ class Header extends React.Component{
         }
     }
     render() {
+        console.log(this.props)
         return (
             <div className={styles.header}>
                 <div className={styles.left}>
@@ -62,7 +55,7 @@ class Header extends React.Component{
                         repass
                     </Link>
                     <Link to="#" className={styles.sub} >
-                        {this.state.sub}
+                        {this.props.sub}
                     </Link>
                 </div>
                 <div className={styles.right}>

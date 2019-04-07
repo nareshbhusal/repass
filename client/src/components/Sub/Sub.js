@@ -11,24 +11,33 @@ import axios from 'axios';
 
 class Sub extends React.Component{
 
+    state = {
+        sub:''
+    }
+    componentDidUpdate = () => {
+        console.log(this.props);
+    }
     componentDidMount = async () => {
         await this.fetchPosts();
     }
     fetchPosts = async () => {
         const sub = this.props.match.params.sub.toString().toLowerCase();
+        this.setState({ sub });
         try{
             const res = await axios.get(`http://localhost:5000/r/${sub}`);
-            // console.log(res.data);
+            console.log(res.data);
         } catch(err) {
             console.log(err);
         }
     }
     
     render(){
+        const {auth, changeTheme} = this.props;
+        const theme = this.props.theme.theme;
         return (
             <div className={styles.sub}>
-                <Header />
-                <SubShowcase sub="anime"/>
+                <Header auth={auth} changeTheme={changeTheme} theme={this.props.theme.theme} sub={this.state.sub} />
+                <SubShowcase sub={this.state.sub}/>
                 <Sort />
                 <div className={styles.main}>
                     <Posts />
