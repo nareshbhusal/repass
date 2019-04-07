@@ -1,15 +1,17 @@
 import React from 'react';
 import styles from './Comment.module.css';
+import { Link } from 'react-router-dom';
 
 class Comment extends React.Component{
-    constructor(){
+    constructor(props){
         super(props);
 
         this.state = {
             user: 'username',
             votes: 5,
             time: '1 hour ago',
-            body: "There's a guy in our community from Melbourne who made the move to London that could maybe offer some advice. Though he isn't an FE Dev (he's back end and did CS degree in 2000) he only moved here in the last year or so."
+            body: "There's a guy in our community from Melbourne who made the move to London that could maybe offer some advice. Though he isn't an FE Dev (he's back end and did CS degree in 2000) he only moved here in the last year or so.",
+            isSaved: false
         }
 
         this.upVote = React.createRef();
@@ -68,15 +70,9 @@ class Comment extends React.Component{
     renderInfo = () => {
         return (
             <div className={styles.info}>
-                <Link to={`/r/${this.state.sub}`} className={styles.sub}>
-                    r/{this.state.sub}
+                <Link className={styles.user} to={`/u/${this.state.user}`}>
+                    u/{this.state.user}
                 </Link>
-                <span className={styles.postedBy}>
-                    Posted by 
-                    <Link className={styles.user} to={`/u/${this.state.user}`}>
-                        u/{this.state.user}
-                    </Link>
-                </span>
                 <span className={styles.time}>
                     {this.state.time}
                 </span>
@@ -104,10 +100,10 @@ class Comment extends React.Component{
     renderActions = () => {
         return (
             <div className={styles.actions}>
-                <Link to={this.state.url} className={styles.comment}>
+                <button to={this.state.url} className={styles.comment}>
                     <i className="fa fa-comment"></i>
-                    {this.state.comments} Comments
-                </Link>
+                        Reply
+                </button>
                 {this.renderSave()}
             </div>
         )
@@ -115,26 +111,17 @@ class Comment extends React.Component{
     renderBody = () => {
         return (
             <React.Fragment>
-                <p className={styles.title}>
-                    {this.state.title}
+                <p className={styles.body}>
+                    {this.state.body}
                 </p>
-                {
-                    this.state.detailed ? 
-                    <p className={styles.body}>
-                        {this.state.body}
-                    </p> :
-                    null
-                }
-                
             </React.Fragment>
         )
     }
     render(){
         return (
-            <div ref={this.postRef} className={styles.comment}>
+            <div className={styles.container}>
                 <div className={styles.votes}>
                     <i ref={this.upVote} onClick={this.toggleVote} className={`fa fa-arrow-up up ${styles.up}`}></i>
-                        {this.state.votes}
                     <i ref={this.downVote} name="down" onClick={this.toggleVote} className={`fa fa-arrow-down down ${styles.down}`}></i>
                 </div>
                 <div className="main">
