@@ -5,7 +5,6 @@ const User = require('../models/User');
 router.post('/user', async (req, res) => {
     // Validate data
     const { username, email, password } = req.body || {};
-    console.log(req.body);
     let errors = [];
     if (!username || !email || !password) {
         errors.push({msg: 'Please fill in all fields'});
@@ -19,7 +18,6 @@ router.post('/user', async (req, res) => {
             email: req.body.email
         }
     });
-    console.log('user', user);
 
     if (user) {
         // if user does exist, throw error
@@ -38,6 +36,7 @@ router.post('/user', async (req, res) => {
             if (newUser) {
                 // Successful registeration
                 console.log('registered user succesfully!')
+                console.log(newUser);
                 // set a cookie
                 req.session.user = {};
                 req.session.user.email = newUser.email;

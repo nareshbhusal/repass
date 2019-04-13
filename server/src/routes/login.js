@@ -46,10 +46,11 @@ router.post('', async (req, res) => {
                 req.session.sessionID = req.sessionID;
                 req.session.user.username = user.username;
                 // res.redirect('/');
+                res.send(req.session);
             }
             
         } else {
-            res.status(400).send('In `then`\nuser NOT found');
+            res.status(404).send('In `then`\nuser NOT found');
         }
     } catch(err) {
         console.log(err);

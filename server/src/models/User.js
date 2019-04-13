@@ -5,6 +5,9 @@ const user = db.define('user', {
     username: {
         type: Sequelize.STRING
     },
+    password: {
+        type: Sequelize.STRING
+    },
     listings: {
         type: Sequelize.INTEGER
     },
