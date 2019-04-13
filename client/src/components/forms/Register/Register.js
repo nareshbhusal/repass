@@ -13,7 +13,7 @@ class Register extends React.Component{
         e.preventDefault();
         try{
             const res = await axios.post("http://localhost:5000/create/user", {
-                name: this.state.username,
+                username: this.state.username,
                 email: this.state.email,
                 password: this.state.password
             });
