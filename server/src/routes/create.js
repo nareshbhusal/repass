@@ -38,10 +38,9 @@ router.post('/user', async (req, res) => {
                 console.log('registered user succesfully!')
                 console.log(newUser);
                 // set a cookie
-                req.session.user = {};
-                req.session.user.email = newUser.email;
-                req.session.user.id = newUser.id;
-                req.session.user.username = newUser.username;
+                req.session.user = {
+                    username: newUser.username
+                };
                 req.session.sessionID = req.sessionID;
                 // res.status(201).redirect('/');
                 res.send(req.session);
