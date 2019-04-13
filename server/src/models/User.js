@@ -27,7 +27,7 @@ const user = db.define('user', {
         type: Sequelize.JSON
     },
     session_ids: {
-        type: Sequelize.ARRAY(Sequelize.STRING)
+        type: Sequelize.STRING
     }
 })
 module.exports = user;

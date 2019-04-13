@@ -24,9 +24,10 @@ router.post('', async (req, res) => {
                 res.send('Password doesn\'t match');
             } else {
                 // if password matches
-                console.log(user);
-                console.log('session_ids', user.session_ids);
-                let session_ids = user.session_ids.split(',');
+                console.log(req.sessionID);
+                let session_ids = user.session_ids || [];
+                console.log('session_ids', session_ids);
+                session_ids = session_ids.split(',');
                 
                 session_ids.push(req.sessionID);
                 
