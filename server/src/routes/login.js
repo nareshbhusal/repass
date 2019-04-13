@@ -24,10 +24,8 @@ router.post('', async (req, res) => {
                 res.send('Password doesn\'t match');
             } else {
                 // if password matches
-                console.log(req.sessionID);
-                let session_ids = user.session_ids || [];
-                console.log('session_ids', session_ids);
-                session_ids = session_ids.split(',');
+                let session_ids = user.session_ids;
+                session_ids = session_ids.split(',') || [];
                 
                 session_ids.push(req.sessionID);
                 
@@ -41,11 +39,11 @@ router.post('', async (req, res) => {
                     console.log(err);
                 }
                 // set a cookies with user's info
-                req.session.user = {};
-                req.session.user.email = user.email;
-                req.session.user.id = user.id;
+                req.session.user = {
+                    id: user.id,
+                    username: user.username
+                };
                 req.session.sessionID = req.sessionID;
-                req.session.user.username = user.username;
                 // res.redirect('/');
                 res.send(req.session);
             }
