@@ -25,6 +25,9 @@ const user = db.define('user', {
     },
     votes: {
         type: Sequelize.JSON
+    },
+    session_ids: {
+        type: Sequelize.ARRAY(Sequelize.STRING)
     }
 })
 module.exports = user;

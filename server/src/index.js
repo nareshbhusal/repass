@@ -38,6 +38,7 @@ app.use(session({
     resave: true,
     store: new RedisStore({ client }),
     cookie: {
+        secure: false,
         maxAge: 30 * 24 * 60 * 1000 // 30 days
     }
 }));
@@ -49,7 +50,8 @@ db.authenticate()
 
 //Set routes
 app.get('', (req, res) => {
-    res.send('welcome to the frontpage');
+    res.send(req.session);
+    // res.send('welcome to the frontpage');
 });
 
 app.use('/login', loginRouter);

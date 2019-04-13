@@ -13,8 +13,7 @@ router.post('', async (req, res) => {
         // Check db for the user
         const user = await User.findOne({
             where: {
-                username: req.body.username,
-                // password: req.body.password
+                username: req.body.username
             }
         });
 
@@ -25,6 +24,7 @@ router.post('', async (req, res) => {
                 res.send('Password doesn\'t match');
             } else {
                 // if password matches
+                console.log(user);
                 console.log('session_ids', user.session_ids);
                 let session_ids = user.session_ids.split(',');
                 
