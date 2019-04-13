@@ -1,15 +1,16 @@
 const express = require('express');
 const db = require('./config/database');
+const loginRouter = require('./routes/login');
 const userRouter = require('./routes/user');
 const subRouter = require('./routes/sub');
 const commentsRouter = require('./routes/comments');
 const createRouter = require('./routes/create');
 const corsMiddleware = require('./middlewares/cors');
+const cors = require('cors');
 // Session and cookiesparser
 const session = require('express-session');
 const redis = require('redis');
 const RedisStore = require('connect-redis')(session);
-
 const app = express();
 const uuid = require('uuid');
 
@@ -22,7 +23,10 @@ client.on('connect', () => {
 // Configure middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(corsMiddleware) // cors middleware
+
+// cors middleware
+// app.use(corsMiddleware);
+app.use(cors({ credentials: true, origin: true }));
 
 // express cookies
 app.use(session({
@@ -48,14 +52,11 @@ app.get('', (req, res) => {
     res.send('welcome to the frontpage');
 });
 
-app.post('/login', (req, res) => {
-    console.log(req.body);
-    res.send(req.body);
-});
+app.use('/login', loginRouter);
 
 app.post('/logout', (req, res) => {
     // res.send('Logout');
-    res.send(req.session)
+    res.send(req.body);
 })
 
 app.use('/r', subRouter);

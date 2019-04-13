@@ -11,6 +11,7 @@ class Login extends React.Component{
 
     onSubmit = async(e) => {
         e.preventDefault();
+        // const cors = 'https://cors-anywhere.herokuapp.com/';
         try{
             const res = await axios.post("http://localhost:5000/login", {
                 username: this.state.username,
