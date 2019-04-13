@@ -21,7 +21,15 @@ class Sub extends React.Component{
         await this.fetchPosts();
     }
     fetchPosts = async () => {
-        const sub = this.props.match.params.sub.toString().toLowerCase();
+        let sub;
+        // determine sub
+        if (this.props.match.params.sub) {
+            sub = this.props.match.params.sub.toString().toLowerCase();
+        } else {
+            sub = 'all';
+        }
+        console.log(sub);
+        
         this.setState({ sub });
         try{
             const res = await axios.get(`http://localhost:5000/r/${sub}`);

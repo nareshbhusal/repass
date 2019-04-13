@@ -33,8 +33,8 @@ class Register extends React.Component{
         return (
             <form onSubmit={(e)=> this.onSubmit(e)} className={styles.register}>
                 <input value={this.state.username}  onChange={this.onChange} required placeholder="username" name="username" type="text" />
-                <input value={this.state.email} onChange={this.onChange} required placeholder="email address" name="email" type="text" />
-                <input value={this.state.password} onChange={this.onChange} required placeholder="password" name="password" type="text" />
+                <input value={this.state.email} onChange={this.onChange} required placeholder="email address" name="email" type="email" />
+                <input value={this.state.password} onChange={this.onChange} required placeholder="password" name="password" type="password" />
                 <input type="submit" value="Register" />
                 <p className={styles.message}>
                     Already registered? <Link className={styles.inlineBtn} to="/login">Sign in</Link>
