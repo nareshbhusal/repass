@@ -1,10 +1,10 @@
 import React from 'react';
 import styles from './Sub.module.css';
 import Header from '../Header/Header';
-import Posts from '../Posts/Posts';
 import SubDetails from './SubDetails/SubDetails';
 import SubShowcase from './SubShowcase/SubShowcase';
 import Sort from '../Sort/Sort';
+import Post from '../Post/Post';
 import { changeTheme, userLogin } from '../../actions';
 import { connect } from 'react-redux';
 import axios from 'axios';
@@ -46,6 +46,23 @@ class Sub extends React.Component{
             console.log(err);
         }
     }
+
+    renderPosts = () => {
+        if (this.state.posts.length) {
+            return this.state.posts.map(post => {
+                console.log(post);
+                return (
+                    <Post key={post.id} data={post}/>
+                );
+            });
+        } else {
+            return (
+                <p>
+                    Wow such empty!
+                </p>
+            );
+        }
+    }
     
     render(){
         const {auth, changeTheme} = this.props;
@@ -56,7 +73,9 @@ class Sub extends React.Component{
                 <SubShowcase sub={this.state.sub}/>
                 <Sort />
                 <div className={styles.main}>
-                    <Posts posts={this.state.posts}/>
+                    <div className={styles.posts}>
+                        {this.renderPosts()}
+                    </div>
                     <SubDetails />
                 </div>
             </div>
