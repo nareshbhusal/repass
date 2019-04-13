@@ -3,11 +3,10 @@ const router = express.Router();
 const User = require('../models/User');
 
 router.post('', async (req, res) => {
-    
-    console.log(req.body);
+    console.log(req.session);
     if (req.session.user) {
         // if session exists
-        return res.send('You\'re already logged in. <a href="/">Go Home</a>')
+        return res.send('You\'re already logged in.')
     }
     try{
         // Check db for the user
@@ -39,10 +38,8 @@ router.post('', async (req, res) => {
                     console.log(err);
                 }
                 // set a cookies with user's info
-                req.session.user = {
-                    id: user.id,
-                    username: user.username
-                };
+                req.session.user = {};
+                req.session.user.username = user.username;
                 req.session.sessionID = req.sessionID;
                 // res.redirect('/');
                 res.send(req.session);

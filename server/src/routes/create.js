@@ -3,6 +3,7 @@ const router = express.Router();
 const User = require('../models/User');
 
 router.post('/user', async (req, res) => {
+    console.log(req.session.sessionID);
     // Validate data
     const { username, email, password } = req.body || {};
     let errors = [];
@@ -20,7 +21,7 @@ router.post('/user', async (req, res) => {
     });
 
     if (user) {
-        // if user does exist, throw error
+        // if user does already exist, throw error
         res.status(502).send('Email is aready in use or username taken!')
     } else {
         // if new email and username then register along with session id
@@ -38,9 +39,8 @@ router.post('/user', async (req, res) => {
                 console.log('registered user succesfully!')
                 console.log(newUser);
                 // set a cookie
-                req.session.user = {
-                    username: newUser.username
-                };
+                req.session.user = {};
+                req.session.user.username = newUser.username;
                 req.session.sessionID = req.sessionID;
                 // res.status(201).redirect('/');
                 res.send(req.session);

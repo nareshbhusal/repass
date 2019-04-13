@@ -1,6 +1,7 @@
 const express = require('express');
 const db = require('./config/database');
 const loginRouter = require('./routes/login');
+const logoutRouter = require('./routes/logout');
 const userRouter = require('./routes/user');
 const subRouter = require('./routes/sub');
 const commentsRouter = require('./routes/comments');
@@ -11,6 +12,7 @@ const cors = require('cors');
 const session = require('express-session');
 const redis = require('redis');
 const RedisStore = require('connect-redis')(session);
+
 const app = express();
 const uuid = require('uuid');
 
@@ -56,10 +58,7 @@ app.get('', (req, res) => {
 
 app.use('/login', loginRouter);
 
-app.post('/logout', (req, res) => {
-    // res.send('Logout');
-    res.send(req.body);
-})
+app.use('/logout', logoutRouter);
 
 app.use('/r', subRouter);
 app.use('/u', userRouter);

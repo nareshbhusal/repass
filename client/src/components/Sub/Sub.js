@@ -8,6 +8,7 @@ import Sort from '../Sort/Sort';
 import { changeTheme } from '../../actions';
 import { connect } from 'react-redux';
 import axios from 'axios';
+axios.defaults.withCredentials = true
 
 class Sub extends React.Component{
 

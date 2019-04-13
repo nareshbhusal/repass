@@ -2,6 +2,7 @@ import React from 'react';
 import styles from './Register.module.css';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+axios.defaults.withCredentials = true
 
 class Register extends React.Component{
     state = {
