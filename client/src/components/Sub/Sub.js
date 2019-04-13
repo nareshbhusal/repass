@@ -16,24 +16,13 @@ class Sub extends React.Component{
         sub: '',
         posts:''
     }
-    componentDidUpdate = () => {
-        console.log(this.props);
-    }
+
     componentDidMount = async () => {
-        this.determineSub();
-        await this.determineAuth();
+        await this.determineSub();
         await this.fetchPosts();
     }
-    determineAuth = async () => {
-        try {
-            const user = await axios.get('localhost:5000/user');
-            console.log(user);
-        } catch(err) {
-            console.log(err);
-        }
-        
-    }
-    determineSub = () => {
+
+    determineSub = async () => {
         let sub;
         // determine sub
         if (this.props.match.params.sub) {
@@ -41,17 +30,18 @@ class Sub extends React.Component{
         } else {
             sub = 'all';
         }
-        this.setState({ sub });
+        await this.setState({ sub: sub });
     }
     fetchPosts = async () => {
         // if state has other posts
         const numPosts = this.state.posts.length;
-        
         try{
             const res = await axios.get(`http://localhost:5000/r/${this.state.sub}`, {
                 from: numPosts
             });
-            console.log(res.data);
+            const posts = res.data.posts;
+            this.setState({ posts });
+
         } catch(err) {
             console.log(err);
         }
@@ -62,11 +52,11 @@ class Sub extends React.Component{
         const theme = this.props.theme.theme;
         return (
             <div className={styles.sub}>
-                <Header auth={auth} changeTheme={changeTheme} theme={this.props.theme.theme} sub={this.state.sub} />
+                <Header auth={auth} changeTheme={changeTheme} theme={theme} sub={this.state.sub} />
                 <SubShowcase sub={this.state.sub}/>
                 <Sort />
                 <div className={styles.main}>
-                    <Posts />
+                    <Posts posts={this.state.posts}/>
                     <SubDetails />
                 </div>
             </div>
