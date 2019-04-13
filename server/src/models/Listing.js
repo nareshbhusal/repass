@@ -5,6 +5,10 @@ const listing = db.define('listing', {
     user: {
         type: Sequelize.STRING
     },
+    id: {
+        type: Sequelize.INTEGER,
+        primaryKey: true
+    },
     body: {
         type: Sequelize.STRING
     },

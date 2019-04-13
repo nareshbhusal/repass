@@ -7,14 +7,9 @@ export const changeTheme = () => {
     }
 }
 
-export const userLogin = () => async dispatch => {
-    try {
-        const res = await axios.get(`http://localhost:5000/login`);
-        dispatch({
-            type: LOGIN,
-            payload: res.data
-        });
-    } catch {
-        console.log(err);
-    }
+export const userLogin = (user) => {
+    return {
+        type: LOGIN,
+        payload: user
+    };
 }

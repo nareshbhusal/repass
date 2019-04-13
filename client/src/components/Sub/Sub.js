@@ -5,7 +5,7 @@ import Posts from '../Posts/Posts';
 import SubDetails from './SubDetails/SubDetails';
 import SubShowcase from './SubShowcase/SubShowcase';
 import Sort from '../Sort/Sort';
-import { changeTheme } from '../../actions';
+import { changeTheme, userLogin } from '../../actions';
 import { connect } from 'react-redux';
 import axios from 'axios';
 axios.defaults.withCredentials = true
@@ -13,15 +13,27 @@ axios.defaults.withCredentials = true
 class Sub extends React.Component{
 
     state = {
-        sub:''
+        sub: '',
+        posts:''
     }
     componentDidUpdate = () => {
         console.log(this.props);
     }
     componentDidMount = async () => {
+        this.determineSub();
+        await this.determineAuth();
         await this.fetchPosts();
     }
-    fetchPosts = async () => {
+    determineAuth = async () => {
+        try {
+            const user = await axios.get('localhost:5000/user');
+            console.log(user);
+        } catch(err) {
+            console.log(err);
+        }
+        
+    }
+    determineSub = () => {
         let sub;
         // determine sub
         if (this.props.match.params.sub) {
@@ -29,11 +41,16 @@ class Sub extends React.Component{
         } else {
             sub = 'all';
         }
-        console.log(sub);
-        
         this.setState({ sub });
+    }
+    fetchPosts = async () => {
+        // if state has other posts
+        const numPosts = this.state.posts.length;
+        
         try{
-            const res = await axios.get(`http://localhost:5000/r/${sub}`);
+            const res = await axios.get(`http://localhost:5000/r/${this.state.sub}`, {
+                from: numPosts
+            });
             console.log(res.data);
         } catch(err) {
             console.log(err);
@@ -61,4 +78,4 @@ const mapStateToProps = (state) => {
     return state;
 }
 
-export default connect(mapStateToProps, { changeTheme })(Sub);
+export default connect(mapStateToProps, { changeTheme, userLogin})(Sub);

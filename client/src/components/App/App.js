@@ -20,7 +20,7 @@ class App extends React.Component{
                     <Route exact path="/r/:sub/:postId/comments" component={PostPage} />
                 </Router>
             </div>
-        )
+        );
     }
 }
 

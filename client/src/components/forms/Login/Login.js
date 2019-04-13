@@ -3,6 +3,8 @@ import styles from './Login.module.css';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 axios.defaults.withCredentials = true
+import { userLogin } from '../../../actions/index' ;
+import { connect } from 'react-redux';
 
 class Login extends React.Component{
     state = {
@@ -19,6 +21,12 @@ class Login extends React.Component{
                 password: this.state.password
             });
             console.log(res);
+            const user = {
+                username: this.state.username,
+                password: this.state.password
+            }
+            this.props.userLogin(user);
+            
         } catch(err) {
             console.log(err);
         }
@@ -44,4 +52,8 @@ class Login extends React.Component{
     }
 }
 
-export default Login;
+const mapStateToProps = (state) => {
+    return state;
+}
+
+export default connect(mapStateToProps, { userLogin })(Login);

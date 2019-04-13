@@ -8,6 +8,7 @@ const defaultState = {
 const authReducer = (state=defaultState, action) => {
     switch(action.type) {
         case LOGIN:
+            
             return { ...state, loggedIn: true, user: action.payload }
             
         case LOGOUT:
