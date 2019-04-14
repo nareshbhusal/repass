@@ -5,7 +5,7 @@ import SubDetails from './SubDetails/SubDetails';
 import SubShowcase from './SubShowcase/SubShowcase';
 import Sort from '../Sort/Sort';
 import Post from '../Post/Post';
-import { changeTheme, userLogin, userLogout,  } from '../../actions';
+import { changeTheme, userLogin, userLogout } from '../../actions';
 import { connect } from 'react-redux';
 import axios from 'axios';
 axios.defaults.withCredentials = true
@@ -25,9 +25,7 @@ class Sub extends React.Component{
 
     logout = async () => {
         try {
-            const res = await axios.post('http://localhost:5000/logout');
-            console.log(res);
-            
+            await axios.post('http://localhost:5000/logout');            
             this.props.userLogout();
             this.setState({ user: null });
         } catch(err) {
@@ -63,6 +61,15 @@ class Sub extends React.Component{
         }
     }
 
+    fetchSubs = async () => {
+        try {
+            const res = await axios.get('http://localhost:5000/subs');
+            console.log(res);
+        } catch(err) {
+            console.log(err);
+        }
+    }
+
     renderPosts = () => {
         if (this.state.posts.length) {
             return this.state.posts.map(post => {
@@ -78,6 +85,20 @@ class Sub extends React.Component{
             );
         }
     }
+
+    renderSidebar = () => {
+        return (
+            <div className={styles.sidebar}>
+                <SubDetails />
+                <ul className={styles.subs}>
+                    <h1>Subs:</h1>
+                    <li>Anime</li>
+                    <li>Hentai</li>
+                    <li>Tech</li>
+                </ul>
+            </div>
+        );
+    }
     
     render(){
         const { changeTheme } = this.props;
@@ -92,7 +113,7 @@ class Sub extends React.Component{
                     <div className={styles.posts}>
                         {this.renderPosts()}
                     </div>
-                    <SubDetails />
+                    {this.renderSidebar()}
                 </div>
             </div>
         );
@@ -103,4 +124,4 @@ const mapStateToProps = (state) => {
     return state;
 }
 
-export default connect(mapStateToProps, { changeTheme, userLogin, userLogout})(Sub);
+export default connect(mapStateToProps, { changeTheme, userLogin, userLogout })(Sub);

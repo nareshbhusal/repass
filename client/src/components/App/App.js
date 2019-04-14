@@ -5,7 +5,7 @@ import Register from '../forms/Register/Register';
 import Login from '../forms/Login/Login';
 import Sub from '../Sub/Sub';
 import PostPage from '../PostPage/PostPage';
-import Header from '../Header/Header';
+import SubForm from '../forms/SubForm/SubForm';
 import './App.css';
 
 class App extends React.Component{
@@ -18,6 +18,7 @@ class App extends React.Component{
                     <Route exact path="/login" component={Login} />
                     <Route exact path="/r/:sub" component={Sub} />
                     <Route exact path="/r/:sub/:postId/comments" component={PostPage} />
+                    <Route exact path="/create/sub" component={SubForm} />
                 </Router>
             </div>
         );

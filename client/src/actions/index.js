@@ -1,4 +1,5 @@
 import { CHANGE_THEME, LOGIN, LOGOUT } from './types';
+import history from '../history';
 
 export const changeTheme = () => {
     return {
