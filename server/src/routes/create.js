@@ -3,26 +3,25 @@ const router = express.Router();
 const User = require('../models/User');
 
 router.post('/user', async (req, res) => {
-    console.log(req.session.sessionID);
     // Validate data
     const { username, email, password } = req.body || {};
     let errors = [];
     if (!username || !email || !password) {
-        errors.push({msg: 'Please fill in all fields'});
+        errors.push({err: 'Please fill in all fields'});
     }
     if (errors.length) {
-        return res.status(666).send(errors);
+        return res.send(errors);
     }
     const user =  await User.findOne({
         where: {
             username: req.body.username,
-            email: req.body.email
         }
     });
 
     if (user) {
         // if user does already exist, throw error
-        res.status(502).send('Email is aready in use or username taken!')
+        errors.push({ err: 'Email is aready in use or username taken!' })
+        res.send(errors);
     } else {
         // if new email and username then register along with session id
         const { username, email, password } = req.body;

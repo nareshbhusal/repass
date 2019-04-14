@@ -49,7 +49,7 @@ class Header extends React.Component{
         }
     }
     render() {
-        console.log(this.props)
+        // console.log(this.props)
         return (
             <div className={styles.header}>
                 <div className={styles.left}>

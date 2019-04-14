@@ -5,7 +5,7 @@ import SubDetails from './SubDetails/SubDetails';
 import SubShowcase from './SubShowcase/SubShowcase';
 import Sort from '../Sort/Sort';
 import Post from '../Post/Post';
-import { changeTheme, userLogin } from '../../actions';
+import { changeTheme, userLogin, userLogout,  } from '../../actions';
 import { connect } from 'react-redux';
 import axios from 'axios';
 axios.defaults.withCredentials = true
@@ -15,7 +15,6 @@ class Sub extends React.Component{
     state = {
         sub: '',
         posts:'',
-        user: null
     }
 
     componentDidMount = async () => {
@@ -31,7 +30,6 @@ class Sub extends React.Component{
         } catch(err) {
             console.log(err);
         }
-        
     }
 
     determineSub = async () => {
@@ -53,7 +51,9 @@ class Sub extends React.Component{
             });
             const posts = res.data.posts;
             const user = res.data.user;
-            this.setState({ posts, user });
+            this.setState({ posts });
+            this.props.userLogin({ user });
+            console.log(this.props);
 
         } catch(err) {
             console.log(err);
@@ -78,11 +78,12 @@ class Sub extends React.Component{
     
     render(){
         console.log(this.state);
-        const {auth, changeTheme} = this.props;
+        const { changeTheme } = this.props;
         const theme = this.props.theme.theme;
+        const user = this.props.user.user;
         return (
             <div className={styles.sub}>
-                <Header logoutHandler = {this.logout} user={this.state.user} changeTheme={changeTheme} theme={theme} sub={this.state.sub} />
+                <Header logoutHandler = {this.logout} user={user} changeTheme={changeTheme} theme={theme} sub={this.state.sub} />
                 <SubShowcase sub={this.state.sub}/>
                 <Sort />
                 <div className={styles.main}>
@@ -100,4 +101,4 @@ const mapStateToProps = (state) => {
     return state;
 }
 
-export default connect(mapStateToProps, { changeTheme})(Sub);
+export default connect(mapStateToProps, { changeTheme, userLogin})(Sub);

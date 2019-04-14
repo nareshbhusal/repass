@@ -4,5 +4,5 @@ import authReducer from './authReducer';
 
 export default combineReducers({
     theme: themeReducer,
-    auth: authReducer
+    user: authReducer
 })
