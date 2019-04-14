@@ -20,12 +20,15 @@ class Sub extends React.Component{
     componentDidMount = async () => {
         await this.determineSub();
         await this.fetchPosts();
+        console.log(this.props);
     }
 
     logout = async () => {
         try {
             const res = await axios.post('http://localhost:5000/logout');
             console.log(res);
+            
+            this.props.userLogout();
             this.setState({ user: null });
         } catch(err) {
             console.log(err);
@@ -77,7 +80,6 @@ class Sub extends React.Component{
     }
     
     render(){
-        console.log(this.state);
         const { changeTheme } = this.props;
         const theme = this.props.theme.theme;
         const user = this.props.user.user;
@@ -101,4 +103,4 @@ const mapStateToProps = (state) => {
     return state;
 }
 
-export default connect(mapStateToProps, { changeTheme, userLogin})(Sub);
+export default connect(mapStateToProps, { changeTheme, userLogin, userLogout})(Sub);

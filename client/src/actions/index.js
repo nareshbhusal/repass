@@ -1,4 +1,4 @@
-import { CHANGE_THEME, LOGIN } from './types';
+import { CHANGE_THEME, LOGIN, LOGOUT } from './types';
 
 export const changeTheme = () => {
     return {
@@ -11,4 +11,10 @@ export const userLogin = (user) => {
         type: LOGIN,
         payload: user
     };
+}
+
+export const userLogout = () => {
+    return {
+        type: LOGOUT
+    }
 }
