@@ -95,3 +95,8 @@
     outline: 1px solid #ccc;
     outline-style: dashed;
 }
+
+button{
+    cursor: pointer;
+    outline: none;
+}

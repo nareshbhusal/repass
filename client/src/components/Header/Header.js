@@ -19,8 +19,9 @@ class Header extends React.Component{
             </button>
         );
     }
+
     renderSignInBtns = () => {
-        if (!this.props.auth.loggedIn) {
+        if (!this.props.user) {
             return (
                 <div className={styles.signInBtns}>
                     <Link className={`${styles.btn} ${styles.btnLogin}`} to="/login">
@@ -33,15 +34,16 @@ class Header extends React.Component{
             );
             
         } else {
+            const username = this.props.user;
             return (
                 <div className={styles.userCtrl}>
-                    <Link className={styles.user}>
+                    <Link to={`u/${username}`} className={styles.user}>
                         <i className="fa fa-user"></i>
-                        username
+                        {username}
                     </Link>
-                    <Link className={`${styles.btn} ${styles.btnLogout}`} to="/login">
+                    <button className={`${styles.btn} ${styles.btnLogout}`} onClick={this.props.logoutHandler}>
                         <i className="fa fa-sign-out"></i>Logout
-                    </Link>
+                    </button>
                 </div>
             );
         }

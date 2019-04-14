@@ -14,12 +14,24 @@ class Sub extends React.Component{
 
     state = {
         sub: '',
-        posts:''
+        posts:'',
+        user: null
     }
 
     componentDidMount = async () => {
         await this.determineSub();
         await this.fetchPosts();
+    }
+
+    logout = async () => {
+        try {
+            const res = await axios.post('http://localhost:5000/logout');
+            console.log(res);
+            this.setState({ user: null });
+        } catch(err) {
+            console.log(err);
+        }
+        
     }
 
     determineSub = async () => {
@@ -40,7 +52,8 @@ class Sub extends React.Component{
                 from: numPosts
             });
             const posts = res.data.posts;
-            this.setState({ posts });
+            const user = res.data.user;
+            this.setState({ posts, user });
 
         } catch(err) {
             console.log(err);
@@ -50,26 +63,26 @@ class Sub extends React.Component{
     renderPosts = () => {
         if (this.state.posts.length) {
             return this.state.posts.map(post => {
-                console.log(post);
                 return (
                     <Post key={post.id} data={post}/>
                 );
             });
         } else {
             return (
-                <p>
+                <div>
                     Wow such empty!
-                </p>
+                </div>
             );
         }
     }
     
     render(){
+        console.log(this.state);
         const {auth, changeTheme} = this.props;
         const theme = this.props.theme.theme;
         return (
             <div className={styles.sub}>
-                <Header auth={auth} changeTheme={changeTheme} theme={theme} sub={this.state.sub} />
+                <Header logoutHandler = {this.logout} user={this.state.user} changeTheme={changeTheme} theme={theme} sub={this.state.sub} />
                 <SubShowcase sub={this.state.sub}/>
                 <Sort />
                 <div className={styles.main}>
@@ -87,4 +100,4 @@ const mapStateToProps = (state) => {
     return state;
 }
 
-export default connect(mapStateToProps, { changeTheme, userLogin})(Sub);
+export default connect(mapStateToProps, { changeTheme})(Sub);

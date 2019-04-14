@@ -36,10 +36,21 @@ router.get('/:sub', async (req, res) => {
             vote: null
         }
     ];
-    const user = {
-        username: req.session.user
+    let data;
+    if (req.session.user) {
+        const username = req.session.user.username || null;
+        // console.log(username);
+        data = {
+            user: username,
+            posts
+        }
+    } else {
+        data = {
+            posts,
+            user: null
+        }
     }
-    const data = {user, posts}
+    
     res.send(data);
 })
 

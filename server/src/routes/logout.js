@@ -4,18 +4,19 @@ const User = require('../models/User');
 
 // Log Out
 router.post('', async (req,res) => {
+    console.log(req.session.sessionID);
     // Clear session_id from the database
     if (req.session.user) {
         try{
             const user = await User.findOne({
                 where: {
-                    username: req.session.username
+                    username: req.session.user.username
                 }
             });
             if (user) {
                 let session_ids = user.session_ids;
                 session_ids = session_ids.split(',').filter(session_id => {
-                    return session_id !== req.sessionID
+                    return session_id !== req.session.sessionID
                 }).toString();
 
                 user.update({
@@ -25,7 +26,7 @@ router.post('', async (req,res) => {
                     if(err) {
                         return console.log(err);
                     }
-                    res.redirect('/');
+                    res.send('logged out');
                 });
             } else {
                 console.log(err);
@@ -35,7 +36,7 @@ router.post('', async (req,res) => {
             res.status(500).send('something went wrong while trying to log out!')
         }
     } else {
-        res.status(400).send('You\'re aready logged out');
+        res.send('You\'re aready logged out');
     }
 });
 

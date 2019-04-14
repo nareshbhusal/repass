@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './Thread.module.css';
-import Post from '../Posts/Post/Post';
+import Post from '../Post/Post';
 import Input from '../Input/Input';
 import Comment from '../Comment/Comment';
 
