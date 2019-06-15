@@ -5,9 +5,8 @@ const listing = db.define('listing', {
     user: {
         type: Sequelize.STRING
     },
-    id: {
-        type: Sequelize.INTEGER,
-        primaryKey: true
+    sub: {
+        type: Sequelize.STRING
     },
     body: {
         type: Sequelize.STRING
@@ -43,7 +42,7 @@ const listing = db.define('listing', {
         type: Sequelize.BOOLEAN
     },
     createdAt: {
-        type: Sequelize.DATE
+        type: Sequelize.STRING
     },
     updatedAt: {
         type: Sequelize.STRING

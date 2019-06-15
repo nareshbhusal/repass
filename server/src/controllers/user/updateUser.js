@@ -9,7 +9,7 @@ const updateUser = async (username, dataToUpdate) => {
                 username
             }
         }
-    )
+    );
 }
 
 module.exports = updateUser;

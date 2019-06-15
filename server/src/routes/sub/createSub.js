@@ -1,7 +1,6 @@
 const Sub = require('../../models/Sub');
-const User = require('../../models/User');
-const updateUser = require('../../controllers/user/updateUser');
 const addModerator = require('../../controllers/sub/addModerator');
+
 const createSub = async(req, res) => {
     try{
         const errors = [];
@@ -15,8 +14,8 @@ const createSub = async(req, res) => {
         });
         if (subInRecords) {
             // sub already exists
-            // errors.push({ err: 'Sub already exists' });
-            // return res.send(errors);
+            errors.push({ err: 'Sub already exists' });
+            return res.send(errors);
         }
         const sub = {
             name,
@@ -24,7 +23,7 @@ const createSub = async(req, res) => {
             mods: [ username ],
             createdAt: new Date().getTime().toString()
         }
-        // await Sub.create(sub);
+        await Sub.create(sub);
 
         await addModerator(sub.name, username);
         return res.send({ msg: 'Sub created' });
