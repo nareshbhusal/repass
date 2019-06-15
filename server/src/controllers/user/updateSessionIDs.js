@@ -1,4 +1,5 @@
-const User = require('../models/User');
+
+const updateUser = require('./updateUser');
 
 const updateSessionIDs = async (req, user) => {
 
@@ -14,14 +15,7 @@ const updateSessionIDs = async (req, user) => {
     }
     session_ids = session_ids.toString();
     
-    await User.update(
-        { session_ids },
-        {
-            where: {
-                username: user.username
-        }
-    }
-    );
+    await updateUser(user.username, { session_ids });
 }
 
 module.exports = updateSessionIDs;

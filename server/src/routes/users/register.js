@@ -1,4 +1,5 @@
 const User = require('../../models/User');
+const updateSessionIDs = require('../../controllers/user/updateSessionIDs');
 
 const registerUser = async(req, res) => {
     // const { username, email, password } = req.body;
@@ -21,14 +22,13 @@ const registerUser = async(req, res) => {
         return res.send(errors);
     }
 
-    const sessionID=  req.sessionID;
-    console.log(sessionID);
     // create the user
     const user = await User.create({
         username,
         password,
         email
     });
+    await updateSessionIDs();
 
     // 
 
