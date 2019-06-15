@@ -35,6 +35,9 @@ const user = db.define('user', {
     votes: {
         type: Sequelize.JSON
     },
+    moderator: {
+        type: Sequelize.ARRAY(Sequelize.STRING)
+    },
     session_ids: {
         type: Sequelize.STRING
     }

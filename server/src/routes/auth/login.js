@@ -18,7 +18,10 @@ const login = async(req, res) => {
                 password
             }
         });
-
+        if (!user) {
+            errors.push({ err: 'Wrong username or password' });
+            return res.send(errors);
+        }
         await updateSessionIDs(req, user);
         addCookie(req, user);
         return res.send(user);

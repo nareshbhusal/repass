@@ -7,13 +7,17 @@ const getSub = async(req, res) => {
     batchNum = batchNum || 0;
     postsNum = postsNum || 20;
 
-    const sub = await Sub.findOne({
-        where: {
-            name: req.params.sub
-        }
-    });
-
-    res.send(sub);
+    try {
+        const sub = await Sub.findOne({
+            where: {
+                name: req.params.sub
+            }
+        });
+    
+        return res.send(sub);
+    } catch (err) {
+        console.log(':(');
+    }
 }
 
 module.exports = getSub;

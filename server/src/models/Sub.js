@@ -21,7 +21,7 @@ const sub = db.define('sub', {
         type: Sequelize.STRING
     },
     createdAt : {
-        type: Sequelize.DATE
+        type: Sequelize.STRING
     },
     rules: {
         type: Sequelize.JSON
