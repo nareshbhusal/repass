@@ -12,19 +12,25 @@ const user = db.define('user', {
         type: Sequelize.STRING
     },
     listings: {
-        type: Sequelize.INTEGER
+        type: Sequelize.ARRAY(Sequelize.INTEGER)
     },
     subs: {
-        type: Sequelize.JSON
+        type: Sequelize.ARRAY(Sequelize.INTEGER)
     },
     email: {
         type: Sequelize.STRING
     },
-    followersCount: {
-        type: Sequelize.INTEGER
+    followers: {
+        type: Sequelize.ARRAY(Sequelize.INTEGER)
+    },
+    following: {
+        type: Sequelize.ARRAY(Sequelize.INTEGER)
+    },
+    saved: {
+        type: Sequelize.ARRAY(Sequelize.INTEGER)
     },
     createdAt : {
-        type: Sequelize.DATE
+        type: Sequelize.STRING
     },
     votes: {
         type: Sequelize.JSON
@@ -33,6 +39,7 @@ const user = db.define('user', {
         type: Sequelize.STRING
     }
 })
+
 module.exports = user;
 
 

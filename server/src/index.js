@@ -47,7 +47,7 @@ db.authenticate()
 
 //Set routes
 app.get('', (req, res) => {
-    res.send('welcome to the frontpage');
+    res.send(req.session);
 });
 
 app.use(routes);
