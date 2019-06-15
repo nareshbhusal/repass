@@ -20,12 +20,17 @@ const registerUser = async(req, res) => {
         errors.push({ err: 'Username taken!' })
         return res.send(errors);
     }
+
+    const sessionID=  req.sessionID;
+    console.log(sessionID);
     // create the user
     const user = await User.create({
         username,
         password,
         email
     });
+
+    // 
 
     return res.send(user);
 }
