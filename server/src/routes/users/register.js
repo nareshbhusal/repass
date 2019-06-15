@@ -24,11 +24,13 @@ const registerUser = async(req, res) => {
         }
 
         // create the user
-        const newUser = await User.create({
+        const user = {
             username,
             password,
-            email
-        });
+            email,
+            createdAt: new Date().getTime().toString()
+        }
+        const newUser = await User.create(user);
         await updateSessionIDs(req, newUser);
         addCookie(req, newUser);
         return res.send({msg: 'Registered user'});
