@@ -1,13 +1,7 @@
 const express = require('express');
 const db = require('./config/database');
-const loginRouter = require('./routes/login');
-const logoutRouter = require('./routes/logout');
-const userRouter = require('./routes/user');
-const subRouter = require('./routes/sub');
-const commentsRouter = require('./routes/comments');
-const createRouter = require('./routes/create');
 const corsMiddleware = require('./middlewares/cors');
-const cors = require('cors');
+// const cors = require('cors');
 // Session and cookiesparser
 const session = require('express-session');
 const redis = require('redis');
@@ -15,6 +9,7 @@ const RedisStore = require('connect-redis')(session);
 
 const app = express();
 const uuid = require('uuid');
+const routes = require('./routes/index');
 
 // Create redis client
 let client = redis.createClient();
@@ -27,8 +22,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // cors middleware
-// app.use(corsMiddleware);
-app.use(cors({ credentials: true, origin: true }));
+app.use(corsMiddleware);
+// app.use(cors({ credentials: true, origin: true }));
 
 // express cookies
 app.use(session({
@@ -52,17 +47,9 @@ db.authenticate()
 
 //Set routes
 app.get('', (req, res) => {
-    res.send(req.session);
-    // res.send('welcome to the frontpage');
+    res.send('welcome to the frontpage');
 });
 
-app.use('/login', loginRouter);
-
-app.use('/logout', logoutRouter);
-
-app.use('/r', subRouter);
-app.use('/u', userRouter);
-app.use('/r/:sub/:postId/comments', commentsRouter);
-app.use('/create', createRouter);
+app.use(routes);
 
 module.exports = app;
