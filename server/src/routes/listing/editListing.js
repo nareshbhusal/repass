@@ -5,16 +5,21 @@ const editListing =async(req, res) => {
     try {
         // const updatedListing = req.body;
         const updatedListing = req.query;
+        updatedListing.updatedAt = new Date().getTime().toString();
         const listingId = req.params.id;
-        await updateListing(listingId,  updatedListing);
+        const username = req.session.user.username;
+
         const listingInRecords = await Listing.findOne({
             where: {
-                id: listingId
+                id: listingId,
+                user: username
             }
         });
         if (!listingInRecords) {
             res.send([{err: 'Listing does not exist'}]);
         }
+        await updateListing(listingId,  updatedListing);
+
         return res.send({ msg: 'Listing updated' });
 
 

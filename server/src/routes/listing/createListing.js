@@ -2,7 +2,7 @@
 const postComment = require('../../controllers/Listing/postComment');
 const postPost = require('../../controllers/Listing/postPost');
 
-const isValid = (listing, type, postid) => {
+const isValid = (listing, type) => {
     
     if (type === 'post') {
         if (!listing.title) {
@@ -10,8 +10,7 @@ const isValid = (listing, type, postid) => {
         }
     }
     if (type === 'comment') {
-        console.log(postid);
-        if (!listing.body || !postid){
+        if (!listing.body){
             return false;
         }
     }
@@ -20,21 +19,26 @@ const isValid = (listing, type, postid) => {
 
 
 const createListing = async (req, res, next) => {
-    // validation
-    const { type, sub, postid, commentid } = req.params;
-    // const listing = req.body;
 
-    if (!(type ==='comment' || type ==='post')) {
-        return next();
-    }
+    const { sub, id } = req.params;
+
+    // const listing = req.body;
     let listing = req.query;
     const errors = [];
 
-    if (!type || !sub) {
+    // validation
+    if (!sub) {
         errors.push({ err: 'Paramaters not satisified' });
     }
+    //establish type of listing -- post or comment
+    let type;
+    if (id) {
+        type = 'comment';
+    } else {
+        type = 'post';
+    }
 
-    if (!isValid(listing, type, postid)) {
+    if (!isValid(listing, type)) {
         errors.push({ err: 'Please fill in all fields' });
         return res.send(errors);
     }
@@ -46,17 +50,14 @@ const createListing = async (req, res, next) => {
             ...listing,
             sub,
             user: username,
-            originalPost: postid,
+            originalPost: id,
             createdAt: new Date().getTime().toString()
         }
-        if (commentid) {
-            listing.parent = commentid;
-        } else {
-            listing.parent = postid;
-        }
+
         if (type === 'post') {
             await postPost(listing);
         } else {
+            listing.parent = id;
             await postComment(listing);
         }
 

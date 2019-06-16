@@ -5,8 +5,8 @@ const createListing = require('./createListing');
 const editListing = require('./editListing');
 
 
-router.post('/:sub/:type/:postid/:commentid', createListing);
-router.post('/:sub/:type/:postid/', createListing);
+router.post('/:sub/:id', createListing);
+router.post('/:sub/', createListing);
 router.use('/:sub/:type/:id', editListing); //put
 router.use('/:sub/:id/', getListing);
 
