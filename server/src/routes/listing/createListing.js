@@ -1,6 +1,6 @@
 
-const postComment = require('../../controllers/post/postComment');
-const postPost = require('../../controllers/post/postPost');
+const postComment = require('../../controllers/Listing/postComment');
+const postPost = require('../../controllers/Listing/postPost');
 
 const isValid = (listing, type, postid) => {
     
@@ -10,7 +10,8 @@ const isValid = (listing, type, postid) => {
         }
     }
     if (type === 'comment') {
-        if (!listing.comment, !postid){
+        console.log(postid);
+        if (!listing.body || !postid){
             return false;
         }
     }
@@ -20,7 +21,7 @@ const isValid = (listing, type, postid) => {
 
 const createListing = async (req, res, next) => {
     // validation
-    const { type, sub, postid, parentid } = req.params;
+    const { type, sub, postid, commentid } = req.params;
     // const listing = req.body;
 
     if (!(type ==='comment' || type ==='post')) {
@@ -48,11 +49,13 @@ const createListing = async (req, res, next) => {
             originalPost: postid,
             createdAt: new Date().getTime().toString()
         }
-        if (parentid) {
-            listing.parent = parentid;
+        if (commentid) {
+            listing.parent = commentid;
+        } else {
+            listing.parent = postid;
         }
         if (type === 'post') {
-            await postListing(listing);
+            await postPost(listing);
         } else {
             await postComment(listing);
         }
