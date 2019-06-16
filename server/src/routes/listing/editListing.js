@@ -1,7 +1,7 @@
 const Listing = require('../../models/Listing');
 const updateListing = require('../../controllers/Listing/updateListing');
 
-const editListing =async(req, res) => {
+const editListing = async(req, res) => {
     try {
         // const updatedListing = req.body;
         const updatedListing = req.query;
