@@ -15,16 +15,16 @@ const user = db.define('user', {
         type: Sequelize.ARRAY(Sequelize.INTEGER)
     },
     subs: {
-        type: Sequelize.ARRAY(Sequelize.INTEGER)
+        type: Sequelize.ARRAY(Sequelize.STRING)
     },
     email: {
         type: Sequelize.STRING
     },
     followers: {
-        type: Sequelize.ARRAY(Sequelize.INTEGER)
+        type: Sequelize.ARRAY(Sequelize.STRING)
     },
     following: {
-        type: Sequelize.ARRAY(Sequelize.INTEGER)
+        type: Sequelize.ARRAY(Sequelize.STRING)
     },
     saved: {
         type: Sequelize.ARRAY(Sequelize.INTEGER)

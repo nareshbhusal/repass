@@ -11,5 +11,6 @@ module.exports = new Sequelize('repassdb', 'postgres','nnnsss333', {
     },
     define : {
         timestamps: false
-    }
+    },
+    logging: false
 })
