@@ -31,7 +31,7 @@ const toggleSub = async(username, sub) => {
     if (toAdd) {
         users.push(username);
     } else {
-        users.splice(members.indexOf(username), 1);
+        users.splice(users.indexOf(username), 1);
     }
 
     await updateSub(sub, { users });
