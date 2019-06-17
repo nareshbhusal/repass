@@ -1,5 +1,5 @@
 const Sub = require('../../models/Sub');
-const addModerator = require('../../controllers/sub/addModerator');
+const toggleModerator = require('../../controllers/sub/toggleModerator');
 
 const createSub = async(req, res) => {
     try{
@@ -25,7 +25,7 @@ const createSub = async(req, res) => {
         }
         await Sub.create(sub);
 
-        await addModerator(sub.name, username);
+        await toggleModerator(sub.name, username);
         return res.send({ msg: 'Sub created' });
 
     } catch(err) {

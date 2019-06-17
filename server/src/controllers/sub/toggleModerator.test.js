@@ -1,21 +1,21 @@
 const User = require('../../models/User');
 const Sub = require('../../models/Sub');
-const addModerator = require('./addModerator');
+const toggleModerator = require('./toggleModerator');
 
 const user1 = {
-    username: 'addModerator-test-user',
-    email: 'addModerator-test-user@gmail.com',
+    username: 'toggleModerator-test-user',
+    email: 'toggleModerator-test-user@gmail.com',
     password: 'rgpojrgpojrg'
 }
 const user2 = {
-    username: 'addModerator-test-user-2',
-    email: 'addModerator-test-user-2@gmail.com',
+    username: 'toggleModerator-test-user-2',
+    email: 'toggleModerator-test-user-2@gmail.com',
     password: 'rgpojewpfojrg'
 }
 
 const sub1 = {
-    name: 'addModerator-test-sub',
-    description: 'description addModerator-test-sub'
+    name: 'toggleModerator-test-sub',
+    description: 'description toggleModerator-test-sub'
 }
 
 beforeEach(async() => {
@@ -34,7 +34,7 @@ beforeEach(async() => {
 })
 
 test('Add user as a moderator', async() => {
-    await addModerator(sub1.name, user1.username);
+    await toggleModerator(sub1.name, user1.username);
     const mod = await User.findOne({
         where: {
             username: user1.username
@@ -52,8 +52,8 @@ test('Add user as a moderator', async() => {
 })
 
 test('Add 2 users as moderators', async() => {
-    await addModerator(sub1.name, user1.username);
-    await addModerator(sub1.name, user2.username);
+    await toggleModerator(sub1.name, user1.username);
+    await toggleModerator(sub1.name, user2.username);
     const mod1 = await User.findOne({
         where: {
             username: user1.username

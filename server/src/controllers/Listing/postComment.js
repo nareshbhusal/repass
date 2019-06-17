@@ -8,7 +8,6 @@ const postComment = async(comment) => {
     const parent = comment.parent;
     const newListing = await Listing.create(comment);
     const newListingId = newListing.id;
-    console.log(newListingId);
     const userInRecords = await User.findOne({
         where: {
             username
