@@ -1,4 +1,3 @@
-const updateListing = require('./updateListing');
 const Listing = require('../../models/Listing');
 
 const getVote = async(listingId, username) => {
@@ -7,8 +6,8 @@ const getVote = async(listingId, username) => {
             id: listingId
         }
     });
-    const downvotesList = listing.downs;
-    const upvotesList = listing.ups;
+    const downvotesList = listing.downs || [];
+    const upvotesList = listing.ups || [];
     const inDownvotesList = downvotesList.indexOf(username) === -1;
     const inUpvotesList = upvotesList.indexOf(username) === -1;
 
