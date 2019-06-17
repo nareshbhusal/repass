@@ -3,6 +3,10 @@ const updateUser = require('../user/updateUser');
 const Listing = require('../../models/Listing');
 const updateListing = require('./updateListing');
 
+// post a listing as a post on a sub
+// save the post id on the Sub, User, Listings, 
+// and parent listing's children column(array)
+
 const postComment = async(comment) => {
     const username = comment.user;
     const parent = comment.parent;

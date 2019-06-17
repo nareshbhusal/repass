@@ -59,4 +59,5 @@ test('Post comment on a post', async() => {
     });
     expect(comment.body).toBe(comment.body);
     expect(post.children[0]).toBe(comment.id);
+    expect(post.children.length).toBe(1);
 })

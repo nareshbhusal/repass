@@ -4,6 +4,9 @@ const updateSub = require('../sub/updateSub');
 const Listing = require('../../models/Listing');
 const Sub = require('../../models/Sub');
 
+// post a listing as a post on a sub
+// save the post id on the Sub, User, and Listings
+
 const postPost = async (listing) => {
     const newListing = await Listing.create(listing);
         
