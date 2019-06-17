@@ -10,36 +10,36 @@ const Sub = require('../../models/Sub');
 const postPost = async (listing) => {
     const newListing = await Listing.create(listing);
         
-        const listingId = newListing.id;
-        const username = listing.user;
-        const sub = listing.sub;
+    const listingId = newListing.id;
+    const username = listing.user;
+    const sub = listing.sub;
 
-        const user = await User.findOne({ 
-            where: {
-                username
-            }
-        });
-        const userListings = user.listings || [];
-        userListings.push(listingId);
-
-        await updateUser(username, {
-            listings: userListings
-        });
-
-        const subInRecords = await Sub.findOne({
-            where: {
-                name: sub
-            }
-        });
-        if (!subInRecords){
-            throw new Error(`r/${sub} doesn't exist`);
+    const user = await User.findOne({ 
+        where: {
+            username
         }
-        const subListings = subInRecords.listings || [];
-        subListings.push(listingId);
+    });
+    const userListings = user.listings || [];
+    userListings.push(listingId);
 
-        await updateSub(sub, {
-            listings: subListings
-        });
+    await updateUser(username, {
+        listings: userListings
+    });
+
+    const subInRecords = await Sub.findOne({
+        where: {
+            name: sub
+        }
+    });
+    if (!subInRecords){
+        throw new Error(`r/${sub} doesn't exist`);
+    }
+    const subListings = subInRecords.listings || [];
+    subListings.push(listingId);
+
+    await updateSub(sub, {
+        listings: subListings
+    });
 }
 
 module.exports = postPost;
