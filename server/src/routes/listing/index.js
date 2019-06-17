@@ -5,11 +5,13 @@ const createListing = require('./createListing');
 const editListing = require('./editListing');
 const deleteListing = require('./deleteListing');
 
-router.post('/:sub/:id', createListing);
-router.post('/:sub/', createListing);
-router.use('/:sub/:id', editListing); //put
-router.use('/:sub/:id/', getListing);
-router.delete('/:sub/:id', deleteListing);
-router.delete('/:id', deleteListing);
+const requireLogin = require('../../middlewares/requireLogin');
+
+router.post('/:sub/:id',requireLogin,  createListing);
+router.post('/:sub/', requireLogin, createListing);
+router.put('/:sub/:id', requireLogin, editListing); //put
+router.get('/:sub/:id/', getListing);
+router.delete('/:sub/:id', requireLogin, deleteListing);
+router.delete('/:id', requireLogin, deleteListing);
 
 module.exports = router;

@@ -3,8 +3,8 @@ const updateSessionIDs = require('../../controllers/user/updateSessionIDs');
 const addCookie = require('../../controllers/user/addCookie');
 
 const registerUser = async(req, res) => {
-    // const { username, email, password } = req.body;
-    const { username, email, password } = req.query;
+    const { username, email, password } = req.body;
+    // const { username, email, password } = req.query;
     // server side validation
     const errors = [];
     if (!username || !password || !email) {
@@ -20,7 +20,7 @@ const registerUser = async(req, res) => {
         });
         if (userInRecords) {
             errors.push({ err: 'Username taken!' })
-            return res.send(errors);
+            return res.status(409).send(errors);
         }
 
         // create the user

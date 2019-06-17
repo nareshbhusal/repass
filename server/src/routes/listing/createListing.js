@@ -22,8 +22,8 @@ const createListing = async (req, res, next) => {
 
     const { sub, id } = req.params;
 
-    // const listing = req.body;
-    let listing = req.query;
+    const listing = req.body;
+    // let listing = req.query;
     const errors = [];
 
     // validation

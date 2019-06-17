@@ -10,7 +10,7 @@ router.use('/r/', listingRouter);
 router.use('/', subRouter);
 router.use('/', usersRouter);
 router.use('', (req, res) => {
-    return res.send('404');
+    return res.status(404).send('404');
 })
 
 module.exports = router;

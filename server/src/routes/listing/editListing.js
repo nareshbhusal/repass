@@ -3,8 +3,8 @@ const updateListing = require('../../controllers/Listing/updateListing');
 
 const editListing = async(req, res) => {
     try {
-        // const updatedListing = req.body;
-        const updatedListing = req.query;
+        const updatedListing = req.body;
+        // const updatedListing = req.query;
         updatedListing.updatedAt = new Date().getTime().toString();
         const listingId = req.params.id;
         const username = req.session.user.username;

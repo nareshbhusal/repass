@@ -4,8 +4,8 @@ const Sub = require('../../models/Sub');
 const editSub = async (req, res) => {
     const username = req.user.username;
     const sub = req.params.sub;
-    const updatedSub = req.query;
-    // const updatedSub = req.body;
+    // const updatedSub = req.query;
+    const updatedSub = req.body;
 
     try {
         const subInRecords = await Sub.findOne({

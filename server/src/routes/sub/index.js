@@ -6,9 +6,12 @@ const createSub = require('./createSub');
 const deleteSub = require('./deleteSub');
 const editSub = require('./editSub');
 
-router.use('/subs', getSubs);
-router.get('/r/:sub/create', createSub);
-router.delete('/r/:sub/delete', deleteSub);
-router.use('/r/:sub', getSub);
+const requireLogin = require('../../middlewares/requireLogin');
+
+router.get('/subs', getSubs);
+router.get('/r/:sub', getSub);
+router.post('/r/:sub/create', requireLogin, createSub);
+router.put('/r/:sub', requireLogin, editSub);
+router.delete('/r/:sub/delete', requireLogin, deleteSub);
 
 module.exports = router;

@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node src/app.js",
     "dev": "nodemon src/app.js -e js,env",
-    "test": "jest"
+    "test": "jest --verbose --runInBand --watchAll"
   },
   "keywords": [],
   "author": "",
@@ -27,6 +27,7 @@
     "uuid": "^3.3.2"
   },
   "devDependencies": {
-    "jest": "^24.8.0"
+    "jest": "^24.8.0",
+    "supertest": "^4.0.2"
   }
 }
