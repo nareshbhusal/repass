@@ -6,10 +6,10 @@ const registerUser = async(req, res) => {
     const { username, email, password } = req.body;
     // const { username, email, password } = req.query;
     // server side validation
-    let errors = [];
+
     if (!username || !password || !email) {
-        errors.push({ err: 'Please fill in all fields' });
-        return res.status(403).send(errors);
+        const error = { err: 'Please fill in all fields' };
+        return res.status(403).send(error);
     }
     try {
         // Check if the user already exists
@@ -18,10 +18,9 @@ const registerUser = async(req, res) => {
                 username
             }
         });
-        errors= [];
         if (userInRecords) {
-            errors.push({ err: 'Username taken!' })
-            return res.status(409).send(errors);
+            const error = { err: 'Username taken!' };
+            return res.status(409).send(error);
         }
 
         // create the user
@@ -38,7 +37,7 @@ const registerUser = async(req, res) => {
 
     } catch(err) {
         console.log(err);
-        return res.status(500).send(':(')
+        return res.status(500).send('Server error while trying to register user');
     }
     
 }

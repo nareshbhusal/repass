@@ -4,11 +4,10 @@ const addCookie = require('../../controllers/user/addCookie');
 
 const login = async(req, res) => {
     const { username, password } = req.body;
-    // const { username, password } = req.query;
-    const errors = [];
+
     if (!username || !password) {
-        errors.push({ err: 'Please fill all fields' });
-        return res.status(403).send(errors);
+        const error = { err: 'Please fill in all fields' }
+        return res.status(403).send(error);
     }
     try {
         const user = await User.findOne({
@@ -18,8 +17,8 @@ const login = async(req, res) => {
             }
         });
         if (!user) {
-            errors.push({ err: 'Wrong username or password' });
-            return res.status(400).send(errors);
+            const error = { err: 'Wrong username or password' };
+            return res.status(400).send(error);
         }
         await updateSessionIDs(req, user);
         addCookie(req, user);

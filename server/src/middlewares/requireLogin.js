@@ -6,15 +6,15 @@ const clearHeaderCache = (res) => {
 
 const requireLogin = async (req, res, next) => {
 
-    const authError = {err: 'Error authenticating. Please login!'}
+    const authError = {err: 'Error authenticating. Please login or register!'}
     const sessionError = { err: 'Sessions not supported' };
 
     // Check if session exists
     if (!req.session) {
-        return res.status(403).send([authError, sessionError]);
+        return res.status(403).send(authError);
     }
     if (!req.session.user) {
-        return res.status(403).send([authError])
+        return res.status(403).send(authError)
     }
 
     // lookup the user in the DB by pulling their email from the session
@@ -43,11 +43,11 @@ const requireLogin = async (req, res, next) => {
                 });
             }
         }
-        return res.status(403).send([authError])
+        return res.status(403).send(authError)
 
     } catch(err) {
         console.log('error checking authroization status', err);
-        return res.status(500).send(':(')
+        return res.status(500).send({err: 'Critical server error :('})
     }
 }
 

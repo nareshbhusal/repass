@@ -13,7 +13,6 @@ const getSub = async(req, res) => {
                 name: req.params.sub
             }
         });
-
         // determine if current user is subbed
         
         if (sub) {
@@ -33,7 +32,7 @@ const getSub = async(req, res) => {
             }
             return res.status(200).send(sub);
         }
-        return res.status(404).send('sub not found');
+        return res.status(404).send({err: 'sub not found'});
     } catch (err) {
         console.log(':(');
         console.log(err);

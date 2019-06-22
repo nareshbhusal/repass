@@ -5,7 +5,6 @@ const defaultState = {
 }
 
 const themeReducer  = (state=defaultState, action) => {
-    
     if (action.type === CHANGE_THEME) {
         if (state.theme === 'light') {
             return {...state, theme: 'dark'};

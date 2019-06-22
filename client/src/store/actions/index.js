@@ -14,12 +14,6 @@ export const userLogin = (username) => {
     };
 }
 
-// export const userLogout = () => {
-//     return {
-//         type: LOGOUT
-//     }
-// }
-
 export const userLogout = () => async (dispatch) => {
     try {
         const res = await repass.post('logout');
@@ -29,5 +23,6 @@ export const userLogout = () => async (dispatch) => {
         })
     } catch(err) {
         console.log(err.response);
+        alert(err.response.data.err); // alert error
     }
 }

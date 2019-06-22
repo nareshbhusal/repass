@@ -14,22 +14,24 @@ const editSub = async (req, res) => {
             }
         });
         if (!subInRecords) {
-            return res.send([{err: 'Sub does not exist!'}]);
+            return res.status(400).send({err: 'Sub does not exist!'});
         }
         const authError = 'You are not authenticated to make changes to the sub!';
         if (subInRecords.user === username) {
-            return res.send([{err: authError}]);
+            return res.status(403).send({err: authError});
         }
 
         const mods = subInRecords.mods || [];
         if (mods.indexOf(username) ===-1) {
-            return res.send([{ err: authError }]);
+            return res.status(403).send({ err: authError });
         }
 
         await updateSub(sub, { updatedSub });
+
+        return res.status(200).send({msg: 'Edited sub'});
     } catch(err) {
         console.log(err);
-        return res.send('Something went wrong');
+        return res.status(500).send({err: 'Something went wrong. Server error'});
     }
 }
 

@@ -11,11 +11,11 @@ const deleteSub = async(req, res) => {
             }
         });
         if (!subInRecords) {
-            return res.send([{ err: 'Sub does not exist' }]);
+            return res.status(404).send({ err: 'Sub does not exist' });
         }
         const mods = subInRecords.mods || [];
         if (mods.indexOf(username) ===-1) {
-            return res.send([{ err: 'Not authorized to delete this sub!' }]);
+            return res.status(403).send({ err: 'You\'re not authorized to delete this sub!' });
         }
         await Sub.destroy({
             where: {
@@ -23,10 +23,10 @@ const deleteSub = async(req, res) => {
             }
         });
 
-        return res.send({ msg: 'Deleted sub!' });
+        return res.status(200).send({ msg: 'Deleted sub!' });
     } catch(err) {
         console.log(err);
-        return res.send(':)')
+        return res.status(500).send('Server error trying to delete sub')
     }
 }
 

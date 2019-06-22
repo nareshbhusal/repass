@@ -24,6 +24,7 @@ class Login extends React.Component{
             
         } catch(err) {
             console.log(err.response);
+            alert(err.response.data.err); // alert error
         }
     }
 

@@ -11,7 +11,7 @@ const getListing = async (req, res) => {
             }
         });
         if (!listing) {
-            return res.status(404).send({ err: 'Post not found' });
+            return res.status(404).send({ err: 'Listing not found' });
         }
         // determine vote of the current user on the listing
         listing.dataValues.vote=null;
@@ -33,7 +33,7 @@ const getListing = async (req, res) => {
         return res.status(200).send(listing);
     } catch(err) {
         console.log(err);
-        return res.status(500).send('Listing not found');
+        return res.status(500).send({err: 'Listing not found'});
     }
 }
 

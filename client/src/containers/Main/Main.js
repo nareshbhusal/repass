@@ -47,7 +47,7 @@ class Main extends React.Component{
             }
         } catch(err) {
             // error fetching loggedUser or not logged in
-            console.log(err.response);
+            console.log(err.response.data.err);
         }
     }
 
@@ -61,6 +61,7 @@ class Main extends React.Component{
             await this.setState({ allSubs });
 
         } catch(err) {
+            alert(err.response.data.err); // alert error
             console.log(err);
         }
     }
@@ -71,6 +72,7 @@ class Main extends React.Component{
             await repass.post(`subscribe/${sub.name}/`);
         } catch(err) {
             console.log(err);
+            alert(err.response.data.err); // alert error
         }
         await this.fetchSubInfo();
         await this.fetchCurrentUser();
@@ -85,6 +87,7 @@ class Main extends React.Component{
                 history.push('/');
             } catch(err) {
                 console.log(err);
+                alert(err.response.data.err); // alert error
             }
         }
     }
@@ -184,10 +187,6 @@ class Main extends React.Component{
     }
     componentDidMount= async()=>{
         await this.determineState();
-    }
-
-    componentWillUnmount() {
-        console.log('unmounting')
     }
 
     async componentDidUpdate(){

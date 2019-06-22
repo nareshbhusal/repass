@@ -11,7 +11,7 @@ const voteListing = async (req, res, next) => {
         return res.status(200).send({ msg: 'Successfully voted!' });
     } catch(err) {
         console.log(err);
-        return res.status(500).send('Could not vote');
+        return res.status(500).send({err: 'Could not vote'});
     }
 }
 

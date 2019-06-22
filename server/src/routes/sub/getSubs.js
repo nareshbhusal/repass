@@ -3,10 +3,10 @@ const Sub = require('../../models/Sub');
 const getSubs = async(req, res) => {
     try {
         const subs = await Sub.findAll();
-        return res.send(subs);
+        return res.status(201).send(subs);
     } catch(err) {
         console.log(err);
-        return res.send('awkwarrrrd');
+        return res.status(500).send('awkwarrrrd');
     }
 }
 

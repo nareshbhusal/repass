@@ -73,6 +73,7 @@ class Post extends React.Component{
             await this.fetchPost();
         } catch(err) {
             console.log(err.response.data);
+            alert(err.response.data.err); // alert error
         }
         this.renderVote();
     }
@@ -130,6 +131,7 @@ class Post extends React.Component{
                 await this.setState({ isHidden: true });
             } catch(err) {
                 console.log(err);
+                alert(err.response.data.err); // alert error
             }
         }
     }

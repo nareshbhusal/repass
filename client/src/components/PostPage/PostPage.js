@@ -59,7 +59,6 @@ class PostPage extends React.Component{
             return children;
 
         } catch(err) {
-            console.log(err.response);
         }
         return [];
     }
@@ -75,6 +74,7 @@ class PostPage extends React.Component{
 
         } catch(err) {
             console.log(err.response);
+            alert(err.response.data.err); // alert error
         }
     }
 

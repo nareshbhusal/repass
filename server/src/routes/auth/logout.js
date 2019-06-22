@@ -3,7 +3,7 @@ const clearSession = require('../../controllers/user/clearSession');
 
 const logout = async(req, res) => {
     if (!req.session) {
-        return res.status(400).send([{ err: 'Already logged out!' }]);
+        return res.status(400).send({ err: 'Already logged out!' });
     }
     // Clear session_id from the database
     if (req.session.user) {
@@ -19,13 +19,13 @@ const logout = async(req, res) => {
                 await clearSession(req, user);
                 return res.status(200).send({ msg: 'Logged out' });
             } else {
-                return res.status(400).send([{ err: 'Already logged out!' }]);
+                return res.status(400).send({ err: 'Already logged out!' });
             }
         } catch(err) {
             res.status(500).send('something went wrong while trying to log out!')
         }
     } else {
-        res.status(204).send([{ err: 'Already logged out!' }]);
+        res.status(204).send({ err: 'Already logged out!' });
     }
 }
 

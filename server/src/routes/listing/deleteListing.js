@@ -15,7 +15,7 @@ const deleteListing = async (req, res) => {
         
     } catch(err) {
         console.log(err);
-        return res.sendStatus(500);
+        return res.status(500).send({ err: 'Server error while deleting listing!' });
     }
 }
 

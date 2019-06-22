@@ -37,6 +37,7 @@ class PostForm extends React.Component{
             
         } catch(err) {
             console.log(err.response);
+            alert(err.response.data.err); // alert error
         }
     }
 
@@ -50,6 +51,7 @@ class PostForm extends React.Component{
             history.push(`/r/${sub}/${id}`);
         } catch(err) {
             console.log(err);
+            alert(err.response.data.err); // alert error
         }
     }
 
@@ -61,6 +63,7 @@ class PostForm extends React.Component{
             await this.setState({ title, body });
         } catch(err) {
             console.log(err);
+            alert(err.response.data.err); // alert error
         }
     }
 

@@ -34,7 +34,7 @@ class Comment extends React.Component{
             await this.setState({ ...data });
 
         } catch(err) {
-            console.log(err.response);
+            // console.log(err.response);
         }
 
         if (!this.state.body) {
@@ -51,7 +51,7 @@ class Comment extends React.Component{
                 console.log(res.data);
                 await this.setState({ isHidden: true });
             } catch(err) {
-                console.log(err);
+                alert(err.data.err); // alert error
             }
         }
     }
@@ -63,7 +63,7 @@ class Comment extends React.Component{
             console.log(res.data);
             await this.fetchComment();
         } catch(err) {
-            console.log(err.response);
+            alert(err.response.data.err); // alert error
         }
         this.renderVote();
     }
@@ -120,12 +120,8 @@ class Comment extends React.Component{
     toggleReply = async () => {
         const isReplying = this.state.isReplying || false;
         await this.setState({ isReplying: !isReplying });
-        if (this.state.isReplying) {
-            console.log('replying');
-        } else {
-            console.log('not replying');
-        }
     }
+    
     toggleEdit = async () => {
         const isEditing = this.state.isEditing || false;
         await this.setState({ isEditing: !isEditing });
@@ -143,7 +139,7 @@ class Comment extends React.Component{
             await this.fetchComment();
 
         } catch(err) {
-            console.log(err);
+            alert(err.response.data.err); // alert error
         }
     }
 
@@ -158,6 +154,7 @@ class Comment extends React.Component{
             console.log(res.data);
         } catch(err) {
             console.log(err);
+            alert(err.response.data.err); // alert error
         }
     }
 

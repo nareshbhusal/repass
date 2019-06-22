@@ -8,7 +8,7 @@ const subscribe = async (req, res) => {
         return res.status(200).send({ msg: 'Suscribed to '+sub });
     } catch(err) {
         console.log(err);
-        return res.status(500).send('Something went wrong');
+        return res.status(500).send({err: 'Something went wrong.'});
     }
 }
 

@@ -62,7 +62,7 @@ const createListing = async (req, res, next) => {
 
     } catch(err) {
         console.log(err);
-        return res.status(500).send('could not create listing');
+        return res.status(500).send({err: 'Server error! could not create listing'});
     }
 }
 

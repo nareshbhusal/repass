@@ -2,7 +2,7 @@ const User = require('../../models/User');
 
 const deleteUser = async(req, res) => {
     if (req.session.user.username !== req.params.username) {
-        return res.send([{err: 'Cannot delte the user. Not authenticated'}]);
+        return res.status(403).send({err: 'Cannot delete user. Not authenticated'});
     }
     const username = req.params.username;
     try {
@@ -11,10 +11,10 @@ const deleteUser = async(req, res) => {
                 username
             }
         });
-        return res.send({ msg: 'Deleted the user' });
+        return res.status(200).send({ msg: 'Deleted user' });
     } catch(err) {
         console.log(err);
-        res.send(':)');
+        res.status(500).send({err: 'Couldn\'t delete user. Server error!'});
     }
 }
 

@@ -6,6 +6,7 @@ class Nav extends React.Component{
 
     changeTheme = () => {
         this.props.changeTheme();
+        alert('Dark theme not yet implemented, maybe next release'); // alert error
     }
 
     renderThemeBtn = () => {
