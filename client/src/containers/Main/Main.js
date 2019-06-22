@@ -30,7 +30,7 @@ class Main extends React.Component{
         link: '',
         allSubs: [],
         userSubs:[],
-
+        modalOn: false,
         doesNotExist: false
     }
 
@@ -74,7 +74,7 @@ class Main extends React.Component{
             console.log(err);
             alert(err.response.data.err); // alert error
         }
-        await this.fetchSubInfo();
+        await this.fetchInfo();
         await this.fetchCurrentUser();
     }
 
@@ -137,7 +137,7 @@ class Main extends React.Component{
                     numOfUsers = users.length;
                 }
             }
-            mods = mods ||[];
+            mods = mods || [];
 
             const isMod = mods.indexOf(loggedUser) !==-1 || createdBy === loggedUser;
             const sub = {
@@ -153,6 +153,10 @@ class Main extends React.Component{
             console.log(err.response);
             await this.setState({ doesNotExist: true });
         }
+    }
+
+    toggleModal = async () => {
+        await this.setState({ modalOn: !this.state.modalOn });
     }
 
     fetchUserInfo = async (username) => {
@@ -218,6 +222,18 @@ class Main extends React.Component{
         }
     }
 
+    renderModal = () => {
+        if (!this.state.modalOn) {
+            return;
+        }
+        console.log(this.state.modalOn)
+        return (
+            <div className={styles.modal}>
+                Modal
+            </div>
+            );
+    }
+
     render() {
         let { theme, changeTheme, userLogout } = this.props.state;
         const loggedUser = this.props.state.user.username;
@@ -225,7 +241,7 @@ class Main extends React.Component{
         
         return (
             <div className={styles.container}>
-                <Header { ...this.state} theme={theme} changeTheme={changeTheme} loggedUser={loggedUser} userLogout={userLogout} />
+                <Header toggleModal={this.toggleModal} { ...this.state} theme={theme} changeTheme={changeTheme} loggedUser={loggedUser} userLogout={userLogout} />
                 <main>
                     <div className={styles.central}>
                         {this.renderCentral()}
@@ -237,6 +253,7 @@ class Main extends React.Component{
                         }
                         <SubsList allSubs={allSubs} userSubs={userSubs}/>
                     </div>
+                    {this.renderModal()}
                 </main>
             </div>
         );

@@ -4,8 +4,8 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 500px;
-    /* background-color: #fff; */
+    width: 50%;
+    min-width: 300px;
     margin: 5rem auto;
     padding: 3.25rem 2.5rem;
     font-size: 1.75rem;

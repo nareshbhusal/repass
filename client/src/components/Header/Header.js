@@ -1,24 +1,23 @@
 import React from 'react';
 import Nav from './Nav/Nav';
 import Showcase from './Showcase/Showcase';
-import styles from './Header.module.css';
 
-const header = ({ user, sub, loggedUser, changeTheme, theme, userLogout }) =>{
+const header = ({ user, sub, loggedUser,toggleModal, changeTheme, theme, userLogout }) =>{
     const subName = sub.name;
     if (subName) {
         return (
-            <div className={styles.Header}>
+            <div>
                 <Nav sub={subName} theme={theme} changeTheme={changeTheme} loggedUser={loggedUser} userLogout={userLogout}/>
-                <Showcase dest={`r/${subName}`}/>
+                <Showcase dest={`r/${subName}`} toggleModal={toggleModal}/>
             </div>
         );
     }
     return (
-        <div className={styles.Header}>
+        <div>
             <Nav theme={theme} changeTheme={changeTheme} loggedUser={loggedUser} userLogout={userLogout}/>
             {user ? 
-            <Showcase dest={`u/${user.username}`}/> : 
-            <Showcase />
+            <Showcase toggleModal={toggleModal} dest={`u/${user.username}`}/> : 
+            <Showcase toggleModal={toggleModal} />
             }
         </div>
     );

@@ -6,7 +6,7 @@ class NotFoundError extends React.Component{
         const { user, sub, id } = this.props;
 
         if (id) {
-            return `Post with id- ${id} not found`;
+            return `Post with id: ${id} not found`;
         } else if (sub.name) {
             return `r/${sub.name} does not exist!`;
         } else if (user.username) {

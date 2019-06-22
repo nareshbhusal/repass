@@ -1,7 +1,6 @@
 .header{
     display: flex;
     flex-direction: row;
-    border: 1px solid #ccc;
     justify-content: space-between;
     align-items: center;
     line-height: 1.5;
@@ -99,4 +98,16 @@
 button{
     cursor: pointer;
     outline: none;
+}
+
+@media(max-width: 500px) {
+    .user span {
+        display: none;
+    }
+    .btnLogout{
+        padding: 0.5rem;
+    }
+    .btnLogout span{
+        /* display: none; */
+    }
 }

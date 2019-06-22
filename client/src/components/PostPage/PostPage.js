@@ -79,13 +79,12 @@ class PostPage extends React.Component{
     }
 
     updatePostPage = async () => {
-
+        await this.doesPostExist();
         const threadElements = await this.getThreadElements(this.props.id);
         await this.setState({ threadElements });
     }
 
     componentDidMount = async() => {
-        await this.doesPostExist();
         await this.updatePostPage();
     }
 

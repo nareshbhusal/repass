@@ -95,13 +95,13 @@ i{
 .comment{
     text-decoration: none;
     padding: 0.5rem;
+    padding-left: 0;
 }
 
 .comment:hover,
  .save:hover{
     background: rgb(226, 224, 224);
 }
-
 
 .btnEdit, .btnDelete{
     border: none;
@@ -125,4 +125,22 @@ i{
 .btnDelete:hover{
     background-color: red;
     color: #fff;
+}
+
+@media(max-width: 500px) {
+    .container > *{
+        padding: 0.5rem;
+    }
+
+    .actions{
+        margin-top: 0.1rem;
+    }
+    .comment{
+        padding: 0.25rem;
+        padding-left: 0;
+    }
+
+    .btnEdit, .btnDelete{
+        margin: 0;
+    }
 }

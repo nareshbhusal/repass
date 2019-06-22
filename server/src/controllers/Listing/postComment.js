@@ -18,7 +18,7 @@ const postComment = async(comment) => {
         }
     });
     const userListings = userInRecords.listings || [];
-    userListings.push(newListingId);
+    userListings.unshift(newListingId);
 
     // update user's listings
     await updateUser(
@@ -37,7 +37,7 @@ const postComment = async(comment) => {
     });
 
     const children = listing.children || [];
-    children.push(newListingId);
+    children.unshift(newListingId);
     await updateListing(parent, { children });
 
 }

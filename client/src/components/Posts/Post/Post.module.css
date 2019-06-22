@@ -80,7 +80,6 @@ i.down:hover, i.down.--active{
 .info{
     display: flex;
     flex-direction: row;
-    
 }
 
 .sub{
@@ -130,12 +129,13 @@ i.down:hover, i.down.--active{
     margin-top: 1rem;
 }
 
-.comment, .save{
+.comment{
     color: #878a8c;
     font-weight: bold;
     font-size: 1.35rem;
     margin-right: 0.275rem;
-    padding: 0.275rem;
+    padding: 0.5rem;
+    padding-left: 0;
     border-radius: 3px;
     outline: none;
     cursor: pointer;
@@ -143,11 +143,19 @@ i.down:hover, i.down.--active{
     text-decoration: none;
     border: none;
 }
-.comment{ 
-    padding: 0.5rem;
+
+.comment:hover {
+    background: rgb(226, 224, 224);
 }
 
-.comment:hover,
- .save:hover{
-    background: rgb(226, 224, 224);
+@media(max-width: 500px) {
+    .post > *{
+        padding: 0.6rem;
+    }
+    .body{
+        margin: 0.25rem 0;
+    }
+    .comment{
+        padding: 0.25rem;
+    }
 }

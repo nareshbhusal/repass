@@ -20,7 +20,7 @@ const postPost = async (listing) => {
         }
     });
     const userListings = user.listings || [];
-    userListings.push(listingId);
+    userListings.unshift(listingId);
 
     await updateUser(username, {
         listings: userListings
@@ -35,7 +35,7 @@ const postPost = async (listing) => {
         throw new Error(`r/${sub} doesn't exist`);
     }
     const subListings = subInRecords.listings || [];
-    subListings.push(listingId);
+    subListings.unshift(listingId);
 
     await updateSub(sub, {
         listings: subListings

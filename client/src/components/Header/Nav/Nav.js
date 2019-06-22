@@ -44,10 +44,11 @@ class Nav extends React.Component{
             <div className={styles.userCtrl}>
                 <Link to={`/u/${username}`} className={styles.user}>
                     <i className="fa fa-user"></i>
-                    {username}
+                    <span>{username}</span>
                 </Link>
                 <button onClick={this.logoutHandler} className={`${styles.btn} ${styles.btnLogout}`}>
-                    <i className="fa fa-sign-out"></i>Logout
+                    <i className="fa fa-sign-out"></i>
+                    <span>Logout</span>
                 </button>
             </div>
         );
