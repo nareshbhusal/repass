@@ -4,7 +4,6 @@ const updateListing = require('../../controllers/Listing/updateListing');
 const editListing = async(req, res) => {
     try {
         const updatedListing = req.body;
-        // const updatedListing = req.query;
         updatedListing.updatedAt = new Date().getTime().toString();
         const listingId = req.params.id;
         const username = req.session.user.username;
@@ -16,16 +15,16 @@ const editListing = async(req, res) => {
             }
         });
         if (!listingInRecords) {
-            res.send([{err: 'Listing does not exist'}]);
+            res.status(400).send({err: 'Listing does not exist'});
         }
         await updateListing(listingId,  updatedListing);
 
-        return res.send({ msg: 'Listing updated' });
+        return res.status(201).send({ msg: 'Listing updated' });
 
 
     } catch(err) {
         console.log(err);
-        return res.send([{ err: 'Could not edit listing' }]);
+        return res.status(500).send({ err: 'Could not edit listing' });
     }
 }
 

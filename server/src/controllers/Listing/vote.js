@@ -1,36 +1,31 @@
 const updateListing = require('./updateListing');
-const Listing = require('../../models/Listing');
 const getVote = require('./getVote');
 
 // Modify the state of vote on a listing for user
 
-const vote = async(listingId, username) => {
+const vote = async(listingId, username, type) => {
 
-    const listing = await Listing.findOne({
-        where: {
-            id: listingId
-        }
-    });
-    let downvotesList = listing.downs || [];
-    let upvotesList = listing.ups || [];
+    const votesData = await getVote(listingId, username);
 
-    const vote = await getVote(listingId, username);
+    let vote = votesData.self;
+    let downvotesList = votesData.downs || [];
+    let upvotesList = votesData.ups || [];
 
-    if (vote === 1) {
-        // upvoted state
-        upvotesList.splice(downvotesList.indexOf(username));
+    if (vote === 1 && type ==='up') {
+        upvotesList.splice(upvotesList.indexOf(username), 1);
+
+    } else if((vote === 0 || vote === null) && type==='up') {
+        upvotesList.push(username);
+        downvotesList.splice(downvotesList.indexOf(username), 1);
+
+    } else if(vote === 0 && type === 'down') {
+        downvotesList.splice(downvotesList.indexOf(username), 1);
+
+    } else if ((vote === 1 || vote === null) && type ==='down') {
+        upvotesList.splice(upvotesList.indexOf(username), 1);
         downvotesList.push(username);
-
-    } else if(vote === 0) {
-        // downvoted state
-        downvotesList.splice(downvotesList.indexOf(username));
-        upvotesList.push(username);
-
-    }else {
-        // no vote state
-        upvotesList.push(username);
     }
-    await updateListing(listingId, { upvotesList, downvotesList });
+    await updateListing(listingId, { ups: upvotesList, downs: downvotesList });
 
 }
 

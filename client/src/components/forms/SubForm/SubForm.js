@@ -1,26 +1,27 @@
 import React from 'react';
 import styles from './SubForm.module.css';
-import { Link } from 'react-router-dom';
+import history from '../../../history';
+import axios from 'axios';
 
 class SubForm extends React.Component{
     state = {
-        name: '',
+        title: '',
         description:''
     }
 
     onSubmit = async(e) => {
         e.preventDefault();
-        // const cors = 'https://cors-anywhere.herokuapp.com/';
         try{
-            const res = await axios.post("http://localhost:5000/create/sub", {
-                name: this.state.name,
+            const res = await axios.post("http://localhost:5000/subs/create", {
+                name: this.state.title,
                 description: this.state.description
             });
             console.log(res);
-            // this.props.history.push('/');
+            
+            history.push(`/r/${this.state.title}`);
             
         } catch(err) {
-            console.log(err);
+            console.log(err.response);
         }
     }
 
@@ -32,12 +33,12 @@ class SubForm extends React.Component{
 
     render(){
         return (
-            <form onSubmit={this.onSubmit} className={styles.login}>
-                <label for="name">Name</label>
-                <input value={this.state.name} onChange={this.onChange} required placeholder="name" name="name" type="text" />
-                <label for="description">Description</label>
-                <textarea value={this.state.description} onChange={this.onChange} required placeholder="description" name="description" />
-                <input required type="submit" value="Login" />
+            <form onSubmit={this.onSubmit} className={styles.subform}>
+                <label htmlFor="title">Name</label>
+                <input value={this.state.title} onChange={this.onChange} required placeholder="name of the sub" name="title" type="text" />
+                <label htmlFor="description">About</label>
+                <textarea value={this.state.description} onChange={this.onChange} required placeholder="about this sub" name="description" />
+                <input required type="submit" value="Submit" />
             </form>
         );
     }

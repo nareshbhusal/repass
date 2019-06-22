@@ -5,7 +5,6 @@ const addCookie = require('../../controllers/user/addCookie');
 const login = async(req, res) => {
     const { username, password } = req.body;
     // const { username, password } = req.query;
-
     const errors = [];
     if (!username || !password) {
         errors.push({ err: 'Please fill all fields' });
@@ -24,7 +23,7 @@ const login = async(req, res) => {
         }
         await updateSessionIDs(req, user);
         addCookie(req, user);
-        return res.status(200).send({msg: 'Logged in!'});
+        return res.status(200).send(user.username);
 
     } catch(err) {
         console.log(err);

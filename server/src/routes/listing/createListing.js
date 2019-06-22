@@ -4,15 +4,11 @@ const postPost = require('../../controllers/Listing/postPost');
 
 const isValid = (listing, type) => {
     
-    if (type === 'post') {
-        if (!listing.title) {
-            return false;
-        }
+    if (type === 'post' && !listing.title) {
+        return false;
     }
-    if (type === 'comment') {
-        if (!listing.body){
-            return false;
-        }
+    if (type === 'comment' && !listing.body) {
+        return false;
     }
     return true;
 }
@@ -22,10 +18,10 @@ const createListing = async (req, res, next) => {
 
     const { sub, id } = req.params;
 
-    const listing = req.body;
+    let listing = req.body;
     // let listing = req.query;
     const errors = [];
-
+    console.log(listing);
     // validation
     if (!sub) {
         errors.push({ err: 'Paramaters not satisified' });
@@ -40,7 +36,7 @@ const createListing = async (req, res, next) => {
 
     if (!isValid(listing, type)) {
         errors.push({ err: 'Please fill in all fields' });
-        return res.send(errors);
+        return res.status(400).send(errors);
     }
     
     try {
@@ -51,7 +47,8 @@ const createListing = async (req, res, next) => {
             sub,
             user: username,
             originalPost: id,
-            createdAt: new Date().getTime().toString()
+            createdAt: new Date().getTime().toString(),
+            ups: [username]
         }
 
         if (type === 'post') {
@@ -61,11 +58,11 @@ const createListing = async (req, res, next) => {
             await postComment(listing);
         }
 
-        return res.send({ msg: 'Created listing!' });
+        return res.status(201).send({ msg: 'Created listing!' });
 
     } catch(err) {
         console.log(err);
-        return res.send('could not create listing');
+        return res.status(500).send('could not create listing');
     }
 }
 

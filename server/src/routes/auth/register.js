@@ -6,10 +6,10 @@ const registerUser = async(req, res) => {
     const { username, email, password } = req.body;
     // const { username, email, password } = req.query;
     // server side validation
-    const errors = [];
+    let errors = [];
     if (!username || !password || !email) {
         errors.push({ err: 'Please fill in all fields' });
-        return res.send(errors);
+        return res.status(403).send(errors);
     }
     try {
         // Check if the user already exists
@@ -18,6 +18,7 @@ const registerUser = async(req, res) => {
                 username
             }
         });
+        errors= [];
         if (userInRecords) {
             errors.push({ err: 'Username taken!' })
             return res.status(409).send(errors);
@@ -33,11 +34,11 @@ const registerUser = async(req, res) => {
         const newUser = await User.create(user);
         await updateSessionIDs(req, newUser);
         addCookie(req, newUser);
-        return res.send({msg: 'Registered user'});
+        return res.status(201).send(newUser.username);
 
     } catch(err) {
         console.log(err);
-        return res.send(':(')
+        return res.status(500).send(':(')
     }
     
 }

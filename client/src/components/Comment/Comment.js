@@ -1,137 +1,251 @@
 import React from 'react';
 import styles from './Comment.module.css';
 import { Link } from 'react-router-dom';
+import ta from 'time-ago';
+import repass from '../../repass';
+
+import Input from '../Input/Input';
+
+import { connect } from 'react-redux';
 
 class Comment extends React.Component{
     constructor(props){
         super(props);
 
         this.state = {
-            user: 'username',
-            votes: 5,
-            time: '1 hour ago',
-            body: "There's a guy in our community from Melbourne who made the move to London that could maybe offer some advice. Though he isn't an FE Dev (he's back end and did CS degree in 2000) he only moved here in the last year or so.",
-            isSaved: false
+            edit: '',
+            reply: ''
         }
 
         this.upVote = React.createRef();
         this.downVote = React.createRef();
     }
 
-    onSaveHandler = () => {
-        this.setState({ isSaved:  !this.state.isSaved});
-        if (this.state.isSaved) {
-            console.log('saved');
+    fetchComment = async () => {
+        try {
+            const { id } = this.props;
+            const res = await repass.get(`listing/${id}`);
+            let { data } = res;
+            data.ups = data.ups || [];
+            data.downs = data.downs || [];
+            data.ups = data.ups.length - data.downs.length;
+            data.children = data.children || [];
+            
+            await this.setState({ ...data });
+
+        } catch(err) {
+            console.log(err.response);
+        }
+
+        if (!this.state.body) {
+            await this.setState({ isHidden: true });
+        }
+    }
+
+    deleteComment = async() => {
+        const confirmQuestion = 'Are you sure you want to delete this comment ?';
+        if (confirm(confirmQuestion)){
+            try {
+                const { sub, id } = this.props;
+                const res = await repass.delete(`r/${sub}/${id}`);
+                console.log(res.data);
+                await this.setState({ isHidden: true });
+            } catch(err) {
+                console.log(err);
+            }
+        }
+    }
+
+    vote = async (type) => {
+        try {
+            const {id} = this.props;
+            const res = await repass.post(`${id}/vote/${type}`);
+            console.log(res.data);
+            await this.fetchComment();
+        } catch(err) {
+            console.log(err.response);
+        }
+        this.renderVote();
+    }
+
+    renderVote = () => {
+        if (this.state.isHidden) {
+            return;
+        }
+
+        if (this.state.vote===1) {
+            this.upVote.current.style.color='tomato';
+            this.downVote.current.style.color = '#878a8c';
+        } else if (this.state.vote===0) {
+            this.upVote.current.style.color='#878a8c';
+            this.downVote.current.style.color='blue';
         } else {
-            console.log('unsaved');
-        }
-    }
-
-    UpdateVotes = () => {
-        if (this.state.vote == 0) {
-            this.upVote.current.style.color = '#878a8c';
-            this.downVote.current.style.color = 'blue';
-
-        } else if(this.state.vote == 1) {
-            this.upVote.current.style.color = 'red';
-            this.downVote.current.style.color = '#878a8c';
-
-        } else if(this.state.vote === null) {
-            this.upVote.current.style.color = '#878a8c';
+            this.upVote.current.style.color='#878a8c';
             this.downVote.current.style.color = '#878a8c';
         }
     }
 
-    componentDidMount = () => {
-        this.UpdateVotes();
-        if (this.props.detailed) {
-            console.log('done?');
-            this.postRef.current.style.border = 'none';
-        }
+    componentDidMount = async () => {
+        await this.fetchComment();
+        this.renderVote();
     }
 
-    componentDidUpdate = () => {
-        this.UpdateVotes();
-    }
-
-    toggleVote = (e) => {
-        const btn = e.target.classList.contains('up') ? 'up' : 'down';
-
-        if ((this.state.vote == 0 && btn ==='down') || (this.state.vote == 1 && btn === 'up')) {
-            // case where user undos the vote
-            this.setState({ vote: null });
-        } else if (btn === 'up') {
-            this.setState({ vote: 1 });
-        } else if (btn === 'down') {
-            this.setState({ vote :0 });
-        }
+    getParsedTime = (time) => {
+        return ta.ago(new Date(parseInt(time)));
     }
 
     renderInfo = () => {
+        const { user, createdAt, updatedAt } = this.state;
         return (
             <div className={styles.info}>
                 <Link className={styles.user} to={`/u/${this.state.user}`}>
-                    u/{this.state.user}
+                    u/{user}
                 </Link>
-                <span className={styles.time}>
-                    {this.state.time}
+                <span className={styles.points}>
+                    {`${this.state.ups} points`}
                 </span>
+                <span className={styles.time}>
+                    {this.getParsedTime(createdAt)}
+                </span>
+
+                {updatedAt ? 
+                <span className={styles.time +` ${styles.editedTime}`}>
+                    edited
+                    {' '+this.getParsedTime(updatedAt)}
+                </span> : null
+                }
             </div>
         );
     }
-    
-    renderSave = () => {
-        if (this.state.isSaved) {
-            return (
-                <button onClick={this.onSaveHandler} className={styles.save}>
-                    <i className="fa fa-bookmark"></i>
-                    Unsave
-                </button>
-            )
+    toggleReply = async () => {
+        const isReplying = this.state.isReplying || false;
+        await this.setState({ isReplying: !isReplying });
+        if (this.state.isReplying) {
+            console.log('replying');
         } else {
-            return (
-                <button onClick={this.onSaveHandler} className={styles.save}>
-                    <i className="fa fa-bookmark"></i>
-                    Save
-                </button>
-            );
+            console.log('not replying');
         }
     }
+    toggleEdit = async () => {
+        const isEditing = this.state.isEditing || false;
+        await this.setState({ isEditing: !isEditing });
+    }
+
+    editComment = async(body) => {
+        try {
+            const { sub, id } = this.state;
+            await repass.put(`/r/${sub}/${id}`, {
+                body
+            });
+
+            this.setState({ isEditing: false });
+            // update comment data
+            await this.fetchComment();
+
+        } catch(err) {
+            console.log(err);
+        }
+    }
+
+    postReply = async(body) => {
+        try {
+            const { sub, id } = this.state;
+            const res = await repass.post(`/r/${sub}/${id}`, {
+                body
+            });
+            await this.toggleReply();
+            await this.props.updatePostPage();
+            console.log(res.data);
+        } catch(err) {
+            console.log(err);
+        }
+    }
+
+    renderCtrlBtns = () => {
+        return (
+            <React.Fragment>
+                <button onClick={this.toggleEdit} className={styles.btnEdit}>
+                    <i className="fa fa-edit"></i>
+                </button>
+                <button className={styles.btnDelete} onClick={this.deleteComment}>
+                <i className="fa fa-trash"></i>
+                </button>
+            </React.Fragment>
+        );
+    }
+
     renderActions = () => {
+        const loggedUser = this.props.user.username;
         return (
             <div className={styles.actions}>
-                <button to={this.state.url} className={styles.comment}>
+                <button onClick={this.toggleReply} className={styles.comment}>
                     <i className="fa fa-comment"></i>
                         Reply
                 </button>
-                {this.renderSave()}
+                {this.state.user === loggedUser ?
+                 this.renderCtrlBtns() : null
+                }
             </div>
-        )
+        );
     }
     renderBody = () => {
+        if (this.state.isEditing) {
+            return <Input 
+                value={this.state.body} 
+                onSubmit={this.editComment} 
+                onCancel={this.toggleEdit} />
+        }
         return (
             <React.Fragment>
-                <p className={styles.body}>
+                <div className={styles.body}>
                     {this.state.body}
-                </p>
+                </div>
             </React.Fragment>
         )
     }
     render(){
-        return (
-            <div className={styles.container}>
-                <div className={styles.votes}>
-                    <i ref={this.upVote} onClick={this.toggleVote} className={`fa fa-arrow-up up ${styles.up}`}></i>
-                    <i ref={this.downVote} name="down" onClick={this.toggleVote} className={`fa fa-arrow-down down ${styles.down}`}></i>
+        const dynamicStyle = {paddingLeft: `${1.6*this.props.branch}rem`}
+        if (this.state.isHidden) {
+            return (
+                <div style={dynamicStyle} className={styles.container}>
+                    <p style={{paddingLeft: '2rem'}}>Comment deleted</p>
                 </div>
-                <div className="main">
-                    {this.renderInfo()}
-                    {this.renderBody()}
-                    {this.renderActions()}
+                );
+        }
+        return (
+            <div style={dynamicStyle} className={styles.container}>
+                <div className={styles.votes}>
+                    <i ref={this.upVote} onClick={()=>this.vote('up')} className={`fa fa-arrow-up up ${styles.up}`}></i>
+                    <i ref={this.downVote} name="down" onClick={()=>this.vote('down')} className={`fa fa-arrow-down down ${styles.down}`}></i>
+                </div>
+                <div className={styles.main}>
+
+                    {this.state.isEditing? 
+                    <Input value={this.state.body} 
+                    onSubmit={this.editComment} 
+                    onCancel={this.toggleEdit} /> :
+                    
+                    <React.Fragment >
+                        {this.renderInfo()}
+                        {this.renderBody()}
+                        {this.renderActions()}
+
+                        {this.state.isReplying ? 
+                        <Input 
+                            type="reply"
+                            onSubmit={this.postReply} 
+                            onCancel={this.toggleReply} /> 
+                            : null
+                        }
+                    </React.Fragment>
+                    }
                 </div>
             </div>
-        )
+        );
     }
 }
 
-export default Comment;
+const mapStateToProps = (state) => {
+    return state;
+}
+export default connect(mapStateToProps, { })(Comment);

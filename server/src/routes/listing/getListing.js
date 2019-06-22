@@ -10,10 +10,30 @@ const getListing = async (req, res) => {
                 id
             }
         });
-        return res.send(listing);
+        if (!listing) {
+            return res.status(404).send({ err: 'Post not found' });
+        }
+        // determine vote of the current user on the listing
+        listing.dataValues.vote=null;
+        if (req.session) {
+            if (req.session.user) {
+                const {username} = req.session.user;
+                if (listing.ups) {
+                    if (listing.ups.indexOf(username) !==-1) {
+                        listing.dataValues.vote = 1;
+                    }
+                }
+                if (listing.downs) {
+                    if (listing.downs.indexOf(username) !==-1) {
+                        listing.dataValues.vote = 0;
+                    }
+                }
+            }
+        }
+        return res.status(200).send(listing);
     } catch(err) {
         console.log(err);
-        return res.send('Listing not found');
+        return res.status(500).send('Listing not found');
     }
 }
 

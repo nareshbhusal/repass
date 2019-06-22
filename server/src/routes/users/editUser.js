@@ -7,10 +7,10 @@ const editUser = async(req, res) => {
         const updatedUserProperties = { ...req.query };
 
         await updateUser(username, { ...updatedUserProperties });
-        return res.send({ msg: 'Done!' });
+        return res.status(200).send({ msg: 'Edited user!' });
     } catch(err) {
         console.log(err);
-        return res.send(':(');
+        return res.status(500).send(':(');
     }
 }
 

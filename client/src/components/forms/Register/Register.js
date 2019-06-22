@@ -1,8 +1,8 @@
 import React from 'react';
 import styles from './Register.module.css';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
-axios.defaults.withCredentials = true
+import repass from '../../../repass';
+import history from '../../../history';
 
 class Register extends React.Component{
     state = {
@@ -13,13 +13,17 @@ class Register extends React.Component{
     onSubmit = async(e) => {
         e.preventDefault();
         try{
-            const res = await axios.post("http://localhost:5000/create/user", {
-                username: this.state.username,
-                email: this.state.email,
-                password: this.state.password
+            const { username, password, email } = this.state;
+
+            const res = await repass.post('register', {
+                username,
+                email,
+                password
             });
-            console.log(res);
-            this.props.history.push('/');
+            const loggedUser = res.data.username;
+            this.props.onSignIn(loggedUser);
+            history.goBack();
+            
         } catch(err) {
             console.log(err);
         }

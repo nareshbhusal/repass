@@ -19,10 +19,10 @@ const listing = db.define('listing', {
         type: Sequelize.STRING
     },
     ups: {
-        type: Sequelize.INTEGER
+        type: Sequelize.ARRAY(Sequelize.STRING)
     },
     downs: {
-        type: Sequelize.INTEGER
+        type: Sequelize.ARRAY(Sequelize.STRING)
     },
     children: {
         // ids of sub-listings

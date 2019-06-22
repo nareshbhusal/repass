@@ -17,7 +17,7 @@ const toggleSub = async(username, sub) => {
         userSubs.push(sub);
         toAdd = true;
     } else {
-        userSubs.splice(userSubs.indexOf(sub, 1));
+        userSubs.splice((userSubs.indexOf(sub)), 1);
         toAdd = false;
     }
     await updateUser(username, { subs: userSubs });
@@ -27,6 +27,9 @@ const toggleSub = async(username, sub) => {
             name: sub
         }
     });
+    if (!subInRecords) {
+        throw new Error("No such sub as "+sub +" to subscribe?")
+    }
     const users = subInRecords.users || [];
     if (toAdd) {
         users.push(username);

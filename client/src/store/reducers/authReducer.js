@@ -1,16 +1,16 @@
-import { LOGIN, LOGOUT } from '../actions/types';
+import { LOGIN, LOGOUT } from '../types';
 
 const defaultState = {
-    user: null
+    username: null
 };
 
 const authReducer = (state=defaultState, action) => {
     switch(action.type) {
         case LOGIN:
-            return { ...state, user: action.payload.user }
+            return { ...state, username: action.payload }
             
         case LOGOUT:
-            return { ...state, user: null };
+            return { ...state, username: null };
     }
     return state;
 }

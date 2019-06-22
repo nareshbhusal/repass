@@ -8,12 +8,13 @@ const voteListing = require('./voteListing');
 
 const requireLogin = require('../../middlewares/requireLogin');
 
-router.post('/:sub/:id',requireLogin,  createListing);
-router.post('/:sub/', requireLogin, createListing);
-router.put('/:sub/:id', requireLogin, editListing); //put
-router.get('/:sub/:id/', getListing);
-router.delete('/:sub/:id', requireLogin, deleteListing);
-router.post('/:id', requireLogin, voteListing);
+router.post('/r/:sub/:id',requireLogin,  createListing); // commenting
+router.post('/r/:sub/', requireLogin, createListing);
+router.post('/:id/vote/:type', requireLogin, voteListing);
+router.put('/r/:sub/:id', requireLogin, editListing); //put
+router.get('/listing/:id/', getListing);
+router.get('/r/:sub/:id/', getListing);
+router.delete('/r/:sub/:id', requireLogin, deleteListing);
 router.delete('/:id', requireLogin, deleteListing);
 
 module.exports = router;

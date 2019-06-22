@@ -9,11 +9,15 @@ const getUser = async(req, res) => {
                 username
             }
         });
-        return res.send(user);
+        if (user) {
+            return res.status(201).send(user);
+        } else {
+            return res.status(404).send({err: 'User not found'});
+        }
 
     } catch(err) {
         console.log(err);
-        return res.send('server error');
+        return res.status(500).send('server error');
     }
 }
 

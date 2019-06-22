@@ -6,11 +6,11 @@ const usersRouter = require('./users/index');
 const listingRouter = require('./listing/index');
 
 router.use('/', authRouter);
-router.use('/r/', listingRouter);
+router.use('/', listingRouter);
 router.use('/', subRouter);
 router.use('/', usersRouter);
 router.use('', (req, res) => {
-    return res.status(404).send('404');
+    return res.status(404).send('404 route');
 })
 
 module.exports = router;

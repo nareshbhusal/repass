@@ -8,15 +8,30 @@ const getVote = async(listingId, username) => {
     });
     const downvotesList = listing.downs || [];
     const upvotesList = listing.ups || [];
-    const inDownvotesList = downvotesList.indexOf(username) === -1;
-    const inUpvotesList = upvotesList.indexOf(username) === -1;
 
+    const votesData = {
+        ups: upvotesList,
+        downs: downvotesList,
+        total: upvotesList.length - downvotesList.length
+    }
+
+    if (!username) {
+        // if not logged in
+        return votesData;
+    }
+    const inDownvotesList = downvotesList.indexOf(username) !== -1;
+    const inUpvotesList = upvotesList.indexOf(username) !== -1;
+
+    // self refers to
+        // null for no votes
+        // 0 for downvote &
+        // 1 for upvote on the listing
     if (inDownvotesList) {
-        return 0;
+        return { self: 0, ...votesData };
     } else if (inUpvotesList) {
-        return 1;
+        return { self: 1, ...votesData };
     } else {
-        return null;
+        return { self: null, ...votesData };;
     }
 }
 

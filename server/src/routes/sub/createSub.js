@@ -4,7 +4,9 @@ const toggleModerator = require('../../controllers/sub/toggleModerator');
 const createSub = async(req, res) => {
     try{
         const errors = [];
-        const name = req.params.sub;
+        let { name, description } = req.body;
+        name=name.trim();
+        description=description.trim();
         const username = req.session.user.username;
 
         const subInRecords = await Sub.findOne({
@@ -15,14 +17,16 @@ const createSub = async(req, res) => {
         if (subInRecords) {
             // sub already exists
             errors.push({ err: 'Sub already exists' });
-            return res.send(errors);
+            return res.status(409).send(errors);
         }
         const sub = {
             name,
+            description,
             createdBy: username,
-            mods: [ username ],
+            mods: [],
             createdAt: new Date().getTime().toString()
         }
+        sub.mods.push(username);
         await Sub.create(sub);
 
         await toggleModerator(sub.name, username);

@@ -11,10 +11,11 @@ const deleteListing = async (req, res) => {
                 id
             }
         });
-        return res.send({ msg: 'Deleted listing!' })
+        return res.status(202).send({ msg: 'Deleted listing!' })
         
     } catch(err) {
         console.log(err);
+        return res.sendStatus(500);
     }
 }
 

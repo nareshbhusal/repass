@@ -3,14 +3,49 @@ import styles from './Input.module.css';
 
 class Input extends React.Component{
     state = {
-        type: 'comment'
+        body: ''
+    }
+    
+    onChangeHandler = (e) => {
+
+        const { value } = e.target;
+        this.setState({ body: value });
+    }
+    componentDidMount = () => {
+        const body = this.props.value || '';
+        this.setState({ body });
+    }
+    onSubmitHandler = async () => {
+        await this.props.onSubmit(this.state.body);
+        if (this.props.type !=='reply') {
+            await this.setState({ body:'' });
+        }
     }
     render() {
+
+        const btnText = this.props.type==='reply' ? 'Reply' : 'Comment';
         return (
             <div className={styles.input}>
-                <textarea placeholder="What are your thoughts?"></textarea>
+                <textarea 
+                    autoFocus={this.props.type === 'reply'}
+                    name="body" 
+                    value={this.state.body}
+                    onChange={this.onChangeHandler} 
+                    placeholder="What are your thoughts?">
+                </textarea>
+
                 <div className={styles.actions}>
-                    <button className={styles.button}>{this.state.type.toUpperCase()}</button>
+                    <button onClick={this.onSubmitHandler} 
+                        className={styles.submitButton}>
+                        {btnText}
+                    </button>
+
+                    {this.props.onCancel ? 
+                    <button onClick={this.props.onCancel} className={styles.cancelButton}>
+                        Cancel
+                    </button> 
+                    :null}
+                    
                 </div>
             </div>
         );

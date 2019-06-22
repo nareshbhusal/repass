@@ -1,10 +1,8 @@
 import React from 'react';
 import styles from './Login.module.css';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
-axios.defaults.withCredentials = true
-import { userLogin } from '../../../actions/index' ;
-import { connect } from 'react-redux';
+import repass from '../../../repass';
+import history from '../../../history';
 
 class Login extends React.Component{
     state = {
@@ -14,21 +12,18 @@ class Login extends React.Component{
 
     onSubmit = async(e) => {
         e.preventDefault();
-        // const cors = 'https://cors-anywhere.herokuapp.com/';
         try{
-            const res = await axios.post("http://localhost:5000/login", {
-                username: this.state.username,
-                password: this.state.password
+            const { username, password } = this.state;
+            const res = await repass.post("login", {
+                username,
+                password
             });
-            const user = {
-                username: this.state.username,
-                password: this.state.password
-            }
-            this.props.userLogin(user);
-            this.props.history.push('/');
+            const loggedUser = res.data.username;
+            this.props.onSignIn(loggedUser);
+            history.goBack();
             
         } catch(err) {
-            console.log(err);
+            console.log(err.response);
         }
     }
 
@@ -52,8 +47,4 @@ class Login extends React.Component{
     }
 }
 
-const mapStateToProps = (state) => {
-    return state;
-}
-
-export default connect(mapStateToProps, { userLogin })(Login);
+export default Login;

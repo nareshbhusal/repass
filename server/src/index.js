@@ -1,7 +1,7 @@
 const express = require('express');
 const db = require('./config/database');
 const corsMiddleware = require('./middlewares/cors');
-// const cors = require('cors');
+const cors = require('cors');
 // Session and cookiesparser
 const session = require('express-session');
 const redis = require('redis');
@@ -23,7 +23,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // cors middleware
 app.use(corsMiddleware);
-// app.use(cors({ credentials: true, origin: true }));
+app.use(cors({ credentials: true, origin: true }));
 
 // express cookies
 app.use(session({
@@ -46,10 +46,9 @@ db.authenticate()
     .catch((err) => console.log(err))
 
 //Set routes
-app.get('', (req, res) => {
-    res.send(req.session);
-});
-
+app.get('', (req, res)=> {
+    return res.send(req.session)
+})
 app.use(routes);
 
 module.exports = app;
