@@ -6,10 +6,11 @@ const cors = require('cors');
 const session = require('express-session');
 const redis = require('redis');
 const RedisStore = require('connect-redis')(session);
-
+const { session_secret } = require('./config');
 const app = express();
 const uuid = require('uuid');
 const routes = require('./routes/index');
+
 
 // Create redis client
 let client = redis.createClient();
@@ -20,8 +21,6 @@ client.on('connect', () => {
 // Configure middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
-// cors middleware
 app.use(corsMiddleware);
 app.use(cors({ credentials: true, origin: true }));
 
@@ -47,7 +46,7 @@ db.authenticate()
 
 //Set routes
 app.get('', (req, res)=> {
-    return res.send(req.session)
+    return res.send('req.session')
 })
 app.use(routes);
 

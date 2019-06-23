@@ -13,29 +13,33 @@ import { connect } from 'react-redux';
 
 import './App.css';
 
-class App extends React.Component{
+const InvalidRoute = () => {
+    return (
+        <p style={{color: 'red', margin: '4rem', textAlign:'center'}}>
+            404: Invalid route
+        </p>
+    )
+}
 
-    render() {
-        const props = { ...this.props, ...this.state };
-        return (
-            <div>
-                <Router history={history}>
-                    <Switch>
-                        <Route exact path="/register" render={() => <Register onSignIn={this.props.userLogin} theme={this.props.theme.theme} />} />
-                        <Route exact path="/login" render={() => <Login onSignIn={this.props.userLogin} theme={this.props.theme.theme} />} />
-                        <Route exact path="/" render={() => <Main store={props} />} />
-                        <Route exact path="/r/:sub/create/post" component={PostForm} />
-                        <Route exact path="/r/:sub/edit/:id" component={PostForm} />
-                        <Route exact path="/r/:sub/" render={() => <Main store={props} />} />
-                        <Route exact path="/r/:sub/:id" render={() => <Main store={props} />} />
-                        <Route exact path="/u/:user/" render={() => <Main store={props} />} />
-                        <Route exact path="/create/sub" component={SubForm} />
-                        <Route exact path="/*" render={() => <p style={{color: 'red', margin: '4rem', textAlign:'center'}}>404: Invalid route</p>} />
-                    </Switch>
-                </Router>
-            </div>
-        );
-    }
+const App = (props) => {
+    const { userLogin } = props;
+    const { theme } = props.theme;
+    const pathsThatRenderMain = ["/", "/r/:sub/", "/r/:sub/:id", "/u/:user/", ]
+    const pathsThatRenderPostForm = ["/r/:sub/create/post", "/r/:sub/edit/:id"]
+    return (
+        <div>
+            <Router history={history}>
+                <Switch>
+                    <Route exact path="/register" render={() => <Register onSignIn={userLogin} theme={theme} />} />
+                    <Route exact path="/login" render={() => <Login onSignIn={userLogin} theme={theme} />} />
+                    <Route exact path={pathsThatRenderMain} render={() => <Main store={props} />} />
+                    <Route exact path={pathsThatRenderPostForm} component={PostForm} />
+                    <Route exact path="/create/sub" component={SubForm} />
+                    <Route exact path="/*" component={InvalidRoute} />
+                </Switch>
+            </Router>
+        </div>
+    );
 }
 
 const mapStateToProps = (state) => {

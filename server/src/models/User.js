@@ -1,9 +1,13 @@
 const db = require('../config/database');
 const Sequelize = require('sequelize');
 
+// listings are associated with their ids
+// subs can be subpasses(subreddits), posts or even users
+
 const user = db.define('user', {
     username: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        primaryKey: true
     },
     password: {
         type: Sequelize.STRING
@@ -47,7 +51,3 @@ const user = db.define('user', {
 })
 
 module.exports = user;
-
-
-// listings are associated with their ids
-// subs can be subpasses(subreddits), posts or even users

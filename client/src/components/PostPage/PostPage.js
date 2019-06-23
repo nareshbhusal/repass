@@ -40,7 +40,7 @@ class PostPage extends React.Component{
         const children = await this.getChildren(id);
         branch++;
         const threadElements =  (
-            <div key={id}>
+            <div key={id} className={styles.threadElement}>
                 {this.renderComment(id, branch)}
 
                 {children.length ? await Promise.all( children.map(async id => {

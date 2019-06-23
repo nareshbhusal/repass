@@ -3,7 +3,8 @@ const Sequelize = require('sequelize');
 
 const sub = db.define('sub', {
     name: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        primaryKey: true
     },
     description: {
         type: Sequelize.STRING

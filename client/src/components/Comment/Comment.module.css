@@ -26,6 +26,19 @@
     flex-direction: column;
     font-weight: bold;
     align-items: center;
+    position: relative;
+    overflow: none;
+}
+
+.votes::before{
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    height: 1000000000000%;
+    width: 100%;
+    border-left: 1.4px solid #888;
+    opacity: 0.3;
 }
 
 i{
@@ -36,6 +49,7 @@ i{
     color: #878a8c;
     cursor: pointer;
     padding: 0.25rem;
+    z-index: 2;
 }
 
 .votes i:hover{
@@ -57,6 +71,7 @@ i{
     font-size: 1.25rem;
     color: #555;
 }
+
 .time::before{
     content: ' \00B7  ';
 }

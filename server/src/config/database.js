@@ -1,6 +1,7 @@
 const Sequelize = require('sequelize');
+const { db_name, db_user, db_pass, host } = require('../config');
 
-module.exports = new Sequelize('repassdb', 'postgres','nnnsss333', {
+module.exports = new Sequelize('repassdb', 'postgres', 'nnnsss', {
     host: 'localhost',
     dialect: 'postgres',
     pool: {

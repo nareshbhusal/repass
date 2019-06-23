@@ -11,6 +11,8 @@ class PostForm extends React.Component{
         title: '',
         body:''
     }
+    bodyRef=React.createRef();
+    titleRef=React.createRef();
 
     onSubmit = async(e) => {
         e.preventDefault();
@@ -68,10 +70,11 @@ class PostForm extends React.Component{
         }
     }
 
-    onChange = (e) => {
-        const inputName = e.target.name;
-        const inputValue = e.target.value;
-        this.setState({ [inputName]: inputValue });
+    onChangeHandler = async(e) => {
+        e.persist();
+        const name = e.target.getAttribute('name');
+        let value = this[`${name}Ref`].current.innerHTML;
+        await this.setState({ [name]: value });
     }
 
     componentDidMount = async () => {
@@ -79,20 +82,33 @@ class PostForm extends React.Component{
         if (id || id ===0) {
             await this.fetchPost();
         }
+        this.bodyRef.current.innerHTML = this.state.body;
+        this.titleRef.current.innerHTML = this.state.title;
     }
 
     render(){
         const sub = this.props.match.params.sub;
         const { theme } = this.props.theme;
-
         return (
             <div className={styles.container + ` ${theme==='dark' ? styles.dark :styles.light}`}>
                 <form onSubmit={this.onSubmit} className={styles.postform + ` ${theme==='dark' ? styles.dark :styles.light}`}>
-                    <label htmlFor="title">Title</label>
-                    <input value={this.state.title} onChange={this.onChange} required name="title" type="tel" placeholder="Title of your post" />
-                    <label htmlFor="body">Body</label>
-                    <textarea value={this.state.body} onChange={this.onChange} placeholder="" name="body" placeholder="(optional)" />
-                    <input required type="submit" value={`Post to r/${sub}`} />
+                    <h1 contentEditable
+                        name="title"
+                        ref={this.titleRef} 
+                        className={styles.title}
+                        onInput={this.onChangeHandler}
+                        onBlur={this.onChangeHandler} 
+                        placeholder="Title of your post">
+                    </h1>
+                    <p contentEditable
+                        name="body"
+                        ref={this.bodyRef}
+                        className={styles.body}
+                        onInput={this.onChangeHandler}
+                        onBlur={this.onChangeHandler}
+                        placeholder="body">
+                    </p>
+                    <input type="submit" value={`Post to r/${sub}`} />
                 </form>
             </div>
         );

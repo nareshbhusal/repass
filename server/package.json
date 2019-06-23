@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node src/app.js",
-    "dev": "nodemon src/app.js -e js,env",
+    "dev": "NODE_ENV=DEVELOPMENT nodemon src/app.js -e js,env",
+    "prod": "NODE_ENV=PRODUCTION node src/app.js",
     "test": "jest --verbose --runInBand --watchAll"
   },
   "keywords": [],

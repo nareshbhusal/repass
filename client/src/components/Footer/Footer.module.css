@@ -1,0 +1,31 @@
+.container{
+    width: 100%;
+    color: #ddd;
+    background: #333;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    bottom: 0%;
+    left:0%;
+    /* margin: -5rem 0; */
+}
+.container p{
+    padding: 0.3rem;
+}
+
+.container p:nth-of-type(2){
+    background: #222;
+    padding: 0.1rem;
+    padding-top: 0;
+}
+
+.link{
+    margin-left: 0.5rem;
+    color: #eeefff;
+    text-decoration: none;
+}
+
+.link i{
+    font-size: 1.2rem;
+}

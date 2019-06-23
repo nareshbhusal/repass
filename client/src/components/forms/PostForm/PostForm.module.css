@@ -43,13 +43,34 @@ label{
     width: 100%;
 }
 
+[contentEditable]:empty:before{
+    content:attr(placeholder);
+    color: #ccc;
+    /* font-weight: lighter; */
+}
+
+[contentEditable=true]:hover{
+    cursor: text;
+}
+
+[contentEditable=true]:focus{
+    outline: none;
+}
+
 .postform input:focus {
     outline: 0.1px solid var(--color-primary);
 }
-textarea{
-    height: 22rem;
+
+.title, .body{
+    padding: 0.25rem;
+    width: 100%;
+    border: 1px solid #ddd;
+    margin: 0.5rem 0;
 }
 
+.body{
+    height: 17rem;
+}
 .postform input[type='submit']{
     background-color: var(--color-primary);
     color: #fff;

@@ -6,6 +6,7 @@ import Posts from '../../components/Posts/Posts';
 import PostPage from '../../components/PostPage/PostPage';
 import TopNav from '../../components/Header/Nav/TopNav/TopNav';
 import NotFoundError from '../../components/NotFoundError/NotFoundError';
+import Footer from '../../components/Footer/Footer';
 
 import styles from './Main.module.css';
 
@@ -159,6 +160,7 @@ class Main extends React.Component{
                     </div>
                     <TopNav className={styles.topnav} topNavContentData={topNavContentData}/>
                 </main>
+                {/* <Footer /> */}
             </div>
         );
     }

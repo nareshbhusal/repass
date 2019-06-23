@@ -175,6 +175,7 @@ class Comment extends React.Component{
                     {' '+this.getParsedTime(updatedAt)}
                 </span> : null
                 }
+                <div className={styles.verticleLine}></div>
             </div>
         );
     }
