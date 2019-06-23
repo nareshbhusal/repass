@@ -1,4 +1,4 @@
-.header{
+.container{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -9,7 +9,34 @@
     font-family: 'arial';
     position: sticky;
     background-color: #fff;
+    color: #000;
 }
+
+.container.dark{
+    background-color: #1a1a1b;
+    color: #d7dadc;
+}
+
+.container.dark .logo, 
+.container.dark .sub, 
+.container.dark .btn, 
+.container.dark .user,
+.container.dark .themeBtn{
+    color: #d7dadc;
+}
+
+.container.dark .btnLogin, 
+.container.dark .btnLogout{
+    background-color: #1a1a1b;
+    border: 1px solid #d7dadc;
+}
+
+.container.dark .btnSignup{
+    color: #1a1a1b;
+    background-color: #d7dadc;
+    border-color: #1a1a1b;
+}
+
 
 .logo{
     display: block;
@@ -31,6 +58,7 @@
     margin-left: 1.5rem;
     padding: 0.3rem 1.2rem;
 }
+
 .sub:hover{
     outline: 1px solid #ddd;
     -moz-outline-radius: 3px;
@@ -42,15 +70,12 @@
 
 .themeBtn{
     margin-right: 2rem;
+    font-size: 1.8rem;
     display: block;
-    background-color: #fff;
+    background-color: transparent;
     border: none;
     cursor: pointer;
     outline: none;
-}
-
-.themeBtn{
-    font-size: 1.8rem;
 }
 
 .btn{
@@ -100,7 +125,7 @@ button{
     outline: none;
 }
 
-@media(max-width: 500px) {
+@media(max-width: 650px) {
     .user span {
         display: none;
     }
@@ -108,6 +133,13 @@ button{
         padding: 0.5rem;
     }
     .btnLogout span{
-        /* display: none; */
+        display: none;
+    }
+
+    .sub{
+        display: none;
+    }
+    .logo{
+        margin-left: 3rem;
     }
 }

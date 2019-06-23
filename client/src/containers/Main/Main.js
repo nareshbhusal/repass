@@ -4,44 +4,35 @@ import Info from '../../components/Info/Info';
 import SubsList from '../../components/SubsList/SubsList';
 import Posts from '../../components/Posts/Posts';
 import PostPage from '../../components/PostPage/PostPage';
-
+import TopNav from '../../components/Header/Nav/TopNav/TopNav';
 import NotFoundError from '../../components/NotFoundError/NotFoundError';
 
 import styles from './Main.module.css';
-import {withRouter} from 'react-router';
-import history from '../../history';
+
+import { withRouter } from 'react-router';
 import repass from '../../repass';
+
+// helpers
+import { joinSub, determineTheme, determineDest, getLink, deleteSub, getAllSubs, fetchSubInfo, fetchUserInfo } from '../../helpers/index';
 
 class Main extends React.Component{
 
     state = {
-        user: {
-            username: null,
-            createdAt: null
-        },
-        sub: {
-            name: null,
-            info: '',
-            numOfUsers: 0,
-            isSubbed: false,
-            isMod: false
-        },
+        user: {},
+        sub: {},
         id: null,
         link: '',
         allSubs: [],
         userSubs:[],
-        modalOn: false,
         doesNotExist: false
     }
 
-    // send sub to the Posts component
-
-    fetchCurrentUser = async() => {
+    fetchLoggedUser = async() => {
         try {
             const res = await repass.get('users/me');
             const { username, subs } = res.data;
 
-            this.props.state.userLogin(username);
+            this.props.store.userLogin(username);
             if (subs) {
                 await this.setState({ userSubs: subs });
             }
@@ -51,144 +42,45 @@ class Main extends React.Component{
         }
     }
 
-    fetchAllSubs = async() => {
-        try {
-            const res = await repass.get('subs');
-            const allSubs = res.data;
-            if (!allSubs.length) {
-                return;
-            }
-            await this.setState({ allSubs });
-
-        } catch(err) {
-            alert(err.response.data.err); // alert error
-            console.log(err);
-        }
-    }
-
     join = async() => {
-        try {
-            const {sub} = this.state;
-            await repass.post(`subscribe/${sub.name}/`);
-        } catch(err) {
-            console.log(err);
-            alert(err.response.data.err); // alert error
-        }
+        const subName = this.state.sub.name;
+        await joinSub(subName);
         await this.fetchInfo();
-        await this.fetchCurrentUser();
-    }
-
-    deleteSub = async() => {
-        if (confirm('Are you sure you want to delete r/'+this.state.sub.name)) {
-            try {
-                const sub = this.state.sub.name;
-                const res = await repass.delete(`r/${sub}`);
-                console.log(res.data);
-                history.push('/');
-            } catch(err) {
-                console.log(err);
-                alert(err.response.data.err); // alert error
-            }
-        }
-    }
-
-    getLink = (sub, user, id) =>{
-        let link;
-        if (sub) {
-            link = `r/${sub}`;
-            if (id) {
-                link = `r/${sub}/${id}`;
-            }
-        } else if (user) {
-            link = `u/${user}`;
-        } else {
-            link=`r/all`;
-        }
-        return link;
-    }
-
-    determineDest = async() => {
-
-        let { sub, user, id } = this.props.match.params;
-        const link = this.getLink(sub, user, id);
-        let subName;
-
-        if (user) {
-            user= { username: user };
-            return await this.setState({ user, id, link });
-        } else if (sub) {
-            subName = sub;
-        } else {
-            subName = 'all';
-        }
-        sub = { name: subName };
-        await this.setState({ sub, id, link });
-    }
-
-    fetchSubInfo = async (subName) => {
-        try {
-            const loggedUser = this.props.state.user.username;
-            const res = await repass.get(`r/${subName}`);
-            let {description, users, isSubbed, mods, createdBy} = res.data;
-            let numOfUsers=0;
-
-            if (users) {
-                if (users.length) {
-                    numOfUsers = users.length;
-                }
-            }
-            mods = mods || [];
-
-            const isMod = mods.indexOf(loggedUser) !==-1 || createdBy === loggedUser;
-            const sub = {
-                name: subName,
-                info:description,
-                numOfUsers,
-                isSubbed,
-                isMod
-            }
-            await this.setState({ sub });
-        } catch(err) {
-            // error finding the sub
-            console.log(err.response);
-            await this.setState({ doesNotExist: true });
-        }
-    }
-
-    toggleModal = async () => {
-        await this.setState({ modalOn: !this.state.modalOn });
-    }
-
-    fetchUserInfo = async (username) => {
-        try {
-            const res = await repass.get(`u/${username}`);
-            const user = res.data;
-            console.log(user);
-            await this.setState({ user });
-        } catch(err) {
-            console.log(err);
-            await this.setState({ doesNotExist: true });
-        }
+        await this.fetchLoggedUser();
     }
 
     fetchInfo = async() => {
         const { sub, user } = this.state;
+
         const destType = sub.name ? 'sub' : 'user';
         if (destType === 'sub') {
-            await this.fetchSubInfo(sub.name);
+
+            const loggedUser = this.props.store.user.username;
+
+            const subInfo = await fetchSubInfo(sub.name, loggedUser);
+            await this.setState({ ...subInfo, user: {} });
+
         } else {
-            await this.fetchUserInfo(user.username);
+            const userInfo = await fetchUserInfo(user.username);
+            await this.setState({ ...userInfo, sub:{} });
         }
     }
 
     determineState = async() => {
+        const { theme, changeTheme } = this.props.store;
+        const currentTheme = theme.theme;
+        await determineTheme(currentTheme, changeTheme);
+
+        const dest = await determineDest(this.props.match.params);
+        await this.setState({ ...dest });
         
-        await this.determineDest();
-        await this.fetchCurrentUser();
+        await this.fetchLoggedUser();
         await this.fetchInfo();
-        await this.fetchAllSubs();
-        
+
+        const allSubs = await getAllSubs();
+        await this.setState({ allSubs });
     }
+
     componentDidMount= async()=>{
         await this.determineState();
     }
@@ -196,9 +88,10 @@ class Main extends React.Component{
     async componentDidUpdate(){
 
         const { sub, user, id } = this.props.match.params;
-        const newLink = this.getLink(sub, user, id);
+        const newLink = getLink(sub, user, id);
 
         if (this.state.link !== newLink) {
+
             await this.determineState();
         }
     }
@@ -222,38 +115,49 @@ class Main extends React.Component{
         }
     }
 
-    renderModal = () => {
-        if (!this.state.modalOn) {
-            return;
-        }
-        console.log(this.state.modalOn)
-        return (
-            <div className={styles.modal}>
-                Modal
-            </div>
-            );
+    deleteCurrentSub = async () => {
+        const { sub } = this.state;
+        await deleteSub(sub.name);
+        await this.determineState();
     }
 
     render() {
-        let { theme, changeTheme, userLogout } = this.props.state;
-        const loggedUser = this.props.state.user.username;
-        const { user, sub, id, link, allSubs, userSubs, info } = this.state;
+        let { theme, changeTheme, userLogout } = this.props.store;
+        const loggedUser = this.props.store.user.username;
+        const { user, sub, allSubs, userSubs } = this.state;
+
+        const topNavContentData = { user, sub, join: this.join, theme, deleteHandler: this.deleteCurrentSub, allSubs, userSubs };
         
         return (
             <div className={styles.container}>
-                <Header toggleModal={this.toggleModal} { ...this.state} theme={theme} changeTheme={changeTheme} loggedUser={loggedUser} userLogout={userLogout} />
-                <main>
+
+                <Header 
+                    { ...this.state} theme={theme} 
+                    changeTheme={changeTheme} 
+                    loggedUser={loggedUser} 
+                    userLogout={userLogout} 
+                    />
+
+                <main className={theme.theme === 'dark'? styles.dark : styles.light}>
                     <div className={styles.central}>
                         {this.renderCentral()}
                     </div>
+
                     <div className={styles.sidebar} >
                         {sub.name || user ? 
-                        <Info sub={sub} user={user} join={this.join} deleteHandler={this.deleteSub}/>
+                        <Info sub={sub} 
+                            user={user} 
+                            join={this.join} 
+                            theme={theme.theme} 
+                            deleteHandler={this.deleteCurrentSub}/>
                         : null
                         }
-                        <SubsList allSubs={allSubs} userSubs={userSubs}/>
+                        <SubsList 
+                            allSubs={allSubs}
+                            userSubs={userSubs}
+                            theme={theme.theme}/>
                     </div>
-                    {this.renderModal()}
+                    <TopNav className={styles.topnav} topNavContentData={topNavContentData}/>
                 </main>
             </div>
         );

@@ -1,12 +1,12 @@
 import React from 'react';
 import styles from './Comment.module.css';
 import { Link } from 'react-router-dom';
-import ta from 'time-ago';
-import repass from '../../repass';
+import { connect } from 'react-redux';
 
 import Input from '../Input/Input';
 
-import { connect } from 'react-redux';
+import repass from '../../repass';
+import ta from 'time-ago';
 
 class Comment extends React.Component{
     constructor(props){
@@ -91,32 +91,13 @@ class Comment extends React.Component{
     }
 
     getParsedTime = (time) => {
-        return ta.ago(new Date(parseInt(time)));
+        const parsedTime = ta.ago(new Date(parseInt(time)));
+        if (parsedTime.includes('ms ago')) {
+            return 'just now';
+        }
+        return parsedTime;
     }
 
-    renderInfo = () => {
-        const { user, createdAt, updatedAt } = this.state;
-        return (
-            <div className={styles.info}>
-                <Link className={styles.user} to={`/u/${this.state.user}`}>
-                    u/{user}
-                </Link>
-                <span className={styles.points}>
-                    {`${this.state.ups} points`}
-                </span>
-                <span className={styles.time}>
-                    {this.getParsedTime(createdAt)}
-                </span>
-
-                {updatedAt ? 
-                <span className={styles.time +` ${styles.editedTime}`}>
-                    edited
-                    {' '+this.getParsedTime(updatedAt)}
-                </span> : null
-                }
-            </div>
-        );
-    }
     toggleReply = async () => {
         const isReplying = this.state.isReplying || false;
         await this.setState({ isReplying: !isReplying });
@@ -171,6 +152,52 @@ class Comment extends React.Component{
         );
     }
 
+    renderInfo = () => {
+        const { user, createdAt, updatedAt, isThisOP } = this.state;
+
+        const dynamicStyle = isThisOP ? {fontWeight: 'bold'} : {fontWeight: 'normal'};
+
+        return (
+            <div className={styles.info}>
+                <Link style={dynamicStyle} className={styles.user} to={`/u/${this.state.user}`}>
+                    u/{user}
+                </Link>
+                <span className={styles.points}>
+                    {`${this.state.ups} points`}
+                </span>
+                <span className={styles.time}>
+                    {this.getParsedTime(createdAt)}
+                </span>
+
+                {updatedAt ? 
+                <span className={styles.time +` ${styles.editedTime}`}>
+                    edited
+                    {' '+this.getParsedTime(updatedAt)}
+                </span> : null
+                }
+            </div>
+        );
+    }
+
+    renderBody = () => {
+        const { theme } = this.props.theme;
+
+        if (this.state.isEditing) {
+            return <Input 
+                value={this.state.body} 
+                theme={theme}
+                onSubmit={this.editComment} 
+                onCancel={this.toggleEdit} />
+        }
+        return (
+            <React.Fragment>
+                <div className={styles.body}>
+                    {this.state.body}
+                </div>
+            </React.Fragment>
+        )
+    }
+
     renderActions = () => {
         const loggedUser = this.props.user.username;
         return (
@@ -185,32 +212,20 @@ class Comment extends React.Component{
             </div>
         );
     }
-    renderBody = () => {
-        if (this.state.isEditing) {
-            return <Input 
-                value={this.state.body} 
-                onSubmit={this.editComment} 
-                onCancel={this.toggleEdit} />
-        }
-        return (
-            <React.Fragment>
-                <div className={styles.body}>
-                    {this.state.body}
-                </div>
-            </React.Fragment>
-        )
-    }
+    
     render(){
+        const { theme } = this.props.theme;
+
         const dynamicStyle = {paddingLeft: `${1.6*this.props.branch}rem`}
         if (this.state.isHidden) {
             return (
-                <div style={dynamicStyle} className={styles.container}>
+                <div style={dynamicStyle} className={styles.container + ` ${theme === 'dark' ? styles.dark : styles.light}`}>
                     <p style={{paddingLeft: '2rem'}}>Comment deleted</p>
                 </div>
                 );
         }
         return (
-            <div style={dynamicStyle} className={styles.container}>
+            <div style={dynamicStyle} className={styles.container + ` ${theme === 'dark' ? styles.dark : styles.light}`}>
                 <div className={styles.votes}>
                     <i ref={this.upVote} onClick={()=>this.vote('up')} className={`fa fa-arrow-up up ${styles.up}`}></i>
                     <i ref={this.downVote} name="down" onClick={()=>this.vote('down')} className={`fa fa-arrow-down down ${styles.down}`}></i>
@@ -220,6 +235,7 @@ class Comment extends React.Component{
                     {this.state.isEditing? 
                     <Input value={this.state.body} 
                     onSubmit={this.editComment} 
+                    theme={theme}
                     onCancel={this.toggleEdit} /> :
                     
                     <React.Fragment >
@@ -231,6 +247,7 @@ class Comment extends React.Component{
                         <Input 
                             type="reply"
                             onSubmit={this.postReply} 
+                            theme={theme}
                             onCancel={this.toggleReply} /> 
                             : null
                         }
@@ -245,4 +262,5 @@ class Comment extends React.Component{
 const mapStateToProps = (state) => {
     return state;
 }
+
 export default connect(mapStateToProps, { })(Comment);

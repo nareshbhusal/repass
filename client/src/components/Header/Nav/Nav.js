@@ -1,12 +1,12 @@
 import React from 'react';
 import styles from './Nav.module.css'
+
 import { Link } from 'react-router-dom';
 
 class Nav extends React.Component{
 
     changeTheme = () => {
         this.props.changeTheme();
-        alert('Dark theme not yet implemented, maybe next release'); // alert error
     }
 
     renderThemeBtn = () => {
@@ -22,7 +22,6 @@ class Nav extends React.Component{
     }
 
     logoutHandler = async () => {
-        console.log('logout');
         await this.props.userLogout();
     }
 
@@ -54,8 +53,10 @@ class Nav extends React.Component{
         );
     }
     render() {
+
+        const { theme } = this.props.theme;
         return (
-            <div className={styles.header}>
+            <div className={styles.container + ` ${theme === 'dark'? styles.dark : styles.light}`}>
                 <div className={styles.left}>
                     <Link to="/" className={styles.logo}>
                         repass
@@ -68,6 +69,7 @@ class Nav extends React.Component{
                     {this.renderThemeBtn()}
                     {this.renderSignInBtns()}
                 </div>
+
             </div>
         );
     }

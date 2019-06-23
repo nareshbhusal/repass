@@ -1,11 +1,31 @@
 const Listing = require('../../models/Listing');
 
+const isThisOP = async (listing) => {
+    try {
+        if (!listing.parent){
+            // this is a post
+            return;
+        }
+        const originalPost = await Listing.findOne({
+            where: {
+                id: listing.originalPost
+            }
+        });
+        if (originalPost.user === listing.user) {
+            return true;
+        }
+        return false;
+    } catch(err) {
+        console.log(err);
+        return false;
+    }
+}
 
 const getListing = async (req, res) => {
     
     try {
         const { id } = req.params;
-        const listing = await Listing.findOne({
+        let listing = await Listing.findOne({
             where: {
                 id
             }
@@ -30,10 +50,14 @@ const getListing = async (req, res) => {
                 }
             }
         }
+        const isOP = await isThisOP(listing);
+
+        listing.isThisOP = isOP;
+
         return res.status(200).send(listing);
     } catch(err) {
         console.log(err);
-        return res.status(500).send({err: 'Listing not found'});
+        return res.status(500).send({err: 'Server error while getting listing!'});
     }
 }
 

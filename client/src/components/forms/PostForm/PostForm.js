@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from './PostForm.module.css';
 import history from '../../../history';
+import { connect } from 'react-redux';
 import repass from '../../../repass';
 
 // Used as form for both creating and editing post
@@ -82,16 +83,24 @@ class PostForm extends React.Component{
 
     render(){
         const sub = this.props.match.params.sub;
+        const { theme } = this.props.theme;
+
         return (
-            <form onSubmit={this.onSubmit} className={styles.postform}>
-                <label htmlFor="title">Title</label>
-                <input value={this.state.title} onChange={this.onChange} required name="title" type="tel" placeholder="Title of your post" />
-                <label htmlFor="body">Body</label>
-                <textarea value={this.state.body} onChange={this.onChange} placeholder="" name="body" placeholder="(optional)" />
-                <input required type="submit" value={`Post to r/${sub}`} />
-            </form>
+            <div className={styles.container + ` ${theme==='dark' ? styles.dark :styles.light}`}>
+                <form onSubmit={this.onSubmit} className={styles.postform + ` ${theme==='dark' ? styles.dark :styles.light}`}>
+                    <label htmlFor="title">Title</label>
+                    <input value={this.state.title} onChange={this.onChange} required name="title" type="tel" placeholder="Title of your post" />
+                    <label htmlFor="body">Body</label>
+                    <textarea value={this.state.body} onChange={this.onChange} placeholder="" name="body" placeholder="(optional)" />
+                    <input required type="submit" value={`Post to r/${sub}`} />
+                </form>
+            </div>
         );
     }
 }
 
-export default PostForm;
+const mapStateToProps = (state) => {
+    return state;
+}
+
+export default connect(mapStateToProps, {  })(PostForm);

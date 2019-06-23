@@ -5,6 +5,8 @@ import repass from '../../../repass';
 import ta from 'time-ago';
 import { connect } from 'react-redux';
 
+import { fetchPost } from '../../../helpers/index';
+
 // This is just a postItem, not directly accessible via link
 // only through PostPage or (Sub)Posts
 
@@ -29,35 +31,6 @@ class Post extends React.Component{
     upVote=React.createRef();
     downVote=React.createRef();
 
-    fetchPost = async() => {
-        try {
-            const { id } = this.props;
-            const res = await repass.get(`listing/${id}`);
-            const {data} = res;
-            if (!data.title) {
-                // no title signifies deleted post
-                return await this.setState({ isHidden: true });
-            }
-            data.ups= data.ups.length;
-            data.comments=0;
-            data.url=`/r/${data.sub}/${id}`;
-            if (data.downs) {
-                data.ups = data.ups - data.downs.length;
-            }
-            if (data.children){
-                data.comments=data.children.length;
-            }
-            if (data.originalPost) {
-                data.url = `/r/${data.sub}/${data.originalPost}#${id}`;
-            }
-            await this.setState({ ...data });
-
-        } catch(err) {
-            console.log(err.response);
-        }
-        await this.isPostDeleted();
-    }
-
     isPostDeleted= async () => {
         if (this.state.title) {
             return false;
@@ -70,7 +43,9 @@ class Post extends React.Component{
         try {
             const {id} = this.props;
             await repass.post(`${id}/vote/${type}`);
-            await this.fetchPost();
+
+            const post = await fetchPost(id);
+            await this.setState({ ...post });
         } catch(err) {
             console.log(err);
             alert(err.response.data.err); // alert error
@@ -93,13 +68,22 @@ class Post extends React.Component{
         }
     }
 
-    componentDidMount = async () => {
-        await this.fetchPost();
-        this.renderVote();
-    }
-
     getParsedTime = () => {
         return ta.ago(new Date(parseInt(this.state.createdAt)));
+    }
+
+    deletePost = async() => {
+        if (confirm('Are you sure you want to delete this post')){
+            try {
+                const { sub, id } = this.state;
+                const res = await repass.delete(`r/${sub}/${id}`);
+                console.log(res.data);
+                await this.setState({ isHidden: true });
+            } catch(err) {
+                console.log(err);
+                alert(err.response.data.err); // alert error
+            }
+        }
     }
 
     renderInfo = () => {
@@ -120,20 +104,6 @@ class Post extends React.Component{
                 </span>
             </div>
         );
-    }
-
-    deletePost = async() => {
-        if (confirm('Are you sure you want to delete this post')){
-            try {
-                const { sub, id } = this.state;
-                const res = await repass.delete(`r/${sub}/${id}`);
-                console.log(res.data);
-                await this.setState({ isHidden: true });
-            } catch(err) {
-                console.log(err);
-                alert(err.response.data.err); // alert error
-            }
-        }
     }
 
     renderCtrlBtns = () => {
@@ -180,14 +150,24 @@ class Post extends React.Component{
             </React.Fragment>
         );
     }
+
+    componentDidMount = async () => {
+        const { id } = this.props;
+        
+        const post = await fetchPost(id);
+        await this.setState({ ...post });
+        await this.isPostDeleted();
+        this.renderVote();
+    }
+
     render(){
         if (this.state.isHidden) {
             return null;
         }
         const dynamicClass = this.props.detailed ? `${styles.post} ${styles.detailed}` : `${styles.post}`;
-
+        const theme = this.props.theme.theme;
         return (
-            <div ref={this.postRef} className={dynamicClass} >
+            <div ref={this.postRef} className={dynamicClass + ` ${theme === 'dark' ? styles.dark : styles.light}`} >
                 <div className={styles.votes}>
                     <i ref={this.upVote} onClick={()=>this.vote('up')} className={`fa fa-arrow-up up`}></i>
                         {this.state.ups}

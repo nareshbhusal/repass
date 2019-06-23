@@ -1,17 +1,34 @@
 
+.container{
+    height: 100vh;
+    width: 100vw;
+    position: absolute;
+    top:0;
+    left:0;
+}
+
 .login{
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 50%;
-    min-width: 300px;
+    width: 75%;
+    min-width: 320px;
+    max-width: 750px;
     margin: 5rem auto;
     padding: 3rem 2.5rem;
     font-size: 1.75rem;
     font-family: "Roboto";
-    /* background-color: #fff; */
     box-shadow: 0 0 13px 0 rgba(160, 131, 131, 0.13), 0 2px 3px 0 rgba(0, 0, 0, 0.24);
+}
+
+.container.dark{
+    background-color: #111;
+}
+
+.login.dark{
+    background-color: #777;
+    color: rgb(238, 236, 236);
 }
 
 .login input {

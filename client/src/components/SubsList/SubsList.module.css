@@ -4,6 +4,24 @@
     margin: 2rem 0;
     padding: 0.5rem;
     border-radius: 3px;
+    max-width: 100%;
+}
+
+.allSubs.dark, 
+.userSubs.dark{
+    background: #1a1a1b;
+    color: #d7dadc;
+}
+
+.allSubs.dark .btn{
+    background: #d7dadc;
+    color: #000;
+}
+
+
+.allSubs.dark .sub, 
+.userSubs.dark .sub{
+    color: #d7dadc;
 }
 
 .head{
@@ -35,7 +53,15 @@
     border-radius: 5px;
     cursor: pointer;
 }
+
 .btn:hover{
     opacity: 0.85;
     text-decoration: none;
+}
+
+@media(max-width: 650px) {
+    .container {
+        width: 99%;
+        max-width: 530px;
+    }
 }

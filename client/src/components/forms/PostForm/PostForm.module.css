@@ -1,4 +1,12 @@
 
+.container{
+    height: 100vh;
+    width: 100vw;
+    position: absolute;
+    top:0;
+    left:0;
+}
+
 .postform{
     display: flex;
     flex-direction: column;
@@ -12,6 +20,15 @@
     font-size: 1.75rem;
     font-family: "Roboto";
     box-shadow: 0 0 13px 0 rgba(160, 131, 131, 0.13), 0 2px 3px 0 rgba(0, 0, 0, 0.24);
+}
+
+.container.dark{
+    background-color: #111;
+}
+
+.postform.dark{
+    background-color: #777;
+    color: rgb(238, 236, 236);
 }
 
 .postform input, textarea {

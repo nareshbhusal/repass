@@ -1,0 +1,181 @@
+.post{
+    border: 1px solid #ccc;
+    /* margin: 1rem; */
+    display: flex;
+    background-color: #fff;
+    border-bottom: none;
+}
+
+.post.detailed {
+    border: none;
+    background-color: transparent;
+}
+.post.detailed .body {
+    display: block;
+}
+.post.detailed .votes{
+    background-color: transparent;
+}
+
+.post.dark{
+    background-color: rgb(26, 26, 27);
+    color: rgb(215, 218, 220);
+}
+
+.post.dark .votes{
+    background-color: rgb(22, 22, 23);
+}
+.post.dark .votes i:hover, .post.dark .comment:hover{
+    background-color: rgba(129,131,132,0.5);;
+}
+/* rgb(215, 218, 220); */
+.post:last-of-type{
+    border-bottom: 1px solid #ccc;
+}
+
+.post > *{
+    padding: 1rem;
+}
+.votes{
+    display: flex;
+    flex-direction: column;
+    background-color: #f7f9fa;
+    font-weight: bold;
+    align-items: center;
+}
+
+i{
+    margin: 0 0.15rem;
+}
+
+.votes i{
+    color: rgb(129, 131, 132);
+    cursor: pointer;
+    padding: 0.25rem;
+}
+
+.btnEdit, .btnDelete{
+    border: none;
+    background-color: #fff;
+    padding: 0.5rem;
+    margin: 0 0.25rem;
+}
+
+.btnEdit:hover{
+    color: #fff;
+    background-color: blue;
+}
+.btnEdit{
+    color: blue;
+    background-color: #fff;
+}
+
+.btnDelete{
+    color: red;
+}
+.btnDelete:hover{
+    background-color: red;
+    color: #fff;
+}
+
+.votes i:hover, .votes i.--active{
+    background-color: rgb(226, 224, 224);
+}
+i.up:hover, i.up.--active{
+    color: tomato;
+}
+
+i.down:hover, i.down.--active{
+    color: blue;
+}
+
+.info{
+    display: flex;
+    flex-direction: row;
+}
+
+.sub{
+    margin: 0 0.3rem;
+    font-size: 1.5rem;
+    color: #000;
+    font-weight: bold;
+}
+
+.post.dark .sub{
+    color: rgb(215, 218, 220);
+}
+
+.post.dark .postedBy, .post.dark .time, .post.dark .user{
+    color: rgb(115, 117, 118);
+}
+
+.postedBy, .time{
+    margin: 0 0.3rem;
+    font-size: 1.37rem;
+    color: #555;
+}
+.user{
+    color: #555;
+}
+
+.postedBy a{
+    margin: 0.35rem;
+}
+.sub, .user{
+    text-decoration: none;
+}
+.sub:hover, .user:hover{
+    text-decoration: underline;
+}
+
+.title{
+    font-size: 1.9rem;
+    font-family: Arial, Helvetica, sans-serif;
+    letter-spacing: 0.1px;
+    margin: 0.4rem 0;
+    margin-bottom: 0.6rem;
+}
+
+.body{
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 1rem 0;
+    display: none;
+    white-space: pre-line;
+    word-wrap: break-word;
+}
+
+.actions{
+    font-size: 1.45rem;
+    margin-top: 1rem;
+}
+
+.comment{
+    color: rgb(129, 131, 132);
+    font-weight: bold;
+    font-size: 1.35rem;
+    margin-right: 0.275rem;
+    padding: 0.5rem;
+    padding-left: 0;
+    border-radius: 3px;
+    outline: none;
+    cursor: pointer;
+    background-color: transparent;
+    text-decoration: none;
+    border: none;
+}
+
+.comment:hover {
+    background: rgb(226, 224, 224);
+}
+
+@media(max-width: 500px) {
+    .post > *{
+        padding: 0.6rem;
+    }
+    .body{
+        margin: 0.25rem 0;
+    }
+    .comment{
+        padding: 0.25rem;
+    }
+}

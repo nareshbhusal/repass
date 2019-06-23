@@ -4,6 +4,7 @@ import Comment from '../Comment/Comment';
 import Post from '../Posts/Post/Post';
 import Input from '../Input/Input';
 import repass from '../../repass';
+import {connect} from 'react-redux';
 
 import NotFoundError from '../NotFoundError/NotFoundError';
 
@@ -89,15 +90,17 @@ class PostPage extends React.Component{
     }
 
     render() {
+        const theme = this.props.theme.theme;
+
         const { id, sub } = this.props;
         if (this.state.doesNotExist) {
             return <NotFoundError id={id} />
         }
         return (
-            <div className={styles.postpage}>
-                <Post updatePostPage={this.updatePostPage} sub={sub} id={id} detailed/>
+            <div className={styles.postpage + ` ${theme === 'dark' ? styles.dark : styles.light}`}>
+                <Post className={theme === 'dark' ? styles.dark : styles.light} updatePostPage={this.updatePostPage} sub={sub} id={id} detailed/>
                 <div className={styles.input}>
-                    <Input onSubmit={this.submitComment} />
+                    <Input onSubmit={this.submitComment} theme={theme} />
                 </div>
                 {this.state.threadElements}
             </div>
@@ -105,4 +108,8 @@ class PostPage extends React.Component{
     }
 }
 
-export default PostPage;
+const mapStateToProps = (state) => {
+    return state;
+}
+
+export default connect(mapStateToProps, {  })(PostPage);

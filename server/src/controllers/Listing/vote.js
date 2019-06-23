@@ -1,7 +1,4 @@
-const User = require('../../models/User');
-const Listing = require('../../models/Listing');
 const updateListing = require('./updateListing');
-const updateUser = require('../user/updateUser');
 const getVote = require('./getVote');
 
 // Modify the state of vote on a listing for user

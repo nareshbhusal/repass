@@ -4,7 +4,9 @@ const authRouter = require('./auth/index');
 const subRouter = require('./sub/index');
 const usersRouter = require('./users/index');
 const listingRouter = require('./listing/index');
+const themeRouter = require('./theme/index');
 
+router.use('/', themeRouter);
 router.use('/', authRouter);
 router.use('/', listingRouter);
 router.use('/', subRouter);

@@ -7,8 +7,9 @@ const parseDate = (timestamp) => {
 }
 
 const info = (props) =>{
+        // console.log(props);
+        const { sub, user, deleteHandler, theme } = props;
 
-        const { sub, user, deleteHandler } = props;
         let {name, isSubbed, numOfUsers, info, isMod} = props.sub;
         const joinBtnText = isSubbed ? 'Joined' : 'Join';
         const head = name ? 'Community Details' : 'User info';
@@ -25,7 +26,7 @@ const info = (props) =>{
             karma = user.karma || 0;
         }
         return (
-            <div className={styles.info}>
+            <div className={styles.container + ` ${theme === 'dark' ? styles.dark : styles.light}`}>
                 <p className={styles.head}>
                     {head}
                 </p>

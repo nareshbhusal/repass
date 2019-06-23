@@ -17,6 +17,18 @@
     background-color: transparent;
 }
 
+.post.dark{
+    background-color: rgb(26, 26, 27);
+    color: rgb(215, 218, 220);
+}
+
+.post.dark .votes{
+    background-color: rgb(22, 22, 23);
+}
+.post.dark .votes i:hover, .post.dark .comment:hover{
+    background-color: rgba(129,131,132,0.5);;
+}
+/* rgb(215, 218, 220); */
 .post:last-of-type{
     border-bottom: 1px solid #ccc;
 }
@@ -37,14 +49,14 @@ i{
 }
 
 .votes i{
-    color: #878a8c;
+    color: rgb(129, 131, 132);
     cursor: pointer;
     padding: 0.25rem;
 }
 
 .btnEdit, .btnDelete{
     border: none;
-    background-color: #fff;
+    background-color: transparent;
     padding: 0.5rem;
     margin: 0 0.25rem;
 }
@@ -55,7 +67,6 @@ i{
 }
 .btnEdit{
     color: blue;
-    background-color: #fff;
 }
 
 .btnDelete{
@@ -87,6 +98,14 @@ i.down:hover, i.down.--active{
     font-size: 1.5rem;
     color: #000;
     font-weight: bold;
+}
+
+.post.dark .sub{
+    color: rgb(215, 218, 220);
+}
+
+.post.dark .postedBy, .post.dark .time, .post.dark .user{
+    color: rgb(115, 117, 118);
 }
 
 .postedBy, .time{
@@ -130,7 +149,7 @@ i.down:hover, i.down.--active{
 }
 
 .comment{
-    color: #878a8c;
+    color: rgb(129, 131, 132);
     font-weight: bold;
     font-size: 1.35rem;
     margin-right: 0.275rem;

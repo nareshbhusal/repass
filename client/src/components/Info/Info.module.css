@@ -1,13 +1,24 @@
-.info{
+.container{
     border-top-left-radius: 6px;
     border-top-right-radius: 6px;
     height: 100%;
     flex: 1;
     background-color: #fff;
+    color: #000;
     font-family: Arial, Helvetica, sans-serif;
 }
 
-.info > *{
+.container.dark, .container.dark .head{
+    background-color: #1a1a1b;
+    color: #d7dadc;
+}
+
+.container.dark button, .container.dark .btns a{
+    background-color: #d7dadc;
+    color: #1a1a1b;
+}
+
+.container > *{
     padding: 0.6rem;
 }
 
@@ -18,11 +29,16 @@
     border-top-right-radius: 6px;
 }
 
+.container.dark .sub {
+    color: #d7dadc;
+}
+
 .sub{
     color: #000;
     text-decoration: none;
     padding: 1rem;
     display: block;
+    font-size: 1.75rem;
 }
 .numOfUsers, .memberSince, .karma{
     font-size: 1.35rem;
@@ -35,6 +51,7 @@
 
 .btns button, .btns a{
     background-color: #444e59;
+    text-transform: capitalize;
     color: #fff;
     border: none;
     text-align: center;
@@ -58,4 +75,11 @@
     border: 1px solid red;
     color: #fff;
     background-color: red;
+}
+
+@media(max-width: 650px) {
+    .container{
+        width: 100%;
+        max-width: 530px;
+    }
 }

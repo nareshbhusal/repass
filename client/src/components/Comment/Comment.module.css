@@ -4,6 +4,14 @@
     height: auto;
 }
 
+.container.dark{
+    color: #d4d7d9;
+}
+
+.container.dark .votes i:hover{
+    background: #444;
+}
+
 .container > *{
     padding: 1rem;
 }
@@ -81,31 +89,28 @@ i{
     display: flex;
 }
 
-.comment, .save{
+.comment{
     color: #878a8c;
     cursor: pointer;
     background-color: transparent;
     border: none;
     font-weight: bold;
     margin-right: 0.275rem;
-    padding: 0.275rem;
     border-radius: 3px;
     outline: none;
-}
-.comment{
+
     text-decoration: none;
     padding: 0.5rem;
     padding-left: 0;
 }
 
-.comment:hover,
- .save:hover{
+.comment:hover{
     background: rgb(226, 224, 224);
 }
 
 .btnEdit, .btnDelete{
     border: none;
-    background-color: #fff;
+    background-color: transparent;
     padding: 0.5rem;
     margin: 0 0.25rem;
 }
@@ -116,7 +121,6 @@ i{
 }
 .btnEdit{
     color: blue;
-    background-color: #fff;
 }
 
 .btnDelete{

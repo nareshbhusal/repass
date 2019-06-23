@@ -35,15 +35,18 @@ class Login extends React.Component{
     }
 
     render(){
+        const theme = this.props.theme;
         return (
-            <form onSubmit={this.onSubmit} className={styles.login}>
-                <input value={this.state.username}  onChange={this.onChange} required placeholder="username" name="username" type="text" />
-                <input value={this.state.password} onChange={this.onChange} required placeholder="password" name="password" type="password" />
-                <input required type="submit" value="Login" />
-                <p className={styles.message}>
-                    Not registered? <Link className={styles.inlineBtn} to="/register">Create an account</Link>
-                </p>
-            </form>
+            <div className={styles.container + ` ${theme==='dark' ? styles.dark : styles.light}`}>
+                <form onSubmit={this.onSubmit} className={styles.login + ` ${theme==='dark' ? styles.dark : styles.light}`}>
+                    <input value={this.state.username}  onChange={this.onChange} required placeholder="username" name="username" type="text" />
+                    <input value={this.state.password} onChange={this.onChange} required placeholder="password" name="password" type="password" />
+                    <input required type="submit" value="Login" />
+                    <p className={styles.message}>
+                        Not registered? <Link className={styles.inlineBtn} to="/register">Create an account</Link>
+                    </p>
+                </form>
+            </div>
         );
     }
 }

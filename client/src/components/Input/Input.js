@@ -22,10 +22,10 @@ class Input extends React.Component{
         }
     }
     render() {
-
-        const btnText = this.props.type==='reply' ? 'Reply' : 'Comment';
+        const { type, theme } = this.props;
+        const btnText = type==='reply' ? 'Reply' : 'Comment';
         return (
-            <div className={styles.input}>
+            <div className={styles.input + ` ${theme === 'dark' ? styles.dark : styles.light}`}>
                 <textarea 
                     autoFocus={this.props.type === 'reply'}
                     name="body" 

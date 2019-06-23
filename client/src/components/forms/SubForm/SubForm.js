@@ -1,7 +1,8 @@
 import React from 'react';
 import styles from './SubForm.module.css';
 import history from '../../../history';
-import axios from 'axios';
+import { connect } from 'react-redux';
+import repass from '../../../repass';
 
 class SubForm extends React.Component{
     state = {
@@ -12,7 +13,7 @@ class SubForm extends React.Component{
     onSubmit = async(e) => {
         e.preventDefault();
         try{
-            const res = await axios.post("http://localhost:5000/subs/create", {
+            const res = await repass.post("subs/create", {
                 name: this.state.title,
                 description: this.state.description
             });
@@ -32,16 +33,23 @@ class SubForm extends React.Component{
     }
 
     render(){
+        const theme = this.props.theme.theme;
         return (
-            <form onSubmit={this.onSubmit} className={styles.subform}>
-                <label htmlFor="title">Name</label>
-                <input value={this.state.title} onChange={this.onChange} required placeholder="name of the sub" name="title" type="text" />
-                <label htmlFor="description">About</label>
-                <textarea value={this.state.description} onChange={this.onChange} required placeholder="about this sub" name="description" />
-                <input required type="submit" value="Submit" />
-            </form>
+            <div className={styles.container + ` ${theme==='dark' ? styles.dark :styles.light}`}>
+                <form onSubmit={this.onSubmit} className={styles.subform + ` ${theme==='dark' ? styles.dark :styles.light}`}>
+                    <label htmlFor="title">Name</label>
+                    <input value={this.state.title} onChange={this.onChange} required placeholder="name of the sub" name="title" type="text" />
+                    <label htmlFor="description">About</label>
+                    <textarea value={this.state.description} onChange={this.onChange} required placeholder="about this sub" name="description" />
+                    <input required type="submit" value="Submit" />
+                </form>
+            </div>
         );
     }
 }
 
-export default SubForm;
+const mapStateToProps = (state) => {
+    return state;
+}
+
+export default connect(mapStateToProps, {  })(SubForm);
