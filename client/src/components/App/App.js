@@ -1,5 +1,5 @@
 import React from 'react';
-import { Router, Route } from 'react-router-dom';
+import { Router, Route, Switch } from 'react-router-dom';
 import history from '../../history';
 import Register from '../forms/Register/Register';
 import Login from '../forms/Login/Login';
@@ -17,17 +17,20 @@ class App extends React.Component{
         return (
             <div>
                 <Router history={history}>
-                    <Route exact path="/register" render={() => <Register onSignIn={this.props.userLogin} />} />
-                    <Route exact path="/login" render={() => <Login onSignIn={this.props.userLogin} />} />
-                    <Route exact path="/" render={() => <Main state={props} />} />
-                    <Route exact path="/r/:sub/create/post" component={PostForm} />
-                    <Route exact path="/r/:sub/edit/:id" component={PostForm} />
-                    <Route exact path="/r/:sub/" render={() => <Main state={props} />} />
+                    <Switch>
+                        <Route exact path="/register" render={() => <Register onSignIn={this.props.userLogin} />} />
+                        <Route exact path="/login" render={() => <Login onSignIn={this.props.userLogin} />} />
+                        <Route exact path="/" render={() => <Main state={props} />} />
+                        <Route exact path="/r/:sub/create/post" component={PostForm} />
+                        <Route exact path="/r/:sub/edit/:id" component={PostForm} />
+                        <Route exact path="/r/:sub/" render={() => <Main state={props} />} />
 
-                    <Route exact path="/r/:sub/:id" render={() => <Main state={props} />} />
+                        <Route exact path="/r/:sub/:id" render={() => <Main state={props} />} />
 
-                    <Route exact path="/u/:user/" render={() => <Main state={props} />} />
-                    <Route exact path="/create/sub" component={SubForm} />
+                        <Route exact path="/u/:user/" render={() => <Main state={props} />} />
+                        <Route exact path="/create/sub" component={SubForm} />
+                        <Route exact path="/*" render={() => <p style={{color: 'red', margin: '4rem', textAlign:'center'}}>404: Invalid route</p>} />
+                    </Switch>
                 </Router>
             </div>
         );

@@ -14,6 +14,9 @@ const user = db.define('user', {
     listings: {
         type: Sequelize.ARRAY(Sequelize.INTEGER)
     },
+    karma: {
+        type: Sequelize.INTEGER
+    },
     subs: {
         type: Sequelize.ARRAY(Sequelize.STRING)
     },

@@ -31,7 +31,7 @@ const getVote = async(listingId, username) => {
     } else if (inUpvotesList) {
         return { self: 1, ...votesData };
     } else {
-        return { self: null, ...votesData };;
+        return { self: null, ...votesData };
     }
 }
 

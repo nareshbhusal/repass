@@ -15,11 +15,14 @@ const info = (props) =>{
 
         let link;
         let memberSince;
+        let karma;
+
         if (sub.name) {
             link= `/r/${sub.name}`;
         } else {
             link = `/u/${user.username}`;
             memberSince = parseDate(user.createdAt);
+            karma = user.karma || 0;
         }
         return (
             <div className={styles.info}>
@@ -31,7 +34,10 @@ const info = (props) =>{
                 </Link>
                 {name ? 
                     <p className={styles.numOfUsers}>{numOfUsers} users</p> : 
-                    <p className={styles.memberSince}>Member since: {memberSince}</p>
+                    <>
+                        <p className={styles.memberSince}>Member since: {memberSince}</p>
+                        <p className={styles.karma}>Karma: {karma}</p>
+                    </>
                 }
                 <p className={styles.info}>
                     {info}

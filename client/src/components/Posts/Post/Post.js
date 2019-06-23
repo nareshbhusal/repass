@@ -72,7 +72,7 @@ class Post extends React.Component{
             await repass.post(`${id}/vote/${type}`);
             await this.fetchPost();
         } catch(err) {
-            console.log(err.response.data);
+            console.log(err);
             alert(err.response.data.err); // alert error
         }
         this.renderVote();
