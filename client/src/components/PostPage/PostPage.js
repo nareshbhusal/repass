@@ -6,14 +6,11 @@ import Input from '../Input/Input';
 import repass from '../../repass';
 import {connect} from 'react-redux';
 
-import NotFoundError from '../NotFoundError/NotFoundError';
-
 class PostPage extends React.Component{
 
     state = {
         comments: [],
         threadElements: [],
-        doesNotExist: false
     }
 
     renderComment = (id, branch) => {
@@ -22,16 +19,6 @@ class PostPage extends React.Component{
             return null;
         }
         return <Comment key={id} id={id} branch={branch} updatePostPage={this.updatePostPage} />
-    }
-
-    doesPostExist = async () => {
-        try {
-            const id = this.props.id;
-
-            await repass.get(`listing/${id}`);
-        } catch(err) {
-            await this.setState({ doesNotExist: true });
-        }
     }
 
     getThreadElements = async (id, branch=-2) => {
@@ -44,7 +31,6 @@ class PostPage extends React.Component{
                 {this.renderComment(id, branch)}
 
                 {children.length ? await Promise.all( children.map(async id => {
-                    
                     return await this.getThreadElements(id, branch)
                 })) : null
                 }
@@ -57,11 +43,16 @@ class PostPage extends React.Component{
         try {
             const res = await repass.get(`listing/${id}`);
             const children = res.data.children || [];
+            const { deleted } = res.data;
+            await this.setState({ deleted });
+            if (deleted){
+                throw "post deleted!"
+            }
             return children;
 
         } catch(err) {
+            return [];
         }
-        return [];
     }
 
     submitComment = async(body) => {
@@ -80,7 +71,6 @@ class PostPage extends React.Component{
     }
 
     updatePostPage = async () => {
-        await this.doesPostExist();
         const threadElements = await this.getThreadElements(this.props.id);
         await this.setState({ threadElements });
     }
@@ -91,18 +81,23 @@ class PostPage extends React.Component{
 
     render() {
         const theme = this.props.theme.theme;
-
         const { id, sub } = this.props;
-        if (this.state.doesNotExist) {
-            return <NotFoundError id={id} />
-        }
+        const { deleted } = this.state;
         return (
             <div className={styles.postpage + ` ${theme === 'dark' ? styles.dark : styles.light}`}>
-                <Post className={theme === 'dark' ? styles.dark : styles.light} updatePostPage={this.updatePostPage} sub={sub} id={id} detailed/>
-                <div className={styles.input}>
-                    <Input onSubmit={this.submitComment} theme={theme} />
-                </div>
-                {this.state.threadElements}
+                {deleted ? 
+                <React.Fragment>
+                    <p style={{padding: '0.5rem'}}>Post not found!</p>
+                </React.Fragment>
+                :
+                <React.Fragment>
+                    <Post className={theme === 'dark' ? styles.dark : styles.light} updatePostPage={this.updatePostPage} sub={sub} id={id} detailed/>
+                    <div className={styles.input}>
+                        <Input onSubmit={this.submitComment} theme={theme} />
+                    </div>
+                    {this.state.threadElements}
+                </React.Fragment>
+                }
             </div>
         );
     }

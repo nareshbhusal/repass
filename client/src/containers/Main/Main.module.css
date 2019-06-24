@@ -2,8 +2,13 @@
     background-color: #dae0e6;
     overflow: hidden;
     position: relative;
-    min-height: 120vh;
+    min-height: 110vh;
 }
+
+.container.dark{
+    background-color: #030303;
+}
+
 main {
     display: flex;
     justify-content: space-evenly;

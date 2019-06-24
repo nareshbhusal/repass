@@ -1,14 +1,14 @@
 .container{
+    position: absolute;
+    bottom: 0%;
+    left:0%;
     width: 100%;
     color: #ddd;
     background: #333;
     text-align: center;
     display: flex;
     flex-direction: column;
-    position: absolute;
-    bottom: 0%;
-    left:0%;
-    /* margin: -5rem 0; */
+    margin: -1rem 0;
 }
 .container p{
     padding: 0.3rem;

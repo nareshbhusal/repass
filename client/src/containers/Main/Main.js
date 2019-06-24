@@ -7,14 +7,13 @@ import PostPage from '../../components/PostPage/PostPage';
 import TopNav from '../../components/Header/Nav/TopNav/TopNav';
 import NotFoundError from '../../components/NotFoundError/NotFoundError';
 import Footer from '../../components/Footer/Footer';
-
 import styles from './Main.module.css';
 
 import { withRouter } from 'react-router';
 import repass from '../../repass';
 
 // helpers
-import { joinSub, determineTheme, determineDest, getLink, deleteSub, getAllSubs, fetchSubInfo, fetchUserInfo } from '../../helpers/index';
+import { joinSub, determineTheme, determineDest, deleteSub, getAllSubs, fetchSubInfo, fetchUserInfo } from '../../helpers/index';
 
 class Main extends React.Component{
 
@@ -25,7 +24,7 @@ class Main extends React.Component{
         link: '',
         allSubs: [],
         userSubs:[],
-        doesNotExist: false
+        doesNotExist: false,
     }
 
     fetchLoggedUser = async() => {
@@ -55,9 +54,7 @@ class Main extends React.Component{
 
         const destType = sub.name ? 'sub' : 'user';
         if (destType === 'sub') {
-
             const loggedUser = this.props.store.user.username;
-
             const subInfo = await fetchSubInfo(sub.name, loggedUser);
             await this.setState({ ...subInfo, user: {} });
 
@@ -71,13 +68,11 @@ class Main extends React.Component{
         const { theme, changeTheme } = this.props.store;
         const currentTheme = theme.theme;
         await determineTheme(currentTheme, changeTheme);
+        const dest = await determineDest(this.props);
+        await this.setState({ ...dest, doesNotExist: false });
 
-        const dest = await determineDest(this.props.match.params);
-        await this.setState({ ...dest });
-        
         await this.fetchLoggedUser();
         await this.fetchInfo();
-
         const allSubs = await getAllSubs();
         await this.setState({ allSubs });
     }
@@ -87,30 +82,25 @@ class Main extends React.Component{
     }
 
     async componentDidUpdate(){
-
-        const { sub, user, id } = this.props.match.params;
-        const newLink = getLink(sub, user, id);
-
-        if (this.state.link !== newLink) {
-
+        const { link } = determineDest(this.props);
+        if (this.state.link !== link) {
             await this.determineState();
         }
     }
 
     renderCentral = () => {
         // if id is in the route params, then it is a thread
-        const {id, user, sub } = this.state;
+        const {id, user, sub, search, t, doesNotExist, link } = this.state;
+        const pathProps = { id, search, user, t, link };
+        const { theme } = this.props.store;
         const isThread = Boolean(id);
         // if the user or sub doesn't exist
-        if (this.state.doesNotExist) {
+        if (doesNotExist) {
             return <NotFoundError { ...this.state }/>
-        }
-        if (isThread) {
+        } else if (isThread) {
             return <PostPage id={id} sub={sub.name}/>
-        }
-
-        if (user.username || sub.name) {
-            return <Posts sub={sub.name} user={ user.username}/>
+        } else if (user.username || sub.name) {
+            return <Posts sub={sub.name} user={ user.username} pathProps={pathProps} theme={theme.theme}/>
         } else {
             return <p>Loading...</p>
         }
@@ -124,22 +114,23 @@ class Main extends React.Component{
 
     render() {
         let { theme, changeTheme, userLogout } = this.props.store;
+        theme=theme.theme;
         const loggedUser = this.props.store.user.username;
         const { user, sub, allSubs, userSubs } = this.state;
-
         const topNavContentData = { user, sub, join: this.join, theme, deleteHandler: this.deleteCurrentSub, allSubs, userSubs };
-        
+
         return (
-            <div className={styles.container}>
+            <div className={`${styles.container} ${theme==='dark' ? styles.dark : styles.light}`}>
 
                 <Header 
                     { ...this.state} theme={theme} 
                     changeTheme={changeTheme} 
-                    loggedUser={loggedUser} 
+                    loggedUser={loggedUser}
+                    sub={sub} 
                     userLogout={userLogout} 
                     />
 
-                <main className={theme.theme === 'dark'? styles.dark : styles.light}>
+                <main className={theme === 'dark'? styles.dark : styles.light}>
                     <div className={styles.central}>
                         {this.renderCentral()}
                     </div>
@@ -149,14 +140,14 @@ class Main extends React.Component{
                         <Info sub={sub} 
                             user={user} 
                             join={this.join} 
-                            theme={theme.theme} 
+                            theme={theme} 
                             deleteHandler={this.deleteCurrentSub}/>
                         : null
                         }
                         <SubsList 
                             allSubs={allSubs}
                             userSubs={userSubs}
-                            theme={theme.theme}/>
+                            theme={theme}/>
                     </div>
                     <TopNav className={styles.topnav} topNavContentData={topNavContentData}/>
                 </main>

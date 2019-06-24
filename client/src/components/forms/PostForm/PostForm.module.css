@@ -14,7 +14,6 @@
     align-items: center;
     max-width: 900px;
     width: 85%;
-    /* height: 60vh; */
     margin: 5rem auto;
     padding: 3.25rem 2.5rem;
     font-size: 1.75rem;
@@ -62,7 +61,7 @@ label{
 }
 
 .title, .body{
-    padding: 0.25rem;
+    padding: 0.7rem;
     width: 100%;
     border: 1px solid #ddd;
     margin: 0.5rem 0;

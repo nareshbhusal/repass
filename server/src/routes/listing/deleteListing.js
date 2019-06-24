@@ -1,16 +1,10 @@
-const Listing = require('../../models/Listing');
+const updateListing = require('../../controllers/Listing/updateListing');
 
 const deleteListing = async (req, res) => {
-
     const username = req.session.user.username;
     const id = req.params.id;
     try {
-        await Listing.destroy({
-            where: {
-                user:username,
-                id
-            }
-        });
+        await updateListing(id, { deleted: true });
         return res.status(202).send({ msg: 'Deleted listing!' })
         
     } catch(err) {

@@ -17,7 +17,7 @@ const editListing = async(req, res) => {
         if (!listingInRecords) {
             res.status(400).send({err: 'Listing does not exist'});
         }
-        await updateListing(listingId,  updatedListing);
+        await updateListing(listingId, updatedListing);
 
         return res.status(201).send({ msg: 'Listing updated' });
 

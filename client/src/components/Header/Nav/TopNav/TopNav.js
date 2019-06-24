@@ -67,7 +67,7 @@ class TopNav extends React.Component{
     }
 
     render(){
-        const theme = this.props.topNavContentData.theme.theme;
+        const theme = this.props.topNavContentData.theme;
 
         return (
             <div role="navigation" className={styles.topnav+ ` ${theme === 'dark' ? styles.dark : styles.light}`}>

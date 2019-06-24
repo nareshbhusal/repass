@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './Nav.module.css'
-
 import { Link } from 'react-router-dom';
+import history from '../../../history';
 
 class Nav extends React.Component{
 
@@ -52,9 +52,27 @@ class Nav extends React.Component{
             </div>
         );
     }
+    searchHandler = e =>{
+        const search = e.target.value;
+        let { sub } = this.props;
+        sub=sub || {};
+        history.push(`/r/${sub.name}/?search=${search}`);
+    }
+    renderSearchBar = ({ theme, search, sub }) => {
+        if (!sub.name){
+            return null;
+        }
+        search=search ||'';
+        return (
+            <div className={styles.searchBar+ ` ${theme==='light' ? styles.light : styles.dark}`}>
+                <input placeholder="Search Repass" type="text" onChange={this.searchHandler}/>
+                <i className="fa fa-search"></i>
+            </div>
+        )
+    }
     render() {
-
-        const { theme } = this.props.theme;
+        let { theme, search, sub } = this.props;
+        sub = sub || {};
         return (
             <div className={styles.container + ` ${theme === 'dark'? styles.dark : styles.light}`}>
                 <div className={styles.left}>
@@ -62,9 +80,10 @@ class Nav extends React.Component{
                         repass
                     </Link>
                     <Link to={`/r/${this.props.sub}`} className={styles.sub} >
-                        {this.props.sub}
+                        {sub.name}
                     </Link>
                 </div>
+                {this.renderSearchBar({ theme, search, sub })}
                 <div className={styles.right}>
                     {this.renderThemeBtn()}
                     {this.renderSignInBtns()}

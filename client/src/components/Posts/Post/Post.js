@@ -31,29 +31,30 @@ class Post extends React.Component{
     upVote=React.createRef();
     downVote=React.createRef();
 
-    isPostDeleted= async () => {
-        if (this.state.title) {
-            return false;
-        }
-        await this.setState({ isHidden: true });
-        return true;
-    }
-
     vote = async (type) => {
         try {
             const {id} = this.props;
             await repass.post(`${id}/vote/${type}`);
-
-            const post = await fetchPost(id);
-            await this.setState({ ...post });
+            await this.fetchPostData();
         } catch(err) {
-            console.log(err);
+            console.log(err.response);
             alert(err.response.data.err); // alert error
         }
         this.renderVote();
     }
+    fetchPostData = async() => {
+        await this.setState({ error: '' });
+        const { id } = this.props;
+        const post = await fetchPost(id);
+        await this.setState({ ...post });
+        this.renderVote();
+    }
+    componentWillUnmount(){
+        this.setState = () => {};
+    }
     renderVote = () => {
-        if (this.state.isHidden) {
+        const { deleted, error, title } = this.state;
+        if (deleted || error || !title) {
             return;
         }
         if (this.state.vote===1) {
@@ -78,12 +79,12 @@ class Post extends React.Component{
                 const { sub, id } = this.state;
                 const res = await repass.delete(`r/${sub}/${id}`);
                 console.log(res.data);
-                await this.setState({ isHidden: true });
             } catch(err) {
-                console.log(err);
+                console.log(err.response.data);
                 alert(err.response.data.err); // alert error
             }
         }
+        await this.fetchPostData();
     }
 
     renderInfo = () => {
@@ -121,13 +122,14 @@ class Post extends React.Component{
     
     renderActions = () => {
         const loggedUser = this.props.user.username;
+        const { comments, url, user } = this.state;
         return (
             <div className={styles.actions}>
-                <Link to={this.state.url} className={styles.comment}>
+                <Link to={url} className={styles.comment}>
                     <i className="fa fa-comment"></i>
-                    {this.state.comments} Comments
+                    {comments} Comments
                 </Link>
-                {this.state.user === loggedUser ?
+                {user === loggedUser ?
                  this.renderCtrlBtns() : null
                 }
                 
@@ -135,49 +137,55 @@ class Post extends React.Component{
         );
     }
     renderBody = () => {
+        const { title, body } = this.state;
         return (
             <React.Fragment>
-                <p className={styles.title}>
-                    {this.state.title}
+                <p className={styles.title} 
+                    dangerouslySetInnerHTML={{__html: title}}>
                 </p>
                 {
                     this.state.detailed ? 
-                    <p className={styles.body}>
-                        {this.state.body}
-                    </p> :
-                    null
+                    <p className={styles.body} 
+                        dangerouslySetInnerHTML={{__html: body}}></p>
+                    : null
                 }
             </React.Fragment>
         );
     }
 
     componentDidMount = async () => {
-        const { id } = this.props;
-        
-        const post = await fetchPost(id);
-        await this.setState({ ...post });
-        await this.isPostDeleted();
-        this.renderVote();
+        await this.fetchPostData();
     }
 
     render(){
-        if (this.state.isHidden) {
+        const isPreview = !this.props.detailed;
+        const { deleted, ups, error, title } = this.state;
+        if ((deleted && isPreview) || !title) {
             return null;
         }
-        const dynamicClass = this.props.detailed ? `${styles.post} ${styles.detailed}` : `${styles.post}`;
-        const theme = this.props.theme.theme;
+        const dynamicClass = `${styles.post} ${isPreview ? '': styles.detailed}`;
+        const { theme } = this.props.theme;
+
         return (
             <div ref={this.postRef} className={dynamicClass + ` ${theme === 'dark' ? styles.dark : styles.light}`} >
-                <div className={styles.votes}>
-                    <i ref={this.upVote} onClick={()=>this.vote('up')} className={`fa fa-arrow-up up`}></i>
-                        {this.state.ups}
-                    <i ref={this.downVote} name="down" onClick={()=>this.vote('down')} className={`fa fa-arrow-down down`}></i>
-                </div>
-                <div className="main">
-                    {this.renderInfo()}
-                    {this.renderBody()}
-                    {this.renderActions()}
-                </div>
+                {deleted || error ? 
+                <React.Fragment>
+                    <p>Post not found! It was either deleted or never existed.</p>
+                </React.Fragment>
+                :
+                <React.Fragment>
+                    <div className={styles.votes}>
+                        <i ref={this.upVote} onClick={()=>this.vote('up')} className={`fa fa-arrow-up up`}></i>
+                            {ups}
+                        <i ref={this.downVote} name="down" onClick={()=>this.vote('down')} className={`fa fa-arrow-down down`}></i>
+                    </div>
+                    <div className="main">
+                        {this.renderInfo()}
+                        {this.renderBody()}
+                        {this.renderActions()}
+                    </div>
+                </React.Fragment>
+                }
             </div>
         );
     }

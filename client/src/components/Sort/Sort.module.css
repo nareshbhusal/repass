@@ -1,0 +1,30 @@
+.container{
+    width: 100%;
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.container a{
+    color: #000;
+    font-weight: bold;
+    text-decoration: none;
+    padding: 1rem;
+    background: rgba(220, 226, 231, 0.5);
+    border: 1px solid #7AA52F;
+    
+    box-shadow: -2px 2px 1px -2px #7AA52F;
+    text-transform: uppercase;
+}
+
+.container.dark a{
+    color: #eee;
+    background-color: #444;
+}
+
+.container a:hover{
+    /* background-color: #7AA52F;
+    color: #fff; */
+    box-shadow: 1px 2px 0px 1px #7AA52F;
+}

@@ -1,8 +1,8 @@
 import repass from '../repass';
+import qs from 'qs';
 
 export const joinSub = async (subName) => {
-    try {
-            
+    try {  
         await repass.post(`subscribe/${subName}/`);
     } catch(err) {
         console.log(err);
@@ -18,7 +18,6 @@ export const determineTheme = async(currentTheme, changeTheme) => {
             return;
         }
         changeTheme();
-
     } catch(err) {
         console.log(err);
     }
@@ -41,13 +40,11 @@ export const getAllSubs = async () => {
     try {
         const res = await repass.get('subs');
         const allSubs = res.data;
-
         return allSubs || [];
     } catch(err) {
         alert(err.response.data.err); // alert error
         console.log(err);
     }
-
     return [];
 }
 
@@ -56,7 +53,6 @@ export const fetchSubInfo = async (subName, loggedUser) => {
         const res = await repass.get(`r/${subName}`);
         let {description, users, isSubbed, mods, createdBy} = res.data;
         let numOfUsers=0;
-
         if (users) {
             if (users.length) {
                 numOfUsers = users.length;
@@ -81,38 +77,42 @@ export const fetchSubInfo = async (subName, loggedUser) => {
     }
 }
 
-export const getLink = (sub, user, id) =>{
+export const getLink = ({ sub, user, id, search='', t='' }) =>{
     let link;
     if (sub) {
-        link = `r/${sub}`;
+        link=`listings/r/${sub}`;
         if (id) {
-            link = `r/${sub}/${id}`;
+            link += `/${id}`;
+        } else {
+            link+=`/?search=${search}&t=${t}`;
         }
     } else if (user) {
-        link = `u/${user}`;
+        link = `listings/u/${user.username}`;
     } else {
-        link=`r/all`;
+        link=`listings/r/all`;
     }
     return link;
 }
 
-export const determineDest = async(params) => {
-
+export const determineDest = ({ match, location }) => {
+    const params = match.params;
     let { sub, user, id } = params;
-    const link = getLink(sub, user, id);
     let subName;
-
+    
     if (user) {
         user= { username: user };
-        return { user, id, link, sub: {} };
-
+        
     } else if (sub) {
         subName = sub;
     } else {
         subName = 'all';
     }
+    user=user || {};
     sub = { name: subName };
-    return { sub, id, link, user: {} };
+    const { search, t } = qs.parse(location.search, { ignoreQueryPrefix: true });
+    
+    const link = getLink({sub: subName, user, id, search, t});
+    return { sub, id, link, user, search, t };
 }
 
 export const fetchUserInfo = async (username) => {
@@ -153,5 +153,6 @@ export const fetchPost = async(id) => {
 
     } catch(err) {
         console.log(err.response);
+        return { error: err.response.data.err };
     }
 }

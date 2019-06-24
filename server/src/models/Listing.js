@@ -29,6 +29,10 @@ const listing = db.define('listing', {
     downs: {
         type: Sequelize.ARRAY(Sequelize.STRING)
     },
+    score: {
+        type: Sequelize.INTEGER,
+        defaultValue: 1
+    },
     children: {
         // ids of sub-listings
         type: Sequelize.ARRAY(Sequelize.INTEGER)
@@ -51,6 +55,10 @@ const listing = db.define('listing', {
     },
     updatedAt: {
         type: Sequelize.STRING
+    },
+    deleted: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false
     }
 })
 

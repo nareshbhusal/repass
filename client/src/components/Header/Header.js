@@ -4,8 +4,7 @@ import Showcase from './Showcase/Showcase';
 
 const header = (props) => {
 
-    const { user, sub, loggedUser,toggleModal, changeTheme, theme, userLogout } = props;
-
+    const { user, sub, loggedUser,toggleModal, changeTheme, theme, userLogout, searchHandler } = props;
     const subName = sub.name;
     if (subName) {
         return (
@@ -14,7 +13,8 @@ const header = (props) => {
                 sub={subName} 
                 theme={theme} 
                 changeTheme={changeTheme} 
-                loggedUser={loggedUser} 
+                loggedUser={loggedUser}
+                sub={sub}
                 userLogout={userLogout} />
                 <Showcase dest={`r/${subName}`} toggleModal={toggleModal}/>
             </div>
@@ -30,7 +30,6 @@ const header = (props) => {
             {user.username ?
             <Showcase dest={`u/${user.username}`}/>
             : null}
-            
         </div>
     );
 }

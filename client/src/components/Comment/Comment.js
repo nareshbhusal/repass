@@ -2,9 +2,7 @@ import React from 'react';
 import styles from './Comment.module.css';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-
 import Input from '../Input/Input';
-
 import repass from '../../repass';
 import ta from 'time-ago';
 
@@ -16,13 +14,13 @@ class Comment extends React.Component{
             edit: '',
             reply: ''
         }
-
         this.upVote = React.createRef();
         this.downVote = React.createRef();
     }
 
     fetchComment = async () => {
         try {
+            await this.setState({ error: '' });
             const { id } = this.props;
             const res = await repass.get(`listing/${id}`);
             let { data } = res;
@@ -72,7 +70,6 @@ class Comment extends React.Component{
         if (this.state.isHidden) {
             return;
         }
-
         if (this.state.vote===1) {
             this.upVote.current.style.color='tomato';
             this.downVote.current.style.color = '#878a8c';
@@ -154,7 +151,6 @@ class Comment extends React.Component{
 
     renderInfo = () => {
         const { user, createdAt, updatedAt, isThisOP } = this.state;
-
         const dynamicStyle = isThisOP ? {fontWeight: 'bold'} : {fontWeight: 'normal'};
 
         return (
@@ -216,9 +212,9 @@ class Comment extends React.Component{
     
     render(){
         const { theme } = this.props.theme;
-
+        const { deleted, body, isEditing, isReplying } = this.state;
         const dynamicStyle = {paddingLeft: `${1.6*this.props.branch}rem`}
-        if (this.state.isHidden) {
+        if (deleted) {
             return (
                 <div style={dynamicStyle} className={styles.container + ` ${theme === 'dark' ? styles.dark : styles.light}`}>
                     <p style={{paddingLeft: '2rem'}}>Comment deleted</p>
@@ -233,8 +229,8 @@ class Comment extends React.Component{
                 </div>
                 <div className={styles.main}>
 
-                    {this.state.isEditing? 
-                    <Input value={this.state.body} 
+                    {isEditing? 
+                    <Input value={body} 
                     onSubmit={this.editComment} 
                     theme={theme}
                     onCancel={this.toggleEdit} /> :
@@ -244,7 +240,7 @@ class Comment extends React.Component{
                         {this.renderBody()}
                         {this.renderActions()}
 
-                        {this.state.isReplying ? 
+                        {isReplying ? 
                         <Input 
                             type="reply"
                             onSubmit={this.postReply} 

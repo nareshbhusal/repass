@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-
 const changeTheme = require('../theme/changeTheme');
 const getTheme = require('../theme/getTheme');
 

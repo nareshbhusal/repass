@@ -125,6 +125,36 @@ button{
     outline: none;
 }
 
+.searchBar{
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.searchBar input{
+    border: none;
+    background-color: transparent;
+    width: 100%;
+    padding: 0.21rem;
+    outline: none;
+    padding-left: 2.1rem;
+    background-color: #eee;
+}
+.searchBar input::placeholder{
+    color: #999;
+}
+
+.searchBar i{
+    position: absolute;
+    left: 0%;
+    color: #666;
+}
+
+.searchBar.dark input{
+    color: #eee;
+    background-color: #333;
+}
+
 @media(max-width: 650px) {
     .user span {
         display: none;

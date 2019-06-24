@@ -6,7 +6,6 @@ const getVote = require('./getVote');
 const vote = async(listingId, username, type) => {
 
     const votesData = await getVote(listingId, username);
-
     let vote = votesData.self;
     let downvotesList = votesData.downs || [];
     let upvotesList = votesData.ups || [];
@@ -14,7 +13,6 @@ const vote = async(listingId, username, type) => {
     let changeInKarma=0;
 
     if (vote === 1 && type ==='up') {
-        
         changeInKarma = -1;
         upvotesList.splice(upvotesList.indexOf(username), 1);
 
@@ -30,7 +28,6 @@ const vote = async(listingId, username, type) => {
         downvotesList.splice(downvotesList.indexOf(username), 1);
 
     } else if(vote === 0 && type === 'down') {
-
         changeInKarma= 1;
         downvotesList.splice(downvotesList.indexOf(username), 1);
 
@@ -41,13 +38,11 @@ const vote = async(listingId, username, type) => {
         } else {
             changeInKarma = -2;
         }
-
         upvotesList.splice(upvotesList.indexOf(username), 1);
         downvotesList.push(username);
     }
-
-    console.log(changeInKarma)
-    await updateListing(listingId, { ups: upvotesList, downs: downvotesList }, changeInKarma);
+    const score = upvotesList.length - downvotesList.length;
+    await updateListing(listingId, { ups: upvotesList, downs: downvotesList, score }, changeInKarma);
 }
 
 
