@@ -3,5 +3,7 @@ package-lock.json
 .env
 development.development
 production.env
-dist/
-public/
+dist
+public
+dist/*
+public/*
