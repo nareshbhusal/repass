@@ -17,6 +17,7 @@ class Comment extends React.Component{
         this.upVote = React.createRef();
         this.downVote = React.createRef();
     }
+    _isMounted=false;
 
     fetchComment = async () => {
         try {
@@ -83,6 +84,7 @@ class Comment extends React.Component{
     }
 
     componentDidMount = async () => {
+        this._isMounted=true;
         await this.fetchComment();
         this.renderVote();
     }
@@ -104,6 +106,12 @@ class Comment extends React.Component{
         const isEditing = this.state.isEditing || false;
         await this.setState({ isEditing: !isEditing });
     }
+    componentWillUnmount(){
+        this._isMounted=false;
+    }
+    componentDidUpdate(){
+        return this._isMounted;
+    }
 
     editComment = async(body) => {
         try {
@@ -111,7 +119,6 @@ class Comment extends React.Component{
             await repass.put(`/r/${sub}/${id}`, {
                 body
             });
-
             this.setState({ isEditing: false });
             // update comment data
             await this.fetchComment();

@@ -4,7 +4,7 @@ const sequelize = require('sequelize');
 const postsPerBatch = 20;
 
 const getQueryConfig = ({ username, search='', t, sub, page=1 }) => {
-    const days= parseInt(t);
+    const days= t;
     const offset = postsPerBatch * (page-1);
     const queryConfig = {
         where: {
@@ -16,13 +16,13 @@ const getQueryConfig = ({ username, search='', t, sub, page=1 }) => {
         limit:postsPerBatch,
         offset
     }
-    
     if (days) {
         let startTime = new Date();
         startTime.setHours(startTime.getHours() - days*24);
         let endTime = new Date();
         startTime=startTime.getTime().toString();
         endTime=endTime.getTime().toString();
+
         queryConfig.order = [
             ['score', 'DESC']
         ];

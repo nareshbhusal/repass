@@ -11,9 +11,9 @@ const requireLogin = require('../../middlewares/requireLogin');
 
 router.get('/subs', getSubs);
 router.post('/subs/create', requireLogin, createSub);
-router.get('/r/:sub', getSub);
+router.get('/r/:sub/', getSub);
 router.post('/subscribe/:sub/', requireLogin, subscribe);
-router.put('/r/:sub', requireLogin, editSub);
+router.put('/r/:sub/', requireLogin, editSub);
 router.delete('/r/:sub/', requireLogin, deleteSub);
 
 module.exports = router;

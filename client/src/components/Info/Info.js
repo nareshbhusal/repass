@@ -1,13 +1,12 @@
 import React from 'react';
 import styles from './Info.module.css';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const parseDate = (timestamp) => {
     return new Date(parseInt(timestamp)).toDateString().split(' ').slice(1).join(' ');
 }
 
 const info = (props) =>{
-        // console.log(props);
         const { sub, user, deleteHandler, theme } = props;
 
         let {name, isSubbed, numOfUsers, info, isMod} = props.sub;
@@ -57,9 +56,14 @@ const info = (props) =>{
                     }
 
                     {isMod ? 
-                    <button onClick={deleteHandler} className={styles.deleteBtn}>
-                        Delete Sub
-                    </button>
+                    <React.Fragment>
+                        <Link to={`/edit/r/${sub.name}`} className={styles.editBtn}>
+                            Edit Sub
+                        </Link>
+                        <button onClick={deleteHandler} className={styles.deleteBtn}>
+                            Delete Sub
+                        </button>
+                    </React.Fragment>
                     : null}
                 </div>
             </div>

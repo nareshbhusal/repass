@@ -13,22 +13,58 @@ class SubForm extends React.Component{
     onSubmit = async(e) => {
         e.preventDefault();
         try{
-            const res = await repass.post("subs/create", {
-                name: this.state.title,
-                description: this.state.description
-            });
-            console.log(res);
-            
+            const { sub } = this.props.match.params;
+            if (sub) {
+                await this.editSub(sub);
+            } else {
+                await this.createSub();
+            }
             history.push(`/r/${this.state.title}`);
             
         } catch(err) {
             console.log(err.response);
+            alert(err.response.data.err);
+        }
+    }
+    createSub = async() => {
+        const res = await repass.post("subs/create", {
+            name: this.state.title,
+            description: this.state.description
+        });
+        console.log(res.data);
+    }
+    editSub = async(sub) => {
+        const res = await repass.put(`/r/${sub}`, {
+            description: this.state.description
+        });
+        console.log(res.data);
+    }
+    fetchSub = async(sub) => {
+        try {
+            const res = await repass.get(`/r/${sub}`);
+            const { name, description } = res.data;
+            const title = name;
+            this.setState({ title, description });
+        } catch(err) {
+            console.log(err.response);
+            alert(err.response.data.err);
+        }
+    }
+    async componentDidMount(){
+        const { sub } = this.props.match.params;
+        console.log(this.props.match.params)
+        if (sub){
+            await this.fetchSub(sub);
         }
     }
 
     onChange = (e) => {
+        const { sub } = this.props.match.params;
         const inputName = e.target.name;
         const inputValue = e.target.value;
+        if (sub && inputName==='title'){
+            return alert('Can\'t change name of the sub');
+        }
         this.setState({ [inputName]: inputValue });
     }
 

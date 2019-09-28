@@ -82,7 +82,7 @@ class PostPage extends React.Component{
     render() {
         const theme = this.props.theme.theme;
         const { id, sub } = this.props;
-        const { deleted } = this.state;
+        const { deleted, threadElements } = this.state;
         return (
             <div className={styles.postpage + ` ${theme === 'dark' ? styles.dark : styles.light}`}>
                 {deleted ? 
@@ -95,7 +95,7 @@ class PostPage extends React.Component{
                     <div className={styles.input}>
                         <Input onSubmit={this.submitComment} theme={theme} />
                     </div>
-                    {this.state.threadElements}
+                    {threadElements}
                 </React.Fragment>
                 }
             </div>

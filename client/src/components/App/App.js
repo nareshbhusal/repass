@@ -26,6 +26,7 @@ const App = (props) => {
     const { theme } = props.theme;
     const pathsThatRenderMain = ["/", "/r/:sub/", "/r/:sub/:id", "/u/:user/", ]
     const pathsThatRenderPostForm = ["/r/:sub/create/post", "/r/:sub/edit/:id"]
+    const pathsThatRenderSubForm = ["/create/sub", "/edit/r/:sub"]
     return (
         <div>
             <Router history={history}>
@@ -34,7 +35,7 @@ const App = (props) => {
                     <Route exact path="/login" render={() => <Login onSignIn={userLogin} theme={theme} />} />
                     <Route exact path={pathsThatRenderMain} render={() => <Main store={props} />} />
                     <Route exact path={pathsThatRenderPostForm} component={PostForm} />
-                    <Route exact path="/create/sub" component={SubForm} />
+                    <Route exact path={pathsThatRenderSubForm} component={SubForm} />
                     <Route exact path="/*" component={InvalidRoute} />
                 </Switch>
             </Router>

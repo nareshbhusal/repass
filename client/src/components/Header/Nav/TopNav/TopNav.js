@@ -21,7 +21,6 @@ class TopNav extends React.Component{
     }
 
     disableScrolling(){
-        
         window.document.body.style.overflow= 'hidden';
     }
 
@@ -42,7 +41,6 @@ class TopNav extends React.Component{
 
     renderContent(){
         const current = this.state.current;
-
         const { user, sub, join, theme, deleteHandler, allSubs, userSubs } = {...this.props.topNavContentData};
         if (current === 'subs') {
             return (

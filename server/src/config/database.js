@@ -1,8 +1,9 @@
 const Sequelize = require('sequelize');
-const { db_name, db_user, db_pass, host } = require('../config');
+const { DB_NAME, DB_USER, DB_PASS, HOST } = process.env;
 
-module.exports = new Sequelize('repassdb', 'postgres', 'nnnsss', {
-    host: 'localhost',
+console.log(DB_NAME, DB_PASS, DB_USER)
+module.exports = new Sequelize(DB_NAME, DB_USER, DB_PASS, {
+    host: HOST,
     dialect: 'postgres',
     pool: {
         max:5,

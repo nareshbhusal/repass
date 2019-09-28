@@ -1,7 +1,7 @@
 const app = require('./index');
-let { port } = require('./config');
+const { PORT } = process.env;
 
-port = port || 5000;
+const port = PORT || 5000;
 app.listen(port, () => {
     console.log(`listening at port ${port}`);
 })

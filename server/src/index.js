@@ -2,16 +2,16 @@ const express = require('express');
 const db = require('./config/database');
 const corsMiddleware = require('./middlewares/cors');
 const cors = require('cors');
+const path = require('path');
 // Session and cookiesparser
 const session = require('express-session');
 const redis = require('redis');
 const RedisStore = require('connect-redis')(session);
-const { session_secret } = require('./config');
 const app = express();
 const uuid = require('uuid');
 const routes = require('./routes/index');
 
-
+require('dotenv').config({ path: path.resolve(__dirname, `/${process.env.NODE_ENV.toLowerCase()}.env`) });
 // Create redis client
 let client = redis.createClient();
 client.on('connect', () => {
@@ -29,7 +29,7 @@ app.use(session({
     genid: function(req) {
         return uuid(); //use UUIDs for session IDs
     },
-    secret: 'ssssshhhh',
+    secret: process.env.SESSION_SECRET,
     saveUninitialized: true,
     resave: true,
     store: new RedisStore({ client }),

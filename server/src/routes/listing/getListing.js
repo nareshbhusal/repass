@@ -24,7 +24,8 @@ const isThisOP = async (listing) => {
 const getListing = async (req, res) => {
     
     try {
-        const { id } = req.params;
+        let { id } = req.params;
+        id= parseInt(id) || -999; //to avoid server error when id is not of type number
         let listing = await Listing.findOne({
             where: {
                 id
