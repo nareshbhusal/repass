@@ -1,5 +1,6 @@
 import repass from '../repass';
 import qs from 'qs';
+import history from '../history';
 
 export const joinSub = async (subName) => {
     try {  
@@ -28,6 +29,7 @@ export const deleteSub = async(subName) => {
         try {
             const res = await repass.delete(`r/${subName}`);
             console.log(res.data);
+            history.push('/');
 
         } catch(err) {
             console.log(err);

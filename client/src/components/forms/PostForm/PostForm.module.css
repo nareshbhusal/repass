@@ -13,9 +13,9 @@
     justify-content: center;
     align-items: center;
     max-width: 900px;
-    width: 85%;
+    width: 95%;
     margin: 5rem auto;
-    padding: 3.25rem 2.5rem;
+    padding: 3.25rem 2rem;
     font-size: 1.75rem;
     font-family: "Roboto";
     box-shadow: 0 0 13px 0 rgba(160, 131, 131, 0.13), 0 2px 3px 0 rgba(0, 0, 0, 0.24);
@@ -45,7 +45,6 @@ label{
 [contentEditable]:empty:before{
     content:attr(placeholder);
     color: #ccc;
-    /* font-weight: lighter; */
 }
 
 [contentEditable=true]:hover{
@@ -68,7 +67,7 @@ label{
 }
 
 .body{
-    height: 17rem;
+    height: 20rem;
 }
 .postform input[type='submit']{
     background-color: var(--color-primary);

@@ -12,7 +12,8 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 500px;
+    width: 90%;
+    max-width: 750px;
     margin: 5rem auto;
     padding: 3.25rem 2.5rem;
     font-size: 1.75rem;
@@ -29,12 +30,15 @@
     color: rgb(238, 236, 236);
 }
 
-.subform input, textarea {
+.subform input, .subform textarea {
     width: 100%;
     margin: 0.75rem 0;
     padding: 0.65rem;
     border: none;
     background-color: #f2f2f2;
+}
+.subform textarea{
+    height: 10rem;
 }
 label{
     text-align: left;

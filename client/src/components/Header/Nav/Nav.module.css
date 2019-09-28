@@ -155,18 +155,23 @@ button{
     background-color: #333;
 }
 
-@media(max-width: 650px) {
-    .user span {
-        display: none;
+@media(max-width: 730px){
+    .logo{
+        margin-left: 1rem;
     }
     .btnLogout{
         padding: 0.5rem;
     }
-    .btnLogout span{
+    .sub{
         display: none;
     }
+}
 
-    .sub{
+@media(max-width: 650px) {
+    .user span {
+        display: none;
+    }
+    .btnLogout span{
         display: none;
     }
     .logo{
