@@ -52,7 +52,6 @@ class SubForm extends React.Component{
     }
     async componentDidMount(){
         const { sub } = this.props.match.params;
-        console.log(this.props.match.params)
         if (sub){
             await this.fetchSub(sub);
         }
