@@ -104,7 +104,7 @@ i{
 }
 
 .actions{
-    font-size: 1.3rem;
+    font-size: 1.25rem;
     margin-top: 0.3rem;
     display: flex;
 }
@@ -165,5 +165,21 @@ i{
 
     .btnEdit, .btnDelete{
         margin: 0;
+    }
+}
+
+@media(max-width: 350px){
+    .container > *{
+        padding: 0.25rem;
+    }
+    .comment{
+        padding: 0.15rem;
+        padding-left: 0;
+    }
+    .info{
+        font-size: 1.2rem;
+    }
+    .points, .time{
+        font-size: 1rem;
     }
 }

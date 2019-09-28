@@ -4,6 +4,7 @@ import styles from './TopNav.module.css';
 import SubsList from '../../../SubsList/SubsList';
 import Info from '../../../Info/Info';
 
+// read: MobileNav
 class TopNav extends React.Component{
 
     constructor(props) {

@@ -24,7 +24,28 @@
 }
 
 .container a:hover{
-    /* background-color: #7AA52F;
-    color: #fff; */
     box-shadow: 1px 2px 0px 1px #7AA52F;
+}
+
+@media(max-width: 500px){
+    .container a{
+        padding: 0.5rem;
+    }
+}
+
+@media(max-width: 430px){
+    .container a{
+        font-size: 1.35rem;
+    }
+}
+@media(max-width: 375px){
+    .container a{
+        font-size: 1.2rem;
+    }
+}
+@media(max-width: 345px){
+    .container a{
+        font-size: 1.1rem;
+        padding: 0.35rem;
+    }
 }

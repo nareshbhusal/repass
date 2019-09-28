@@ -65,10 +65,10 @@ class Nav extends React.Component{
         search=search ||'';
         return (
             <div className={styles.searchBar+ ` ${theme==='light' ? styles.light : styles.dark}`}>
-                <input placeholder="Search Repass" type="text" onChange={this.searchHandler}/>
+                <input placeholder={`Search r/${sub.name}`} type="text" onChange={this.searchHandler}/>
                 <i className="fa fa-search"></i>
             </div>
-        )
+        );
     }
     render() {
         let { theme, search, sub } = this.props;

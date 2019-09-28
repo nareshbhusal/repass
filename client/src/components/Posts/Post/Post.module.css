@@ -1,6 +1,5 @@
 .post{
     border: 1px solid #ccc;
-    /* margin: 1rem; */
     display: flex;
     background-color: #fff;
     border-bottom: none;
@@ -28,7 +27,6 @@
 .post.dark .votes i:hover, .post.dark .comment:hover{
     background-color: rgba(129,131,132,0.5);;
 }
-/* rgb(215, 218, 220); */
 .post:last-of-type{
     border-bottom: 1px solid #ccc;
 }
@@ -129,7 +127,7 @@ i.down:hover, i.down.--active{
 }
 
 .title{
-    font-size: 1.8rem;
+    font-size: 1.7rem;
     font-family: Arial, Helvetica, sans-serif;
     letter-spacing: 0.1px;
     margin: 0.4rem 0;
@@ -138,7 +136,7 @@ i.down:hover, i.down.--active{
 
 .body{
     font-family: Arial, Helvetica, sans-serif;
-    margin: 1rem 0;
+    margin: 0.8rem 0;
     display: none;
     white-space: pre-line;
     word-wrap: break-word;
@@ -177,5 +175,14 @@ i.down:hover, i.down.--active{
     }
     .comment{
         padding: 0.25rem;
+    }
+}
+
+@media(max-width: 375px){
+    .postedBy a{
+        margin: 0.15rem;
+    }
+    .post > *{
+        padding: 0.3rem;
     }
 }
