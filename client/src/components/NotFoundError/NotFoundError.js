@@ -4,11 +4,11 @@ import styles from './NotFoundError.module.css';
 class NotFoundError extends React.Component{
     getErrorMessage(){
         const { user, sub, id } = this.props;
-
-        if (id) {
-            return `Post with id: ${id} not found`;
-        } else if (sub.name) {
+        
+        if (sub.name) {
             return `r/${sub.name} does not exist!`;
+        }else if (id) {
+            return `Post with id: ${id} not found`;
         } else if (user.username) {
             return `u/${user.username} does not exist!`
         }

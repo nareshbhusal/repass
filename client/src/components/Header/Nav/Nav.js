@@ -79,7 +79,7 @@ class Nav extends React.Component{
                     <Link to="/" className={styles.logo}>
                         repass
                     </Link>
-                    <Link to={`/r/${this.props.sub}`} className={styles.sub} >
+                    <Link to={`/r/${sub.name}`} className={styles.sub} >
                         {sub.name}
                     </Link>
                 </div>

@@ -74,7 +74,7 @@ export const fetchSubInfo = async (subName, loggedUser) => {
 
     } catch(err) {
         // error finding the sub
-        console.log(err.response);
+        console.log(err.response.data);
         return { doesNotExist: true };
     }
 }

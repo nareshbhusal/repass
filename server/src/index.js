@@ -10,6 +10,7 @@ const RedisStore = require('connect-redis')(session);
 const app = express();
 const uuid = require('uuid');
 const routes = require('./routes/index');
+const clientPath = path.join(__dirname, '../../client');
 
 require('dotenv').config({ path: path.resolve(__dirname, `/${process.env.NODE_ENV.toLowerCase()}.env`) });
 // Create redis client
@@ -23,6 +24,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(corsMiddleware);
 app.use(cors({ credentials: true, origin: true }));
+
+// app.use(express.static(path.join(clientPath, 'dist')));
+if (process.env.NODE_ENV==='production'){
+    app.use(express.static(path.join(clientPath, 'dist')));
+    // console.log('DEV')
+}
 
 // express cookies
 app.use(session({
@@ -45,9 +52,13 @@ db.authenticate()
     .catch((err) => console.log(err))
 
 //Set routes
-app.get('', (req, res)=> {
-    return res.send('req.session')
-})
+if (process.env.NODE_ENV==='production'){
+    app.get('', (req, res)=> {
+        console.log('PROD')
+        return res.sendFile(path.join(clientPath, 'dist/index.html'));
+    });
+}
+
 app.use(routes);
 
 module.exports = app;
