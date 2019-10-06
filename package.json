@@ -7,9 +7,9 @@
     "node": "10.16.3"
   },
   "scripts": {
-    "start": "npm run install-dependencies && npm run build",
+    "start": "npm run buildscript",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "heroku-postbuild": "cd client && npm run build && cd ../server && npm run prod",
+    "buildscript": "cd client && npm run build && cd ../server && npm run prod",
     "server": "cd server && npm run dev",
     "client": "cd client && npm run start",
     "install-dependencies": "rm -rf node_modules && npm install && npm run server-install && npm run client-install",
