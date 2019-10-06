@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
+  "engines": {
+    "node": "10.16.3"
+  },
   "scripts": {
     "dev": "NODE_ENV=DEVELOPMENT webpack --mode development --watch",
     "prod": "rm -rf dist && NODE_ENV=PRODUCTION webpack --mode production --watch",
