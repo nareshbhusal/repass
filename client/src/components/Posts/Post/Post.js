@@ -146,7 +146,8 @@ class Post extends React.Component{
                 {
                     this.state.detailed ? 
                     <p className={styles.body} 
-                        dangerouslySetInnerHTML={{__html: body}}></p>
+                        dangerouslySetInnerHTML={{__html: body}}>
+                    </p>
                     : null
                 }
             </React.Fragment>

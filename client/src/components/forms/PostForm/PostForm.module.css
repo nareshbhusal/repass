@@ -45,6 +45,7 @@ label{
 [contentEditable]:empty:before{
     content:attr(placeholder);
     color: #ccc;
+    font-weight: bold;
 }
 
 [contentEditable=true]:hover{
@@ -60,14 +61,14 @@ label{
 }
 
 .title, .body{
-    padding: 0.7rem;
+    padding: 0.75rem;
     width: 100%;
     border: 1px solid #ddd;
     margin: 0.5rem 0;
 }
 
 .body{
-    height: 20rem;
+   min-height: 20rem;
 }
 .postform input[type='submit']{
     background-color: var(--color-primary);
