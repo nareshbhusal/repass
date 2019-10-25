@@ -5,7 +5,7 @@ const dotenv = require('dotenv');
 const NodemonPlugin = require('nodemon-webpack-plugin')
 
 const envPath = `${process.env.NODE_ENV.toLowerCase() || 'production'}.env`
-console.log('*****************',envPath);
+
 const env = dotenv.config({ path: envPath }).parsed;
 const envKeys = Object.keys(env).reduce((prev, next) => {
   prev[`process.env.${next}`] = JSON.stringify(env[next]);

@@ -25,11 +25,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(corsMiddleware);
 app.use(cors({ credentials: true, origin: true }));
 
-// app.use(express.static(path.join(clientPath, 'dist')));
-if (process.env.NODE_ENV==='production'){
-    app.use(express.static(path.join(clientPath, 'dist')));
-    // console.log('DEV')
-}
 
 // express cookies
 app.use(session({
@@ -51,10 +46,11 @@ db.authenticate()
     .then(() => console.log('Database connected'))
     .catch((err) => console.log(err))
 
-//Set routes
+// Set route
 if (process.env.NODE_ENV==='production'){
+    app.use(express.static(path.join(clientPath, 'dist')));
+
     app.get('', (req, res)=> {
-        console.log('PROD')
         return res.sendFile(path.join(clientPath, 'dist/index.html'));
     });
 }

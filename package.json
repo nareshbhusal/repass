@@ -8,15 +8,8 @@
     "npm": "6.9.0"
   },
   "scripts": {
-    "start": "npm run buildscript",
-    "heroku-prebuild": "npm run install-dependencies",
-    "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "buildscript": "cd client && npm run build && cd ../server && npm run prod",
-    "server": "cd server && npm run dev",
-    "client": "cd client && npm run start",
-    "install-dependencies": "rm -rf node_modules && npm install && npm run server-install && npm run client-install",
-    "client-install": "cd client && rm -rf node_modules && npm install",
-    "server-install": "cd server && rm -rf node_modules && npm install",
+    "dev": "cd server && npm run dev",
+    "prod":"cd server && npm run prod",
     "test-server": "cd server && npm run test"
   },
   "keywords": [],
