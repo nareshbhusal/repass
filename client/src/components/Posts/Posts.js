@@ -104,7 +104,7 @@ class Posts extends React.Component{
         user=user || {};
 
         return (
-            <div className={styles.posts}>
+            <div className={styles.container}>
                 {sub ? 
                 <Sort search={search} 
                     sub={sub} 
@@ -113,9 +113,11 @@ class Posts extends React.Component{
                 : null
                 }
                 {posts.length ? 
-                    posts.map(post => {
-                        return <Post key={post.id} id={post.id}/> 
-                    }) : 
+                    <div className={styles.posts}>
+                        {posts.map(post => {
+                            return <Post key={post.id} id={post.id}/> 
+                        })}
+                    </div> :
                     <div className={styles.noActivity}>
                     {destType === 'sub' ? 
                         <React.Fragment>

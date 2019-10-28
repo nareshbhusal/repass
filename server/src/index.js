@@ -46,15 +46,15 @@ db.authenticate()
     .then(() => console.log('Database connected'))
     .catch((err) => console.log(err))
 
-// Set route
+    
+// Set routes
+app.use(routes);
 if (process.env.NODE_ENV==='production'){
     app.use(express.static(path.join(clientPath, 'dist')));
-
-    app.get('', (req, res)=> {
+    
+    app.get('/*', (req, res)=> {
         return res.sendFile(path.join(clientPath, 'dist/index.html'));
     });
 }
-
-app.use(routes);
-
+    
 module.exports = app;

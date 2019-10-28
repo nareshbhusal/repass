@@ -1,9 +1,4 @@
 node_modules
-package-lock.json
 .env
 development.env
 production.env
-dist
-public
-dist/*
-public/*

@@ -8,15 +8,16 @@
     "npm": "6.9.0"
   },
   "scripts": {
-    "dev": "cd server && npm run dev",
-    "prod":"cd server && npm run prod",
+    "dev": "concurrently \"npm run dev-server\" \"npm run dev-client\"",
+    "prod":"cd client && npm rm -rf build && npm run build && cd ../server && npm run prod",
+    "dev-server": "cd server && npm run dev",
+    "dev-client": "cd client && npm run start",
     "test-server": "cd server && npm run test"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "concurrently": "^4.1.2",
-    "dotenv": "^8.1.0"
+    "concurrently": "^4.1.2"
   }
 }
