@@ -11,8 +11,8 @@ router.use('/', authRouter);
 router.use('/', listingRouter);
 router.use('/', subRouter);
 router.use('/', usersRouter);
-router.use('', (req, res) => {
-    return res.status(404).send('404 route');
-})
+// router.use('', (req, res) => {
+//     return res.status(404).send('404 route');
+// })
 
 module.exports = router;
