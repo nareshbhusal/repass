@@ -1,8 +1,9 @@
 import axios from 'axios';
+const { URL } = process.env;
 axios.defaults.withCredentials = true;
 
 const repass= axios.create({
-    baseURL: 'http://localhost:5000/',
+    baseURL: 'URL',
     withCredentials: true,
     headers: { crossDomain: true, 'Content-Type': 'application/json' },
 })
