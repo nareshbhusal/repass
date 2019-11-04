@@ -35,7 +35,7 @@ class Posts extends React.Component{
         } catch(err) {
             console.log(err);
         }
-        this.toggleLoading()
+        this.toggleLoading();
     }
 
     determineState = async() => {
@@ -85,7 +85,7 @@ class Posts extends React.Component{
 
     scrollEventListener = async() => {
         if (this.reachedNearBottom() && !this.state.loading) {
-            console.log('load more posts now!')
+            console.log('load more posts now!');
             await this.fetchPosts();
         }
     }

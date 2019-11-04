@@ -5,8 +5,8 @@
     min-height: 110vh;
 }
 
-.container.dark{
-    background-color: #222;
+.container.dark, main.dark{
+    background-color: #030303;
 }
 
 main {
@@ -14,9 +14,6 @@ main {
     justify-content: space-evenly;
     padding: 2rem 0;
     background-color: #dae0e6;
-}
-main.dark{
-    background-color: #030303;
 }
 
 .central {
