@@ -43,7 +43,7 @@
         font-size: 1.2rem;
     }
 }
-@media(max-width: 345px){
+@media(max-width: 350px){
     .container a{
         font-size: 1.1rem;
         padding: 0.35rem;

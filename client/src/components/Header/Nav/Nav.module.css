@@ -101,7 +101,7 @@
     border-radius: 5px;
     transition: 0.2s;
 }
-.btn:hover{
+.btn:hover, .btn:focus{
     opacity: 0.75;
 }
 
