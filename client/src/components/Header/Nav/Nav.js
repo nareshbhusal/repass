@@ -29,14 +29,21 @@ class Nav extends React.Component{
         const username = this.props.loggedUser;
         if (!username) {
             return (
-                <div className={styles.signInBtns}>
-                    <Link className={`${styles.btn} ${styles.btnLogin}`} to="/login">
-                        Login
-                    </Link>
-                    <Link className={`${styles.btn} ${styles.btnSignup}`} to="/register">
-                        Signup
-                    </Link>
-                </div>
+                <React.Fragment>
+                    <div className={styles.signInBtns}>
+                        <Link className={`${styles.btn} ${styles.btnLogin}`} to="/login">
+                            Login
+                        </Link>
+                        <Link className={`${styles.btn} ${styles.btnSignup}`} to="/register">
+                            Signup
+                        </Link>
+                    </div>
+                    <div className={styles.signInBtns}>
+                        <Link className={`${styles.btn} ${styles.btnSignIn}`} to="/register">
+                            <i className="fa fa-sign-in"></i>
+                        </Link>
+                    </div>
+                </React.Fragment>
             );
         }           
         return (
