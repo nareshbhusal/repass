@@ -18,7 +18,7 @@ body {
     font-size: 1.6rem;
     line-height: 1.4;
 }
-
+/*
 button:focus, a:focus{
     outline: 1px dashed var(--color-primary);
 }
@@ -29,6 +29,7 @@ input:active, textarea:active
     outline: 1px dashed var(--color-primary) !important;
 }
 
+*/
 :root {
     --color-primary: #4CAF50;
     --color-primary-dark: rgb(78, 158, 81);
